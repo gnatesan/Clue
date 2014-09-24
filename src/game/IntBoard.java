@@ -2,12 +2,14 @@ package game;
 
 import java.util.LinkedList;
 import java.util.Set;
+import java.util.*;
 
 public class IntBoard {
 
 	private BoardCell[][] cells;
 	private final int XCELLMAX =4;
 	private final int YCELLMAX = 4;
+	private Map<BoardCell, LinkedList<BoardCell>> adjacencyList;
 	public IntBoard() {
 		super();
 		cells = new BoardCell[XCELLMAX][YCELLMAX];
@@ -29,7 +31,7 @@ public class IntBoard {
 		return null;
 		
 	}
-	public LinkedList<BoardCell> getAdjList(){
+	public LinkedList<BoardCell> getAdjList(BoardCell cell){
 		return null;
 		
 	}
