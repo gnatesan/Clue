@@ -32,9 +32,9 @@ public class IntBoardTests {
 		//TODO
 		//Test top left corner Adjacency list testBoard[0][0]
 			BoardCell cell = testBoard.getCell(0,0);
-			LinkedList<BoardCell> testList = board.getAdjList(cell);
-			Assert.assertTrue(testList.contains(board.getCell(1, 0)));
-			Assert.assertTrue(testList.contains(board.getCell(0, 1)));
+			LinkedList<BoardCell> testList = testBoard.getAdjList(cell);
+			Assert.assertTrue(testList.contains(testBoard.getTargets(1, 0)));
+			Assert.assertTrue(testList.contains(testBoard.getCell(0, 1)));
 			Assert.assertEquals(2, testList.size());
 		
 	}
