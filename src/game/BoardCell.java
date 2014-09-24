@@ -14,6 +14,12 @@ public class BoardCell {
 	public int getColumn() {
 		return column;
 	}
+
+	public void setCell(int x, int y){
+		this.row = x;
+		this.column =y;
+		
+	}
 	
 
 }
