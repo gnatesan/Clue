@@ -12,7 +12,6 @@ import game.IntBoard;
 import org.junit.*;
 
 public class IntBoardTests {
-	//Not sure these are in the right place. Look at web requirements and let me know. . . 
 	private Map<BoardCell, LinkedList<BoardCell>> adjMtx;
 	private Set<BoardCell> visited;
 	private Set<BoardCell> targets;
@@ -21,7 +20,7 @@ public class IntBoardTests {
 	
 	@Before
 	public void setUp(){
-		System.out.println("In @Before");
+		//System.out.println("In @Before");
 		testBoard = new IntBoard();
 		compareArray = new LinkedList<BoardCell>();
 	}
@@ -102,4 +101,88 @@ public class IntBoardTests {
 	
 	//TODO
 	//Create at least 6 methods to test path creation (calcTarget tests)
+	@Test
+	public void testTargets00_3()
+	{
+		BoardCell cell = testBoard.getCell(0, 0);
+		testBoard.calcTargets(cell, 3);
+		Set<BoardCell> targets = testBoard.getTargets();
+		Assert.assertEquals(6, targets.size());
+		Assert.assertTrue(targets.contains(testBoard.getCell(3, 0)));
+		Assert.assertTrue(targets.contains(testBoard.getCell(2, 1)));
+		Assert.assertTrue(targets.contains(testBoard.getCell(0, 1)));
+		Assert.assertTrue(targets.contains(testBoard.getCell(1, 2)));
+		Assert.assertTrue(targets.contains(testBoard.getCell(0, 3)));
+		Assert.assertTrue(targets.contains(testBoard.getCell(1, 0)));
+	}
+	
+	@Test
+	public void testTargets11_1()
+	{
+		BoardCell cell = testBoard.getCell(0, 0);
+		testBoard.calcTargets(cell, 3);
+		Set<BoardCell> targets = testBoard.getTargets();
+		Assert.assertEquals(4, targets.size());
+		Assert.assertTrue(targets.contains(testBoard.getCell(0, 1)));
+		Assert.assertTrue(targets.contains(testBoard.getCell(1, 0)));
+		Assert.assertTrue(targets.contains(testBoard.getCell(2, 1)));
+		Assert.assertTrue(targets.contains(testBoard.getCell(1, 2)));
+	}
+	
+	@Test
+	public void testTargets31_2()
+	{
+		BoardCell cell = testBoard.getCell(0, 0);
+		testBoard.calcTargets(cell, 3);
+		Set<BoardCell> targets = testBoard.getTargets();
+		Assert.assertEquals(4, targets.size());
+		Assert.assertTrue(targets.contains(testBoard.getCell(2, 0)));
+		Assert.assertTrue(targets.contains(testBoard.getCell(1, 1)));
+		Assert.assertTrue(targets.contains(testBoard.getCell(2, 2)));
+		Assert.assertTrue(targets.contains(testBoard.getCell(3, 3)));
+	}
+	
+	@Test
+	public void testTargets21_4()
+	{
+		BoardCell cell = testBoard.getCell(0, 0);
+		testBoard.calcTargets(cell, 3);
+		Set<BoardCell> targets = testBoard.getTargets();
+		Assert.assertEquals(6, targets.size());
+		Assert.assertTrue(targets.contains(testBoard.getCell(1, 0)));
+		Assert.assertTrue(targets.contains(testBoard.getCell(0, 1)));
+		Assert.assertTrue(targets.contains(testBoard.getCell(1, 2)));
+		Assert.assertTrue(targets.contains(testBoard.getCell(0, 3)));
+		Assert.assertTrue(targets.contains(testBoard.getCell(2, 3)));
+		Assert.assertTrue(targets.contains(testBoard.getCell(3, 2)));
+	}
+	
+	@Test
+	public void testTarget03_3()
+	{
+		BoardCell cell = testBoard.getCell(0, 0);
+		testBoard.calcTargets(cell, 3);
+		Set<BoardCell> targets = testBoard.getTargets();
+		Assert.assertEquals(4, targets.size());
+		Assert.assertTrue(targets.contains(testBoard.getCell(0, 0)));
+		Assert.assertTrue(targets.contains(testBoard.getCell(1, 1)));
+		Assert.assertTrue(targets.contains(testBoard.getCell(2, 2)));
+		Assert.assertTrue(targets.contains(testBoard.getCell(3, 3)));
+	}
+	
+	@Test
+	public void testTargets22_2()
+	{
+		BoardCell cell = testBoard.getCell(0, 0);
+		testBoard.calcTargets(cell, 3);
+		Set<BoardCell> targets = testBoard.getTargets();
+		Assert.assertEquals(6, targets.size());
+		Assert.assertTrue(targets.contains(testBoard.getCell(2, 0)));
+		Assert.assertTrue(targets.contains(testBoard.getCell(1, 1)));
+		Assert.assertTrue(targets.contains(testBoard.getCell(0, 2)));
+		Assert.assertTrue(targets.contains(testBoard.getCell(3, 1)));
+		Assert.assertTrue(targets.contains(testBoard.getCell(1, 3)));
+		Assert.assertTrue(targets.contains(testBoard.getCell(3, 3)));
+	}
+	
 }

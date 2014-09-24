@@ -24,7 +24,7 @@ public class IntBoard {
 	public void calcAdjacencies(){
 		
 	}
-	public void calcTargets(){
+	public void calcTargets(BoardCell cell, int i){
 		
 	}
 	public Set<BoardCell> getTargets(){
