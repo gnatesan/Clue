@@ -19,6 +19,7 @@ public class IntBoard {
 		}
 		adjacencyLists = new HashMap<BoardCell, LinkedList<BoardCell>>();
 		calcAdjacencies();
+
 	}
 	public void calcAdjacencies(){
 		for(int i=0; i < ROWMAX; i++){
@@ -40,14 +41,28 @@ public class IntBoard {
 			}
 		}
 	}
-	public void calcTargets(BoardCell cell, int i){
-		visited = new HashSet<BoardCell>();
-		targets = new HashSet<BoardCell>();
-		targets = findAllTargets(cell, i);
-		return targets;
+	public void calcTargets(BoardCell thisCell, int numSteps){
 
 
+		for (int i = 0; i < adjacencyLists.get(thisCell).size(); i++){
+
+			visited.add(adjacencyLists.get(thisCell).get(i));
+
+			if (numSteps == 1){
+				targets.add(adjacencyLists.get(thisCell).get(i));
+			}
+
+			else {
+				calcTargets(adjacencyLists.get(thisCell).get(i), numSteps--);
+			}
+
+
+			
+
+		}
 	}
+
+
 	public Set<BoardCell> getTargets(){
 		return null;
 
@@ -61,8 +76,11 @@ public class IntBoard {
 		return cells[x][y];
 	}
 	public Set<BoardCell> findAllTargets(BoardCell cell, int i){
-		if (i == 1){
-			
-		}
+
+		visited = new HashSet<BoardCell>();
+		targets = new HashSet<BoardCell>();
+		calcTargets(cell, i);
+
+		return targets;
 	}
 }
