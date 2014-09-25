@@ -1,0 +1,89 @@
+try{
+					cellAdjList.add(cells[i+1][j]);
+				}
+				catch(ArrayIndexOutOfBoundsException e){
+					//
+				}
+				
+				try{
+					cellAdjList.add(cells[i][j+1]);
+				}
+				catch(ArrayIndexOutOfBoundsException e){
+					//
+				}
+				
+				try{
+					cellAdjList.add(cells[i-1][j]);
+				}
+				catch(ArrayIndexOutOfBoundsException e){
+					//
+				}
+				
+				try{
+					cellAdjList.add(cells[i][j-1]);
+				}
+				catch(ArrayIndexOutOfBoundsException e){
+					//
+				}
+				
+				adjacencyLists.put(cells[i][j], cellAdjList);
+				/*if( i==0 ){
+					if ( j==0 ){
+						System.out.println("Here, j=0, i=0");
+						cellAdjList.add(cells[i+1][j]);
+						cellAdjList.add(cells[i][j+1]);
+						adjacencyLists.put(cells[i][j], cellAdjList);
+					}
+					else if(j == COLMAX - 1){
+						System.out.println("Here, j=3, i=0");
+						cellAdjList.add(cells[i+1][j]);
+						cellAdjList.add(cells[i][j-1]);
+						adjacencyLists.put(cells[i][j], cellAdjList);
+					}
+					else{
+						System.out.println("Here, j!=0, j!=3 i=0");
+						cellAdjList.add(cells[i+1][j]);
+						cellAdjList.add(cells[i][j-1]);
+						cellAdjList.add(cells[i][j+1]);
+						adjacencyLists.put(cells[i][j], cellAdjList);
+						
+					}
+				}
+				else if( i==ROWMAX - 1 ){
+					if ( j==0 ){
+						cellAdjList.add(cells[i-1][j]);
+						cellAdjList.add(cells[i][j+1]);
+						adjacencyLists.put(cells[i][j], cellAdjList);
+					}
+					else if(j == COLMAX - 1){
+						cellAdjList.add(cells[i-1][j]);
+						cellAdjList.add(cells[i][j-1]);
+						adjacencyLists.put(cells[i][j], cellAdjList);
+					}
+					else{
+						cellAdjList.add(cells[i-1][j]);
+						cellAdjList.add(cells[i][j-1]);
+						cellAdjList.add(cells[i][j+1]);
+						adjacencyLists.put(cells[i][j], cellAdjList);
+						
+					}
+				}
+				else if (j == 0){
+					cellAdjList.add(cells[i+1][j]);
+					cellAdjList.add(cells[i-1][j]);
+					cellAdjList.add(cells[i][j+1]);
+					adjacencyLists.put(cells[i][j], cellAdjList);
+				}
+				else if (j == COLMAX - 1){
+					cellAdjList.add(cells[i+1][j]);
+					cellAdjList.add(cells[i-1][j]);
+					cellAdjList.add(cells[i][j-1]);
+					adjacencyLists.put(cells[i][j], cellAdjList);
+				}
+				else {
+					cellAdjList.add(cells[i+1][j]);
+					cellAdjList.add(cells[i-1][j]);
+					cellAdjList.add(cells[i][j-1]);
+					cellAdjList.add(cells[i][j+1]);
+					adjacencyLists.put(cells[i][j], cellAdjList);
+				}*/
