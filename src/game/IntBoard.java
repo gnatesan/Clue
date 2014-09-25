@@ -10,6 +10,8 @@ public class IntBoard {
 	private final int XCELLMAX =4;
 	private final int YCELLMAX = 4;
 	private Map<BoardCell, LinkedList<BoardCell>> adjacencyList;
+	private Set<BoardCell> returnThis;
+	private LinkedList<BoardCell> defaultReturn;
 	public IntBoard() {
 		super();
 		cells = new BoardCell[XCELLMAX][YCELLMAX];
@@ -28,11 +30,11 @@ public class IntBoard {
 		
 	}
 	public Set<BoardCell> getTargets(){
-		return null;
+		return returnThis;
 		
 	}
 	public LinkedList<BoardCell> getAdjList(BoardCell cell){
-		return null;
+		return defaultReturn;
 		
 	}
 	
