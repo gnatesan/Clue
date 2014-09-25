@@ -28,7 +28,37 @@ public class IntBoard {
 			for(int j=0; j < COLMAX; j++){
 				//System.out.println("Current cell: [row=" + cells[i][j].getRow() + ", column=" + cells[i][j].getColumn() + "]");
 				cellAdjList = new LinkedList<BoardCell>();
-				if( i==0 ){
+				
+				try{
+					cellAdjList.add(cells[i+1][j]);
+				}
+				catch(ArrayIndexOutOfBoundsException e){
+					//
+				}
+				
+				try{
+					cellAdjList.add(cells[i][j+1]);
+				}
+				catch(ArrayIndexOutOfBoundsException e){
+					//
+				}
+				
+				try{
+					cellAdjList.add(cells[i-1][j]);
+				}
+				catch(ArrayIndexOutOfBoundsException e){
+					//
+				}
+				
+				try{
+					cellAdjList.add(cells[i][j-1]);
+				}
+				catch(ArrayIndexOutOfBoundsException e){
+					//
+				}
+				
+				adjacencyLists.put(cells[i][j], cellAdjList);
+				/*if( i==0 ){
 					if ( j==0 ){
 						System.out.println("Here, j=0, i=0");
 						cellAdjList.add(cells[i+1][j]);
@@ -87,7 +117,7 @@ public class IntBoard {
 					cellAdjList.add(cells[i][j-1]);
 					cellAdjList.add(cells[i][j+1]);
 					adjacencyLists.put(cells[i][j], cellAdjList);
-				}
+				}*/
 			}
 		}
 
