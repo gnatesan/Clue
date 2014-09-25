@@ -1,17 +1,15 @@
 package game;
 
-import java.util.LinkedList;
-import java.util.Set;
 import java.util.*;
 
 public class IntBoard {
-
 	private final int ROWMAX =4;
 	private final int COLMAX = 4;
 	private BoardCell[][] cells = new BoardCell[ROWMAX][COLMAX];
 	private Map<BoardCell, LinkedList<BoardCell>> adjacencyLists;
-	//private Set<BoardCell> returnThis;
 	private LinkedList<BoardCell> cellAdjList;
+	private Set<BoardCell> visited;
+	private Set<BoardCell> targets;
 	public IntBoard() {
 		super();
 		for (int i =0; i < ROWMAX; i++){
@@ -23,107 +21,31 @@ public class IntBoard {
 		calcAdjacencies();
 	}
 	public void calcAdjacencies(){
-		//System.out.println("Function Called");
 		for(int i=0; i < ROWMAX; i++){
 			for(int j=0; j < COLMAX; j++){
-				//System.out.println("Current cell: [row=" + cells[i][j].getRow() + ", column=" + cells[i][j].getColumn() + "]");
 				cellAdjList = new LinkedList<BoardCell>();
-				
-				try{
-					cellAdjList.add(cells[i+1][j]);
-				}
-				catch(ArrayIndexOutOfBoundsException e){
-					//
-				}
-				
-				try{
-					cellAdjList.add(cells[i][j+1]);
-				}
-				catch(ArrayIndexOutOfBoundsException e){
-					//
-				}
-				
-				try{
+				if (i-1 >= 0){
 					cellAdjList.add(cells[i-1][j]);
 				}
-				catch(ArrayIndexOutOfBoundsException e){
-					//
+				if (i+1 < ROWMAX){
+					cellAdjList.add(cells[i+1][j]);
 				}
-				
-				try{
+				if (j-1 >= 0){
 					cellAdjList.add(cells[i][j-1]);
 				}
-				catch(ArrayIndexOutOfBoundsException e){
-					//
+				if (j+1 < COLMAX){
+					cellAdjList.add(cells[i][j+1]);
 				}
-				
 				adjacencyLists.put(cells[i][j], cellAdjList);
-				/*if( i==0 ){
-					if ( j==0 ){
-						System.out.println("Here, j=0, i=0");
-						cellAdjList.add(cells[i+1][j]);
-						cellAdjList.add(cells[i][j+1]);
-						adjacencyLists.put(cells[i][j], cellAdjList);
-					}
-					else if(j == COLMAX - 1){
-						System.out.println("Here, j=3, i=0");
-						cellAdjList.add(cells[i+1][j]);
-						cellAdjList.add(cells[i][j-1]);
-						adjacencyLists.put(cells[i][j], cellAdjList);
-					}
-					else{
-						System.out.println("Here, j!=0, j!=3 i=0");
-						cellAdjList.add(cells[i+1][j]);
-						cellAdjList.add(cells[i][j-1]);
-						cellAdjList.add(cells[i][j+1]);
-						adjacencyLists.put(cells[i][j], cellAdjList);
-						
-					}
-				}
-				else if( i==ROWMAX - 1 ){
-					if ( j==0 ){
-						cellAdjList.add(cells[i-1][j]);
-						cellAdjList.add(cells[i][j+1]);
-						adjacencyLists.put(cells[i][j], cellAdjList);
-					}
-					else if(j == COLMAX - 1){
-						cellAdjList.add(cells[i-1][j]);
-						cellAdjList.add(cells[i][j-1]);
-						adjacencyLists.put(cells[i][j], cellAdjList);
-					}
-					else{
-						cellAdjList.add(cells[i-1][j]);
-						cellAdjList.add(cells[i][j-1]);
-						cellAdjList.add(cells[i][j+1]);
-						adjacencyLists.put(cells[i][j], cellAdjList);
-						
-					}
-				}
-				else if (j == 0){
-					cellAdjList.add(cells[i+1][j]);
-					cellAdjList.add(cells[i-1][j]);
-					cellAdjList.add(cells[i][j+1]);
-					adjacencyLists.put(cells[i][j], cellAdjList);
-				}
-				else if (j == COLMAX - 1){
-					cellAdjList.add(cells[i+1][j]);
-					cellAdjList.add(cells[i-1][j]);
-					cellAdjList.add(cells[i][j-1]);
-					adjacencyLists.put(cells[i][j], cellAdjList);
-				}
-				else {
-					cellAdjList.add(cells[i+1][j]);
-					cellAdjList.add(cells[i-1][j]);
-					cellAdjList.add(cells[i][j-1]);
-					cellAdjList.add(cells[i][j+1]);
-					adjacencyLists.put(cells[i][j], cellAdjList);
-				}*/
 			}
 		}
-
 	}
 	public void calcTargets(BoardCell cell, int i){
-		
+		visited = new HashSet<BoardCell>();
+		targets = new HashSet<BoardCell>();
+		targets = findAllTargets(cell, i);
+		return targets;
+
 
 	}
 	public Set<BoardCell> getTargets(){
@@ -131,16 +53,16 @@ public class IntBoard {
 
 	}
 	public LinkedList<BoardCell> getAdjList(BoardCell cell){
-		//System.out.println(adjacencyLists.get(cell));
 		return adjacencyLists.get(cell);
 
 	}
 
 	public BoardCell getCell(int x, int y){
-
 		return cells[x][y];
-
 	}
-
-
+	public Set<BoardCell> findAllTargets(BoardCell cell, int i){
+		if (i == 1){
+			
+		}
+	}
 }
