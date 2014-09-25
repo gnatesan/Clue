@@ -17,7 +17,7 @@ public class IntBoard {
 		cells = new BoardCell[XCELLMAX][YCELLMAX];
 		for (int i =0; i < XCELLMAX; i++){
 			for (int j = 0; j < YCELLMAX; j++){
-				cells[i][j].setCell(i, j);
+				cells[i][j] = new BoardCell(i,j);
 			}
 			
 		}
