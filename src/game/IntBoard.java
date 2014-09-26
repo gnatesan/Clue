@@ -73,7 +73,11 @@ public class IntBoard {
 		visited = new HashSet<BoardCell>();
 		targets = new HashSet<BoardCell>();
 		calcTargets(cell, i);
+		targets.remove(cell);
 
 		return targets;
+	}
+	public static void loadBoardConfig() {
+		
 	}
 }
