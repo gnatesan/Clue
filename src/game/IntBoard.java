@@ -48,15 +48,16 @@ public class IntBoard {
 
 			visited.add(adjacencyLists.get(thisCell).get(i));
 
-			if (numSteps == 1){
+			if (numSteps == 1 /*&& !targets.contains(adjacencyLists.get(thisCell).get(i))*/){
 				targets.add(adjacencyLists.get(thisCell).get(i));
+				//System.out.println(adjacencyLists.get(thisCell).get(i).getRow() + "," + adjacencyLists.get(thisCell).get(i).getColumn());
 			}
 
 			else {	
 				calcTargets(adjacencyLists.get(thisCell).get(i), numSteps-1);
+				visited.remove(adjacencyLists.get(thisCell).get(i));
 			}
 			
-			visited.remove(adjacencyLists.get(thisCell).get(i));
 		}
 	}
 	
@@ -72,6 +73,11 @@ public class IntBoard {
 
 		visited = new HashSet<BoardCell>();
 		targets = new HashSet<BoardCell>();
+		visited.add(cell);
+		
+		//MAKE METHOD BELOW. SEE SLIDES
+		
+		//path = new HashSet<BoardCell>()
 		calcTargets(cell, i);
 		targets.remove(cell);
 
