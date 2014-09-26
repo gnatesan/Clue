@@ -41,16 +41,15 @@ public class IntBoard {
 			}
 		}
 	}
-	public void calcTargets(BoardCell thisCell, int numSteps/*, Set<BoardCell> visited, Set<BoardCell> targets*/){
+	public void calcTargets(BoardCell thisCell, int numSteps){
 
 
 		for (int i = 0; i < adjacencyLists.get(thisCell).size(); i++){
 
 			visited.add(adjacencyLists.get(thisCell).get(i));
 
-			if (numSteps == 1 /*&& !targets.contains(adjacencyLists.get(thisCell).get(i))*/){
+			if (numSteps == 1 ){
 				targets.add(adjacencyLists.get(thisCell).get(i));
-				//System.out.println(adjacencyLists.get(thisCell).get(i).getRow() + "," + adjacencyLists.get(thisCell).get(i).getColumn());
 			}
 
 			else {	
