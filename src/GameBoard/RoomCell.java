@@ -1,7 +1,7 @@
 package GameBoard;
 
 public class RoomCell extends BoardCell {
-	enum DoorDirection{UP, DOWN, LEFT, RIGHT, NONE};
+	public enum DoorDirection{UP, DOWN, LEFT, RIGHT, NONE};
 	private DoorDirection doorDirection;
 	private char roomInital;
 	
@@ -17,13 +17,15 @@ public class RoomCell extends BoardCell {
 	
 	@Override
 	public void draw() {
-		// TODO Auto-generated method stub
 		
 	}
-	public char getRoomInital() {
+	public char getRoomInitial() {
 		return roomInital;
 	}
-	
+
+	public DoorDirection getDoorDirection() {
+		return DoorDirection.UP;
+	}
 	
 	
 

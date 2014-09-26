@@ -21,6 +21,9 @@ public class BoardCell {
 		this.column =y;
 		
 	}
+	public boolean isDoorway() {
+		return true;
+	}
 	
 
 }

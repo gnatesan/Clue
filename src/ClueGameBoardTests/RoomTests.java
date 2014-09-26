@@ -4,8 +4,6 @@ import static org.junit.Assert.*;
 
 import java.util.Map;
 
-import game.IntBoard;
-
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -16,7 +14,7 @@ public class RoomTests {
 
 	//TODO
 	//Make tests to test the Rooms of Board
-	private Board board;
+	private static Board board;
 	
 	@BeforeClass
 	public static void setUp() {
