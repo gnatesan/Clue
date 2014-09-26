@@ -41,7 +41,7 @@ public class IntBoard {
 			}
 		}
 	}
-	public void calcTargets(BoardCell thisCell, int numSteps, Set<BoardCell> visited, Set<BoardCell> targets){
+	public void calcTargets(BoardCell thisCell, int numSteps/*, Set<BoardCell> visited, Set<BoardCell> targets*/){
 
 
 		for (int i = 0; i < adjacencyLists.get(thisCell).size(); i++){
@@ -52,11 +52,14 @@ public class IntBoard {
 				targets.add(adjacencyLists.get(thisCell).get(i));
 			}
 
-			else {
-				calcTargets(adjacencyLists.get(thisCell).get(i), numSteps--, visited, targets);
+			else {	
+				calcTargets(adjacencyLists.get(thisCell).get(i), numSteps-1);
 			}
+			
+			visited.remove(adjacencyLists.get(thisCell).get(i));
 		}
 	}
+	
 	public LinkedList<BoardCell> getAdjList(BoardCell cell){
 		return adjacencyLists.get(cell);
 
@@ -69,7 +72,7 @@ public class IntBoard {
 
 		visited = new HashSet<BoardCell>();
 		targets = new HashSet<BoardCell>();
-		calcTargets(cell, i, visited, targets);
+		calcTargets(cell, i);
 
 		return targets;
 	}
