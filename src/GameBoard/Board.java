@@ -2,18 +2,37 @@ package GameBoard;
 
 import game.BoardCell;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.util.*;
 
 public class Board {
-	private BoardCell[][] cells;
+	private static BoardCell[][] cells;
 	Map<Character, String> rooms;
-	int numRows;
-	int numColumns;
+	private final int ROWS = 22;
+	private final int COLUMNS = 23;
 	
-	public static void loadGameBoardConfig(){
-		
+	public Board(){
+		super();
+		cells = new BoardCell[ROWS][COLUMNS];
 	}
-	public static void loadRoomConfig(){
+	public static void loadGameBoardConfig(String BoardConfigFile) throws FileNotFoundException{
+		
+		FileReader reader = new FileReader(BoardConfigFile);
+		Scanner in = new Scanner(reader);
+		while (in.hasNextLine()){
+			String line = in.nextLine();
+			List<String> temp = Arrays.asList(line.split(","));
+			int row = 0;
+			int column = 0;
+			for (String s : temp){
+				if (s != "W" || s != "X"){
+				cells[row][column] = new RoomCell(row, column, s.charAt(0));
+				}
+			}
+		}
+	}
+	public static void loadRoomConfig(String BoardRoomConfigFile){
 		
 	}
 	public BoardCell getBoardCell(int j, int i){

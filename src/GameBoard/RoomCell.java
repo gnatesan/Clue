@@ -5,8 +5,8 @@ public class RoomCell extends BoardCell {
 	private DoorDirection doorDirection;
 	private char roomInital;
 	
-	public RoomCell() {
-		super();
+	public RoomCell(int r, int c, char i) {
+		super(r, c);
 		// TODO Auto-generated constructor stub
 	}
 

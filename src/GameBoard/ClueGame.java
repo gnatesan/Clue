@@ -1,23 +1,32 @@
 package GameBoard;
 
+import java.io.FileNotFoundException;
 import java.util.*;
 
 public class ClueGame {
 	private Map<Character, String> rooms;
 	private Board clueBoard;
+	private String BoardConfig;
+	private String BoardRoomConfig;
 	
 	
 	public ClueGame(String s1, String s2) {
 		super();
 		rooms = new HashMap<Character, String>();
-		// TODO Auto-generated constructor stub
+		BoardConfig = s1;
+		BoardRoomConfig = s2;
+				
 	}
 	public Board getBoard(){
 		return clueBoard;
 	}
 	public void loadConfigFiles(){
-		Board.loadGameBoardConfig();
-		Board.loadRoomConfig();
+		try{
+		Board.loadGameBoardConfig(BoardConfig);
+		} catch(FileNotFoundException e){
+			e.getMessage();
+		}
+		Board.loadRoomConfig(BoardRoomConfig);
 		
 	}
 

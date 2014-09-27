@@ -9,7 +9,6 @@ import java.util.LinkedList;
 import java.util.Set;
 
 import game.BoardCell;
-import game.IntBoard;
 
 import org.junit.*;
 
@@ -20,9 +19,6 @@ import GameBoard.RoomCell;
 
 public class BoardConfigTests {
 
-
-
-		private IntBoard testBoard;
 		private static Board board;
 		public static final int NUM_ROOMS = 9;
 		public static final int NUM_ROWS = 22;
