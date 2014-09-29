@@ -8,14 +8,9 @@ import java.io.FileNotFoundException;
 import java.util.LinkedList;
 import java.util.Set;
 
-import game.BoardCell;
-
 import org.junit.*;
 
-import GameBoard.BadConfigFormatException;
-import GameBoard.Board;
-import GameBoard.ClueGame;
-import GameBoard.RoomCell;
+import GameBoard.*;
 
 public class BoardConfigTests {
 
