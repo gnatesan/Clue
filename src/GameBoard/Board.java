@@ -9,6 +9,8 @@ public class Board {
 	Map<Character, String> rooms;
 	private final int ROWS = 22;
 	private final int COLUMNS = 23;
+	private static int numRows = 0;
+	private static int numColumns = 0;
 
 	public Board(){
 		super();
@@ -18,51 +20,57 @@ public class Board {
 
 		FileReader reader = new FileReader(BoardConfigFile);
 		Scanner in = new Scanner(reader);
+		numRows = 0;
+		
 		while (in.hasNextLine()){
 			String line = in.nextLine();
 			List<String> temp = Arrays.asList(line.split(","));
-			int row = 0;
-			int column = 0;
+			numColumns = 0;
 			for (String s : temp){
 				if (!s.isEmpty()){ //Helps parse for unwanted spaces. 
 					System.out.println(s.charAt(0));
 					if (s != "W" || s != "X"){
-
-						cells[row][column] = new RoomCell(row, column, s.charAt(0));
+						
+						cells[numRows][numColumns] = new RoomCell(numRows, numColumns, s.charAt(0));
+						if =
 					}
 
 					else if(s == "W"){
-						cells[row][column] = new WalkwayCell(row, column, s.charAt(0));
+						cells[numRows][numColumns] = new WalkwayCell(numRows, numColumns, s.charAt(0));
 					}
-					column++;
+					numColumns++;
 
 				}
 			}
 			System.out.println('\n'); 
-			row++;
+			numRows++;
 		}
+		
 	}
 	public static void loadRoomConfig(String BoardRoomConfigFile){
 
 	}
-	public BoardCell getBoardCell(int j, int i){
+	public BoardCell getBoardCell(int i, int j){
 		return cells[i][j];
 	}
 	public Map<Character, String> getRooms() {
 		return rooms;
 	}
 	public int getNumRows() {
-		return numRows;
+		int x = numRows;
+		return x;
 	}
 	public int getNumColumns() {
-		return numColumns;
+		int x = numColumns;
+		return x;
 	}
-	public BoardCell getCellAt(int row, int col) {
-		return cells[row][col];
-	}
+	
+	//TODO: Need to make other getters to access cells.
+	
+	/*
 	public RoomCell getRoomCellAt(int i, int j) {
-		return new RoomCell();
+		return cells[]
 	}
-
+*/
 
 }

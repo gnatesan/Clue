@@ -5,8 +5,24 @@ public class RoomCell extends BoardCell {
 	private DoorDirection doorDirection;
 	private char roomInital;
 	
-	public RoomCell(int r, int c, char i) {
+	public RoomCell(int r, int c, char i, char j) {
 		super(r, c);
+		roomInital = i;
+		if (j == 'U'){
+			doorDirection = DoorDirection.UP;
+		}
+		else if (j == 'D'){
+			doorDirection = DoorDirection.UP;
+		}
+		else if (j == 'L'){
+			doorDirection = DoorDirection.UP;
+		}
+		else if (j == 'R'){
+			doorDirection = DoorDirection.UP;
+		}
+		else {
+			doorDirection = DoorDirection.UP;
+		}
 		// TODO Auto-generated constructor stub
 	}
 
@@ -24,8 +40,10 @@ public class RoomCell extends BoardCell {
 	}
 
 	public DoorDirection getDoorDirection() {
-		return DoorDirection.UP;
+		return DoorDirection.;
 	}
+	
+	
 	
 	
 
