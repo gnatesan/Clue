@@ -2,8 +2,8 @@ package GameBoard;
 
 public class WalkwayCell extends BoardCell {
 
-	public WalkwayCell() {
-		super();
+	public WalkwayCell(int r, int c, char i) {
+		super(r, c);
 		// TODO Auto-generated constructor stub
 	}
 	

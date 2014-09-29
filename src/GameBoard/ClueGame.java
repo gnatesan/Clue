@@ -13,6 +13,7 @@ public class ClueGame {
 	public ClueGame(String s1, String s2) {
 		super();
 		rooms = new HashMap<Character, String>();
+		clueBoard = new Board();
 		BoardConfig = s1;
 		BoardRoomConfig = s2;
 				
@@ -22,7 +23,7 @@ public class ClueGame {
 	}
 	public void loadConfigFiles(){
 		try{
-		Board.loadGameBoardConfig(BoardConfig);
+		clueBoard.loadGameBoardConfig(BoardConfig);
 		} catch(FileNotFoundException e){
 			e.getMessage();
 		}

@@ -9,13 +9,13 @@ public class Board {
 	Map<Character, String> rooms;
 	private final int ROWS = 22;
 	private final int COLUMNS = 23;
-	
+
 	public Board(){
 		super();
 		cells = new BoardCell[ROWS][COLUMNS];
 	}
 	public static void loadGameBoardConfig(String BoardConfigFile) throws FileNotFoundException{
-		
+
 		FileReader reader = new FileReader(BoardConfigFile);
 		Scanner in = new Scanner(reader);
 		while (in.hasNextLine()){
@@ -24,14 +24,26 @@ public class Board {
 			int row = 0;
 			int column = 0;
 			for (String s : temp){
-				if (s != "W" || s != "X"){
-				cells[row][column] = new RoomCell(row, column, s.charAt(0));
+				if (!s.isEmpty()){ //Helps parse for unwanted spaces. 
+					System.out.println(s.charAt(0));
+					if (s != "W" || s != "X"){
+
+						cells[row][column] = new RoomCell(row, column, s.charAt(0));
+					}
+
+					else if(s == "W"){
+						cells[row][column] = new WalkwayCell(row, column, s.charAt(0));
+					}
+					column++;
+
 				}
 			}
+			System.out.println('\n'); 
+			row++;
 		}
 	}
 	public static void loadRoomConfig(String BoardRoomConfigFile){
-		
+
 	}
 	public BoardCell getBoardCell(int j, int i){
 		return cells[i][j];
@@ -51,6 +63,6 @@ public class Board {
 	public RoomCell getRoomCellAt(int i, int j) {
 		return new RoomCell();
 	}
-	
+
 
 }
