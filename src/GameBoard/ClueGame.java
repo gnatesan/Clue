@@ -21,20 +21,21 @@ public class ClueGame {
 	public Board getBoard(){
 		return clueBoard;
 	}
-	public void loadConfigFiles(){
-		try{
+	/*
+	public void loadConfigFiles() throws FileNotFoundException, BadConfigFormatException{
 		clueBoard.loadGameBoardConfig(BoardConfig);
-		} catch(FileNotFoundException e){
-			e.getMessage();
-		}
-		try {
-			clueBoard.loadRoomConfig(BoardRoomConfig);
-		} catch (FileNotFoundException e) {
-			e.getMessage();
-		}
+		clueBoard.loadRoomConfig(BoardRoomConfig);
 		
+	}*/
+	public void loadRoomConfig() throws FileNotFoundException, BadConfigFormatException {
+			clueBoard.loadRoomConfig(BoardRoomConfig);
+
 	}
 
+	public void loadBoardConfig() throws FileNotFoundException, BadConfigFormatException{
+		clueBoard.loadGameBoardConfig(BoardConfig);
 	
+	}
+
 
 }

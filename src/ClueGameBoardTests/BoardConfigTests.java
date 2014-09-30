@@ -19,11 +19,12 @@ public class BoardConfigTests {
 		public static final int NUM_ROWS = 22;
 		public static final int NUM_COLUMNS = 23;
 		
-		@BeforeClass
-		public static void setUp() {
+		@Before
+		public void setUp() throws FileNotFoundException, BadConfigFormatException {
 			
-			ClueGame game = new ClueGame("ClueLayout.csv", "ClueLegend.csv");
-			game.loadConfigFiles();
+			ClueGame game = new ClueGame("ClueLayout.csv", "ClueLegend.txt");
+			game.loadRoomConfig();
+			game.loadBoardConfig();
 			board = game.getBoard();
 		}
 		
@@ -89,12 +90,13 @@ public class BoardConfigTests {
 			
 		}
 		
-		//@Test
+		@Test (expected = BadConfigFormatException.class)
 		public void testBadRoom() throws BadConfigFormatException, FileNotFoundException {
 			
 			Board badBoard = new Board();
-			ClueGame badGame = new ClueGame("ClueLayoutBadRoom.csv", "Legend.csv");
-			badGame.loadConfigFiles();
+			ClueGame badGame = new ClueGame("ClueLayoutBadRoom.csv", "ClueLegend.txt");
+			badGame.loadRoomConfig();
+			badGame.loadBoardConfig();
 			board = badGame.getBoard();
 			
 		}

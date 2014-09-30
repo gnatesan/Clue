@@ -9,6 +9,7 @@ import java.io.FileNotFoundException;
 import java.util.Map;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -22,10 +23,11 @@ public class ProfTest {
 	public static final int NUM_ROWS = 22;
 	public static final int NUM_COLUMNS = 23;
 	
-	@BeforeClass
-	public static void setUp() throws FileNotFoundException{
+	@Before
+	public void setUp() throws FileNotFoundException{
 		ClueGame game = new ClueGame("ClueLayout 2.csv", "ClueLegend 2.txt");
-		game.loadConfigFiles();
+		game.loadRoomConfig();
+		game.loadBoardConfig();
 		board = game.getBoard();
 	}
 	@Test
@@ -103,7 +105,6 @@ public class ProfTest {
 		assertEquals('K', board.getRoomCellAt(21, 0).getInitial());
 	}
 	
-	// Test that an exception is thrown for a bad config file
 	@Test (expected = BadConfigFormatException.class)
 	public void testBadColumns() throws BadConfigFormatException, FileNotFoundException {
 		// overloaded Game ctor takes config file names
@@ -111,20 +112,23 @@ public class ProfTest {
 		// You may change these calls if needed to match your function names
 		// My loadConfigFiles has a try/catch, so I can't call it directly to
 		// see test throwing the BadConfigFormatException
-		game.loadConfigFiles();
+		game.loadRoomConfig();
+		game.loadBoardConfig();
 	}
 	// Test that an exception is thrown for a bad config file
 	@Test (expected = BadConfigFormatException.class)
 	public void testBadRoom() throws BadConfigFormatException, FileNotFoundException {
 		// overloaded Board ctor takes config file name
 		ClueGame game = new ClueGame("ClueLayoutBadRoom.csv", "ClueLegend.txt");
-		game.loadConfigFiles();
+		game.loadRoomConfig();
+		game.loadBoardConfig();
 	}
 	// Test that an exception is thrown for a bad config file
 	@Test (expected = BadConfigFormatException.class)
 	public void testBadRoomFormat() throws BadConfigFormatException, FileNotFoundException {
 		// overloaded Board ctor takes config file name
 		ClueGame game = new ClueGame("ClueLayout.csv", "ClueLegendBadFormat.txt");
-		game.loadConfigFiles();
+		game.loadRoomConfig();
+		game.loadBoardConfig();
 	}
 }

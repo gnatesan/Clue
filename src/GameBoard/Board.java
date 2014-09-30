@@ -17,7 +17,7 @@ public class Board {
 		cells = new BoardCell[ROWS][COLUMNS];
 		rooms = new HashMap<Character, String>();
 	}
-	public void loadGameBoardConfig(String BoardConfigFile) throws FileNotFoundException{
+	public void loadGameBoardConfig(String BoardConfigFile) throws FileNotFoundException, BadConfigFormatException{
 
 		FileReader reader = new FileReader(BoardConfigFile);
 		Scanner in = new Scanner(reader);
@@ -26,10 +26,16 @@ public class Board {
 		while (in.hasNextLine()){
 			String line = in.nextLine();
 			List<String> temp = Arrays.asList(line.split(","));
+			if (numColumns != 0 && numColumns != temp.size() ){
+				throw new BadConfigFormatException();
+			}
 			int numColumnsTemp = 0;
 			for (String s : temp){
-
+				
 				if (!s.isEmpty()){ //Helps parse for unwanted spaces. 
+					if (!(rooms.containsKey(s.charAt(0))))
+						throw new BadConfigFormatException();
+					
 					if (s != "W" || s != "X"){
 
 						if (s.length() == 1){						
@@ -61,10 +67,11 @@ public class Board {
 		Scanner in2 = new Scanner(reader2);
 		while (in2.hasNextLine()){
 			String line = in2.nextLine();
-			System.out.println(line.charAt(0));
-
+			List<String> temp = Arrays.asList(line.split(","));
+			if (temp.size() != 2){
+				throw new BadConfigFormatException();
+			}
 			rooms.put(line.charAt(0), line.substring(3));
-			System.out.println(line.substring(3));
 
 		}
 

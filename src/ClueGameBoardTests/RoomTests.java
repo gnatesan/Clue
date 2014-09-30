@@ -2,11 +2,13 @@ package ClueGameBoardTests;
 
 import static org.junit.Assert.*;
 
+import java.io.FileNotFoundException;
 import java.util.Map;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import GameBoard.BadConfigFormatException;
 import GameBoard.Board;
 import GameBoard.ClueGame;
 
@@ -17,9 +19,10 @@ public class RoomTests {
 	private static Board board;
 	
 	@BeforeClass
-	public static void setUp() {
+	public static void setUp() throws FileNotFoundException, BadConfigFormatException{
 		ClueGame game = new ClueGame("ClueLayout.csv", "ClueLegend.txt");
-		game.loadConfigFiles();
+		game.loadRoomConfig();
+		game.loadBoardConfig();
 		board = game.getBoard();
 	}
 	
