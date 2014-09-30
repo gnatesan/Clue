@@ -40,7 +40,7 @@ public class RoomCell extends BoardCell {
 	}
 
 	public DoorDirection getDoorDirection() {
-		return DoorDirection.;
+		return doorDirection;
 	}
 	
 	

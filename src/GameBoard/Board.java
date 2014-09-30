@@ -11,6 +11,8 @@ public class Board {
 	private final int COLUMNS = 23;
 	private static int numRows = 0;
 	private static int numColumns = 0;
+	private static int dontTouchTheseRows = 0;
+	private static int dontTouchTheseColumns = 0;
 
 	public Board(){
 		super();
@@ -23,16 +25,24 @@ public class Board {
 		numRows = 0;
 		
 		while (in.hasNextLine()){
+			if (numRows > dontTouchTheseRows){
+					dontTouchTheseRows = numRows;
+				}
 			String line = in.nextLine();
 			List<String> temp = Arrays.asList(line.split(","));
 			numColumns = 0;
 			for (String s : temp){
+				if (numColumns > dontTouchTheseColumns){
+					dontTouchTheseColumns = numColumns;
+				}
 				if (!s.isEmpty()){ //Helps parse for unwanted spaces. 
-					System.out.println(s.charAt(0));
 					if (s != "W" || s != "X"){
-						
-						cells[numRows][numColumns] = new RoomCell(numRows, numColumns, s.charAt(0));
-						if =
+						if (s.length() == 1){						
+						cells[numRows][numColumns] = new RoomCell(numRows, numColumns, s.charAt(0), 'N');
+						}
+						else if (s.length() == 2){
+							cells[numRows][numColumns] = new RoomCell(numRows, numColumns, s.charAt(0), s.charAt(1));
+						}
 					}
 
 					else if(s == "W"){
@@ -42,7 +52,6 @@ public class Board {
 
 				}
 			}
-			System.out.println('\n'); 
 			numRows++;
 		}
 		
@@ -57,12 +66,12 @@ public class Board {
 		return rooms;
 	}
 	public int getNumRows() {
-		int x = numRows;
-		return x;
+		System.out.println(dontTouchTheseRows);
+		return dontTouchTheseRows;
 	}
 	public int getNumColumns() {
-		int x = numColumns;
-		return x;
+		System.out.println(dontTouchTheseColumns);
+		return dontTouchTheseColumns;
 	}
 	
 	//TODO: Need to make other getters to access cells.
