@@ -21,12 +21,13 @@ public class ClueGame {
 	public Board getBoard(){
 		return clueBoard;
 	}
-	/*
+	
 	public void loadConfigFiles() throws FileNotFoundException, BadConfigFormatException{
-		clueBoard.loadGameBoardConfig(BoardConfig);
 		clueBoard.loadRoomConfig(BoardRoomConfig);
+		clueBoard.loadGameBoardConfig(BoardConfig);
+		clueBoard.calcAdjacencies();
 		
-	}*/
+	}
 	public void loadRoomConfig() throws FileNotFoundException, BadConfigFormatException {
 			clueBoard.loadRoomConfig(BoardRoomConfig);
 
