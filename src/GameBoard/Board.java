@@ -140,8 +140,8 @@ public class Board {
 		}
 	}
 
-	public LinkedList<BoardCell> getAdjList(BoardCell cell){
-		return adjacencyLists.get(cell);
+	public LinkedList<BoardCell> getAdjList(int i, int j){
+		return adjacencyLists.get(cells[i][j]);
 	}
 
 	public Set<BoardCell> getTargets(BoardCell cell, int i){

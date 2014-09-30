@@ -18,6 +18,15 @@ public class ClueGame {
 		BoardRoomConfig = s2;
 				
 	}
+	public ClueGame() {
+		super();
+		rooms = new HashMap<Character, String>();
+		clueBoard = new Board();
+		BoardConfig = "ClueLayout 2.csv";
+		BoardRoomConfig = "ClueLegend 2.txt";
+				
+	}
+	
 	public Board getBoard(){
 		return clueBoard;
 	}
