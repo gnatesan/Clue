@@ -48,7 +48,7 @@ public class RoomCell extends BoardCell {
 	public void draw() {
 		
 	}
-	public char getRoomInitial() {
+	public char getInitial() {
 		return roomInitial;
 	}
 

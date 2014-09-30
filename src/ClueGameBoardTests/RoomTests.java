@@ -42,7 +42,6 @@ public class RoomTests {
 		assertEquals("Ballroom", rooms.get('B'));
 		assertEquals("Billiard room", rooms.get('R'));
 		assertEquals("Dining room", rooms.get('D'));
-		assertEquals("Walkway", rooms.get('W'));
 		assertEquals("Kitchen", rooms.get('K'));
 		assertEquals("Lounge", rooms.get('O'));
 		assertEquals("Library", rooms.get('L'));

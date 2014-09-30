@@ -77,15 +77,15 @@ public class BoardConfigTests {
 		
 		@Test
 		public void testRoomLegend() {
-			assertEquals('C', board.getRoomCellAt(21, 0).getRoomInitial());
-			assertEquals('R', board.getRoomCellAt(17, 4).getRoomInitial());
-			assertEquals('B', board.getRoomCellAt(19, 12).getRoomInitial());
-			assertEquals('O', board.getRoomCellAt(1, 20).getRoomInitial());
-			assertEquals('K', board.getRoomCellAt(20, 20).getRoomInitial());
-			assertEquals('L', board.getRoomCellAt(10, 4).getRoomInitial());
-			assertEquals('W', board.getRoomCellAt(12, 16).getRoomInitial());
-			assertEquals('H', board.getRoomCellAt(3, 11).getRoomInitial());
-			assertEquals('D', board.getRoomCellAt(11, 20).getRoomInitial());
+			assertEquals('C', board.getRoomCellAt(21, 0).getInitial());
+			assertEquals('R', board.getRoomCellAt(17, 4).getInitial());
+			assertEquals('B', board.getRoomCellAt(19, 12).getInitial());
+			assertEquals('O', board.getRoomCellAt(1, 20).getInitial());
+			assertEquals('K', board.getRoomCellAt(20, 20).getInitial());
+			assertEquals('L', board.getRoomCellAt(10, 4).getInitial());
+			assertEquals('W', board.getRoomCellAt(12, 16).getInitial());
+			assertEquals('H', board.getRoomCellAt(3, 11).getInitial());
+			assertEquals('D', board.getRoomCellAt(11, 20).getInitial());
 			
 		}
 		
