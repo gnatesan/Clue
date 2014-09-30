@@ -15,7 +15,7 @@ import GameBoard.*;
 public class BoardConfigTests {
 
 		private static Board board;
-		public static final int NUM_ROOMS = 9;
+		public static final int NUM_ROOMS = 11;
 		public static final int NUM_ROWS = 22;
 		public static final int NUM_COLUMNS = 23;
 		

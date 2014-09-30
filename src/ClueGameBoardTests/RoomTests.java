@@ -23,7 +23,7 @@ public class RoomTests {
 		board = game.getBoard();
 	}
 	
-	public static final int NUM_ROOMS = 9;
+	public static final int NUM_ROOMS = 11;
 	public static final int NUM_ROWS = 22;
 	public static final int NUM_COLUMNS = 23;
 	

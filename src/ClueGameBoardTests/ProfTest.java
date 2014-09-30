@@ -24,7 +24,7 @@ public class ProfTest {
 	
 	@BeforeClass
 	public static void setUp() throws FileNotFoundException{
-		ClueGame game = new ClueGame("ClueLayout.csv", "ClueLegend.txt");
+		ClueGame game = new ClueGame("ClueLayout 2.csv", "ClueLegend 2.txt");
 		game.loadConfigFiles();
 		board = game.getBoard();
 	}

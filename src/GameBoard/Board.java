@@ -22,22 +22,22 @@ public class Board {
 		FileReader reader = new FileReader(BoardConfigFile);
 		Scanner in = new Scanner(reader);
 		int numRowsTemp = 0;
-		
+
 		while (in.hasNextLine()){
 			String line = in.nextLine();
 			List<String> temp = Arrays.asList(line.split(","));
 			int numColumnsTemp = 0;
 			for (String s : temp){
-			
+
 				if (!s.isEmpty()){ //Helps parse for unwanted spaces. 
 					if (s != "W" || s != "X"){
-										
+
 						if (s.length() == 1){						
-						cells[numRowsTemp][numColumnsTemp] = new RoomCell(numRowsTemp, numColumnsTemp, s.charAt(0), 'N');
+							cells[numRowsTemp][numColumnsTemp] = new RoomCell(numRowsTemp, numColumnsTemp, s.charAt(0), 'N');
 						}
 						else if (s.length() == 2){
 							cells[numRowsTemp][numColumnsTemp] = new RoomCell(numRowsTemp, numColumnsTemp, s.charAt(0), s.charAt(1));
-							
+
 						}
 					}
 
@@ -52,20 +52,20 @@ public class Board {
 				setNumColumns(numColumnsTemp);
 			}
 			numRowsTemp++;
-			}
-		setNumRows(numRowsTemp);
 		}
-	
+		setNumRows(numRowsTemp);
+	}
+
 	public void loadRoomConfig(String BoardRoomConfigFile) throws FileNotFoundException{
 		FileReader reader2 = new FileReader(BoardRoomConfigFile);
 		Scanner in2 = new Scanner(reader2);
 		while (in2.hasNextLine()){
 			String line = in2.nextLine();
 			System.out.println(line.charAt(0));
-			if (line.charAt(0) != 'X' && line.charAt(0) != 'W'){
-				rooms.put(line.charAt(0), line.substring(3));
-				System.out.println(line.substring(3));
-			}
+
+			rooms.put(line.charAt(0), line.substring(3));
+			System.out.println(line.substring(3));
+
 		}
 
 	}		
@@ -91,6 +91,6 @@ public class Board {
 		return (RoomCell) cells[i][j];
 	}
 
-	
+
 
 }
