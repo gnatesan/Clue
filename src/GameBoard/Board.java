@@ -4,6 +4,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.*;
 
+import GameBoard.RoomCell.DoorDirection;
+
 public class Board {
 	private static BoardCell[][] cells;
 	Map<Character, String> rooms;
@@ -36,11 +38,11 @@ public class Board {
 			}
 			int numColumnsTemp = 0;
 			for (String s : temp){
-				
+
 				if (!s.isEmpty()){ //Helps parse for unwanted spaces. 
 					if (!(rooms.containsKey(s.charAt(0))))
 						throw new BadConfigFormatException();
-					
+
 					if (s != "W" || s != "X"){
 
 						if (s.length() == 1){						
@@ -81,28 +83,48 @@ public class Board {
 		}
 
 	}
-	
+
 	public void calcAdjacencies(){
+
 		for(int i=0; i < numRows; i++){
 			for(int j=0; j < numColumns; j++){
-				cellAdjList = new LinkedList<BoardCell>();
-				if (i-1 >= 0){
-					cellAdjList.add(cells[i-1][j]);
+				if(cells[i][j].isWalkway()){
+					cellAdjList = new LinkedList<BoardCell>();
+					if (i-1 >= 0 && (cells[i-1][j].isWalkway() || (cells[i-1][j].isDoorway() && (((RoomCell) cells[i-1][j]).getDoorDirection() == DoorDirection.DOWN)))){
+						cellAdjList.add(cells[i-1][j]);
+					}
+					if (i+1 < numRows && (cells[i+1][j].isWalkway() || (cells[i+1][j].isDoorway() && (((RoomCell) cells[i+1][j]).getDoorDirection() == DoorDirection.UP)))){
+						cellAdjList.add(cells[i+1][j]);
+					}
+					if (j-1 >= 0 && (cells[i][j-1].isWalkway() || (cells[i][j-1].isDoorway() && (((RoomCell) cells[i][j-1]).getDoorDirection() == DoorDirection.RIGHT)))){
+						cellAdjList.add(cells[i][j-1]);
+					}
+					if (j+1 < numColumns && (cells[i][j+1].isWalkway() || (cells[i][j+1].isDoorway() && (((RoomCell) cells[i][j+1]).getDoorDirection() == DoorDirection.LEFT)))){
+						cellAdjList.add(cells[i][j+1]);
+					}
+					adjacencyLists.put(cells[i][j], cellAdjList);
 				}
-				if (i+1 < numRows){
-					cellAdjList.add(cells[i+1][j]);
+				
+				else if(cells[i][j].isDoorway()){
+					if (((RoomCell) cells[i][j]).getDoorDirection() == DoorDirection.DOWN){
+						cellAdjList.add(cells[i+1][j]);
+					}
+					else if (((RoomCell) cells[i][j]).getDoorDirection() == DoorDirection.UP){
+						cellAdjList.add(cells[i-1][j]);
+					}
+					else if (((RoomCell) cells[i][j]).getDoorDirection() == DoorDirection.RIGHT){
+						cellAdjList.add(cells[i][j+1]);
+					}
+					else if (((RoomCell) cells[i][j]).getDoorDirection() == DoorDirection.LEFT){
+						cellAdjList.add(cells[i][j-1]);
+					}
+					adjacencyLists.put(cells[i][j], cellAdjList);
 				}
-				if (j-1 >= 0){
-					cellAdjList.add(cells[i][j-1]);
-				}
-				if (j+1 < numColumns){
-					cellAdjList.add(cells[i][j+1]);
-				}
-				adjacencyLists.put(cells[i][j], cellAdjList);
+				
 			}
 		}
 	}
-	
+
 	//DON'T MESS WITH THIS YET
 	public void calcTargets(BoardCell thisCell, int numSteps){
 		for (int i = 0; i < adjacencyLists.get(thisCell).size(); i++){
@@ -117,11 +139,11 @@ public class Board {
 			}			
 		}
 	}
-	
+
 	public LinkedList<BoardCell> getAdjList(BoardCell cell){
 		return adjacencyLists.get(cell);
 	}
-	
+
 	public Set<BoardCell> getTargets(BoardCell cell, int i){
 		visited = new HashSet<BoardCell>();
 		targets = new HashSet<BoardCell>();
@@ -130,8 +152,8 @@ public class Board {
 		targets.remove(cell);
 		return targets;
 	}
-	
-	
+
+
 	private void setNumColumns(int numColumnsTemp) {
 		numColumns = numColumnsTemp;		
 	}
@@ -155,6 +177,6 @@ public class Board {
 	}
 
 
-//Test Comment
-	
+	//Test Comment
+
 }
