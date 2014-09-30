@@ -4,6 +4,8 @@ public abstract class BoardCell {
 	private int row;
 	private int column;
 	
+	protected boolean doorway = false;
+	
 	public BoardCell(int row, int column) {
 		super();
 		this.row = row;
@@ -13,7 +15,7 @@ public abstract class BoardCell {
 		return false;
 	}
 	public boolean isDoorway(){
-		return false;
+		return doorway;
 	}
 	public boolean isRoom(){
 		return false;

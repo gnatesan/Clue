@@ -28,20 +28,28 @@ public class Board {
 			if (numRows > dontTouchTheseRows){
 					dontTouchTheseRows = numRows;
 				}
+			System.out.println(numRows);
+			System.out.println(dontTouchTheseRows);
 			String line = in.nextLine();
 			List<String> temp = Arrays.asList(line.split(","));
 			numColumns = 0;
 			for (String s : temp){
-				if (numColumns > dontTouchTheseColumns){
-					dontTouchTheseColumns = numColumns;
-				}
+			
 				if (!s.isEmpty()){ //Helps parse for unwanted spaces. 
 					if (s != "W" || s != "X"){
+						
+						if (numColumns > dontTouchTheseColumns){
+							dontTouchTheseColumns = numColumns;
+						}
+						
 						if (s.length() == 1){						
 						cells[numRows][numColumns] = new RoomCell(numRows, numColumns, s.charAt(0), 'N');
+						System.out.println(s.charAt(0));
 						}
 						else if (s.length() == 2){
 							cells[numRows][numColumns] = new RoomCell(numRows, numColumns, s.charAt(0), s.charAt(1));
+							System.out.println("Door going");
+							System.out.println(s.charAt(1));
 						}
 					}
 
@@ -59,27 +67,28 @@ public class Board {
 	public static void loadRoomConfig(String BoardRoomConfigFile){
 
 	}
-	public BoardCell getBoardCell(int i, int j){
+	public BoardCell getCellAt(int i, int j){
 		return cells[i][j];
 	}
 	public Map<Character, String> getRooms() {
 		return rooms;
 	}
 	public int getNumRows() {
-		System.out.println(dontTouchTheseRows);
+		//System.out.println(dontTouchTheseRows);
 		return dontTouchTheseRows;
 	}
 	public int getNumColumns() {
-		System.out.println(dontTouchTheseColumns);
+		//System.out.println(dontTouchTheseColumns);
 		return dontTouchTheseColumns;
 	}
 	
 	//TODO: Need to make other getters to access cells.
 	
-	/*
 	public RoomCell getRoomCellAt(int i, int j) {
-		return cells[]
+		//System.out.println((RoomCell) cells[i][j]);
+		return (RoomCell) cells[i][j];
 	}
-*/
+
+	
 
 }

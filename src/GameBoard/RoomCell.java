@@ -3,27 +3,38 @@ package GameBoard;
 public class RoomCell extends BoardCell {
 	public enum DoorDirection{UP, DOWN, LEFT, RIGHT, NONE};
 	private DoorDirection doorDirection;
-	private char roomInital;
+	private char roomInitial;
 	
 	public RoomCell(int r, int c, char i, char j) {
+		
 		super(r, c);
-		roomInital = i;
-		if (j == 'U'){
-			doorDirection = DoorDirection.UP;
+		roomInitial = i;
+		super.doorway = true;
+		System.out.println(roomInitial);
+		System.out.println("blargh" + j);
+		
+		switch (j){
+			case 'U':
+				doorDirection = DoorDirection.UP;
+				break;
+				
+			case 'D':
+				doorDirection = DoorDirection.DOWN;
+				break;
+				
+			case 'L':
+				doorDirection = DoorDirection.LEFT;
+				break;
+				
+			case 'R':
+				doorDirection = DoorDirection.RIGHT;
+				break;
+				
+			default:
+				doorDirection = DoorDirection.NONE;
+				break;
 		}
-		else if (j == 'D'){
-			doorDirection = DoorDirection.UP;
-		}
-		else if (j == 'L'){
-			doorDirection = DoorDirection.UP;
-		}
-		else if (j == 'R'){
-			doorDirection = DoorDirection.UP;
-		}
-		else {
-			doorDirection = DoorDirection.UP;
-		}
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	@Override
@@ -31,12 +42,13 @@ public class RoomCell extends BoardCell {
 		return true;
 	}
 	
+	
 	@Override
 	public void draw() {
 		
 	}
 	public char getRoomInitial() {
-		return roomInital;
+		return roomInitial;
 	}
 
 	public DoorDirection getDoorDirection() {
