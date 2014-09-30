@@ -9,63 +9,71 @@ public class Board {
 	Map<Character, String> rooms;
 	private final int ROWS = 22;
 	private final int COLUMNS = 23;
-	private static int numRows = 0;
-	private static int numColumns = 0;
-	private static int dontTouchTheseRows = 0;
-	private static int dontTouchTheseColumns = 0;
+	private int numRows = 0;
+	private int numColumns = 0;
 
 	public Board(){
 		super();
 		cells = new BoardCell[ROWS][COLUMNS];
+		rooms = new HashMap<Character, String>();
 	}
-	public static void loadGameBoardConfig(String BoardConfigFile) throws FileNotFoundException{
+	public void loadGameBoardConfig(String BoardConfigFile) throws FileNotFoundException{
 
 		FileReader reader = new FileReader(BoardConfigFile);
 		Scanner in = new Scanner(reader);
-		numRows = 0;
+		int numRowsTemp = 0;
 		
 		while (in.hasNextLine()){
-			if (numRows > dontTouchTheseRows){
-					dontTouchTheseRows = numRows;
-				}
-			System.out.println(numRows);
-			System.out.println(dontTouchTheseRows);
 			String line = in.nextLine();
 			List<String> temp = Arrays.asList(line.split(","));
-			numColumns = 0;
+			int numColumnsTemp = 0;
 			for (String s : temp){
 			
 				if (!s.isEmpty()){ //Helps parse for unwanted spaces. 
 					if (s != "W" || s != "X"){
-						
-						if (numColumns > dontTouchTheseColumns){
-							dontTouchTheseColumns = numColumns;
-						}
-						
+										
 						if (s.length() == 1){						
-						cells[numRows][numColumns] = new RoomCell(numRows, numColumns, s.charAt(0), 'N');
-						System.out.println(s.charAt(0));
+						cells[numRowsTemp][numColumnsTemp] = new RoomCell(numRowsTemp, numColumnsTemp, s.charAt(0), 'N');
 						}
 						else if (s.length() == 2){
-							cells[numRows][numColumns] = new RoomCell(numRows, numColumns, s.charAt(0), s.charAt(1));
-							System.out.println("Door going");
-							System.out.println(s.charAt(1));
+							cells[numRowsTemp][numColumnsTemp] = new RoomCell(numRowsTemp, numColumnsTemp, s.charAt(0), s.charAt(1));
+							
 						}
 					}
 
 					else if(s == "W"){
-						cells[numRows][numColumns] = new WalkwayCell(numRows, numColumns, s.charAt(0));
+						cells[numRowsTemp][numColumnsTemp] = new WalkwayCell(numRowsTemp, numColumnsTemp, s.charAt(0));
 					}
-					numColumns++;
+					numColumnsTemp++;
 
 				}
 			}
-			numRows++;
+			if (numRowsTemp == 0){
+				setNumColumns(numColumnsTemp);
+			}
+			numRowsTemp++;
+			}
+		setNumRows(numRowsTemp);
 		}
-		
-	}
-	public static void loadRoomConfig(String BoardRoomConfigFile){
+	
+	public void loadRoomConfig(String BoardRoomConfigFile) throws FileNotFoundException{
+		FileReader reader2 = new FileReader(BoardRoomConfigFile);
+		Scanner in2 = new Scanner(reader2);
+		while (in2.hasNextLine()){
+			String line = in2.nextLine();
+			System.out.println(line.charAt(0));
+			if (line.charAt(0) != 'X' && line.charAt(0) != 'W'){
+				rooms.put(line.charAt(0), line.substring(3));
+				System.out.println(line.substring(3));
+			}
+		}
 
+	}		
+	private void setNumColumns(int numColumnsTemp) {
+		numColumns = numColumnsTemp;		
+	}
+	private void setNumRows(int numRowsTemp) {
+		numRows = numRowsTemp;		
 	}
 	public BoardCell getCellAt(int i, int j){
 		return cells[i][j];
@@ -74,18 +82,12 @@ public class Board {
 		return rooms;
 	}
 	public int getNumRows() {
-		//System.out.println(dontTouchTheseRows);
-		return dontTouchTheseRows;
+		return numRows;
 	}
 	public int getNumColumns() {
-		//System.out.println(dontTouchTheseColumns);
-		return dontTouchTheseColumns;
-	}
-	
-	//TODO: Need to make other getters to access cells.
-	
+		return numColumns;
+	}	
 	public RoomCell getRoomCellAt(int i, int j) {
-		//System.out.println((RoomCell) cells[i][j]);
 		return (RoomCell) cells[i][j];
 	}
 

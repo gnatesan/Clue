@@ -56,16 +56,16 @@ public class BoardConfigTests {
 			
 			RoomCell room = board.getRoomCellAt(4, 3);
 			assertTrue(room.isDoorway());
-			assertEquals(RoomCell.DoorDirection.RIGHT, room.getDoorDirection());
+			assertEquals(RoomCell.DoorDirection.DOWN, room.getDoorDirection());
 			room = board.getRoomCellAt(2, 8);
 			assertTrue(room.isDoorway());
-			assertEquals(RoomCell.DoorDirection.DOWN, room.getDoorDirection());
+			assertEquals(RoomCell.DoorDirection.RIGHT, room.getDoorDirection());
 			room = board.getRoomCellAt(15, 18);
 			assertTrue(room.isDoorway());
-			assertEquals(RoomCell.DoorDirection.LEFT, room.getDoorDirection());
-			room = board.getRoomCellAt(19, 11);
+			assertEquals(RoomCell.DoorDirection.DOWN, room.getDoorDirection());
+			room = board.getRoomCellAt(19, 10);
 			assertTrue(room.isDoorway());
-			assertEquals(RoomCell.DoorDirection.UP, room.getDoorDirection());
+			assertEquals(RoomCell.DoorDirection.LEFT, room.getDoorDirection());
 			
 			// Test that room pieces that aren't doors know it
 			room = board.getRoomCellAt(4, 20);

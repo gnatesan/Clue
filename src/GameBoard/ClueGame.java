@@ -27,7 +27,11 @@ public class ClueGame {
 		} catch(FileNotFoundException e){
 			e.getMessage();
 		}
-		Board.loadRoomConfig(BoardRoomConfig);
+		try {
+			clueBoard.loadRoomConfig(BoardRoomConfig);
+		} catch (FileNotFoundException e) {
+			e.getMessage();
+		}
 		
 	}
 
