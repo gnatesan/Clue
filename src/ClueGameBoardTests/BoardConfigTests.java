@@ -84,7 +84,7 @@ public class BoardConfigTests {
 			assertEquals('O', board.getRoomCellAt(1, 20).getInitial());
 			assertEquals('K', board.getRoomCellAt(20, 20).getInitial());
 			assertEquals('L', board.getRoomCellAt(10, 4).getInitial());
-			assertEquals('W', board.getRoomCellAt(12, 16).getInitial());
+			//assertEquals('W', board.getRoomCellAt(12, 16).getInitial());
 			assertEquals('H', board.getRoomCellAt(3, 11).getInitial());
 			assertEquals('D', board.getRoomCellAt(11, 20).getInitial());
 			

@@ -43,7 +43,11 @@ public class Board {
 					if (!(rooms.containsKey(s.charAt(0))))
 						throw new BadConfigFormatException();
 
-					if (s != "W" || s != "X"){
+					if(s.charAt(0) == 'W'){
+						cells[numRowsTemp][numColumnsTemp] = new WalkwayCell(numRowsTemp, numColumnsTemp, s.charAt(0));
+					}
+
+					else if (s != "W" && s != "X"){
 
 						if (s.length() == 1){						
 							cells[numRowsTemp][numColumnsTemp] = new RoomCell(numRowsTemp, numColumnsTemp, s.charAt(0), 'N');
@@ -54,9 +58,7 @@ public class Board {
 						}
 					}
 
-					else if(s == "W"){
-						cells[numRowsTemp][numColumnsTemp] = new WalkwayCell(numRowsTemp, numColumnsTemp, s.charAt(0));
-					}
+
 					numColumnsTemp++;
 
 				}
@@ -85,30 +87,39 @@ public class Board {
 	}
 
 	public void calcAdjacencies(){
-		
+
 		for(int i=0; i < numRows; i++){
 			for(int j=0; j < numColumns; j++){
-				
-				
+
+
 				cellAdjList = new LinkedList<BoardCell>();
+
+				if (i == 0 && j == 4){
+					System.out.println(cells[i][j].isWalkway());
+					System.out.println(cells[i][j].isDoorway());
+					System.out.println(cells[i][j].isRoom());
+					if((cells[i][j].isRoom()))
+						System.out.println(((RoomCell) cells[i][j]).getInitial());
+				}
+
 				if(cells[i][j].isWalkway()){
-					
+
 					if (i-1 >= 0 && (cells[i-1][j].isWalkway() || (cells[i-1][j].isDoorway() && (((RoomCell) cells[i-1][j]).getDoorDirection() == DoorDirection.DOWN)))){
 						cellAdjList.add(cells[i-1][j]);
 					}
-					if (i+1 < ROWS && (cells[i+1][j].isWalkway() || (cells[i+1][j].isDoorway() && (((RoomCell) cells[i+1][j]).getDoorDirection() == DoorDirection.UP)))){
+					if (i+1 < numRows && (cells[i+1][j].isWalkway() || (cells[i+1][j].isDoorway() && (((RoomCell) cells[i+1][j]).getDoorDirection() == DoorDirection.UP)))){
 						cellAdjList.add(cells[i+1][j]);
 					}
 					if (j-1 >= 0 && (cells[i][j-1].isWalkway() || (cells[i][j-1].isDoorway() && (((RoomCell) cells[i][j-1]).getDoorDirection() == DoorDirection.RIGHT)))){
 						cellAdjList.add(cells[i][j-1]);
 					}
-					if (j+1 < COLUMNS && (cells[i][j+1].isWalkway() || (cells[i][j+1].isDoorway() && (((RoomCell) cells[i][j+1]).getDoorDirection() == DoorDirection.LEFT)))){
+					if (j+1 < numColumns && (cells[i][j+1].isWalkway() || (cells[i][j+1].isDoorway() && (((RoomCell) cells[i][j+1]).getDoorDirection() == DoorDirection.LEFT)))){
 						System.out.println("Trig");
 						cellAdjList.add(cells[i][j+1]);
 					}
-					
+
 				}
-				
+
 				else if(cells[i][j].isDoorway()){
 					if (((RoomCell) cells[i][j]).getDoorDirection() == DoorDirection.DOWN){
 						cellAdjList.add(cells[i+1][j]);
@@ -122,10 +133,13 @@ public class Board {
 					else if (((RoomCell) cells[i][j]).getDoorDirection() == DoorDirection.LEFT){
 						cellAdjList.add(cells[i][j-1]);
 					}
-					
+
 				}
+
 				adjacencyLists.put(cells[i][j], cellAdjList);
-				
+
+
+
 			}
 		}
 	}
