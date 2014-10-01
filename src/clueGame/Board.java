@@ -149,7 +149,7 @@ public class Board {
 	}
 
 	//DON'T MESS WITH THIS YET
-	public void calcTargets(BoardCell thisCell, int numSteps){
+	public void calcTargets(int i, int j, int numSteps){
 		for (int i = 0; i < adjacencyLists.get(thisCell).size(); i++){
 			visited.add(adjacencyLists.get(thisCell).get(i));
 			if (numSteps == 1 ){
@@ -198,4 +198,5 @@ public class Board {
 	public RoomCell getRoomCellAt(int i, int j) {
 		return (RoomCell) cells[i][j];
 	}
+
 }
