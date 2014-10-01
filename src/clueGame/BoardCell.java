@@ -21,6 +21,17 @@ public abstract class BoardCell {
 		return false;
 	}
 	
+	public int getRow(){
+		int x = row;
+		return x;
+		
+	}
+	
+	public int getColumn(){
+		int x = column;
+		return x;
+	}
+	
 	 //Add this later:
 	 public abstract void draw();
 	 

@@ -27,6 +27,8 @@ public class Board {
 		BoardConfig = boardConfig;
 		BoardRoomConfig = boardRoomConfig;
 		adjacencyLists = new HashMap<BoardCell, LinkedList<BoardCell>>();
+		targets = new HashSet<BoardCell>();
+		visited = new HashSet<BoardCell>();
 	}
 	public void loadBoardConfig() throws FileNotFoundException, BadConfigFormatException{
 
@@ -91,7 +93,7 @@ public class Board {
 	}
 
 	public void calcAdjacencies(){
-
+		/*
 		for(int i=0; i < numRows; i++){
 			for(int j=0; j < numColumns; j++){
 
@@ -146,33 +148,34 @@ public class Board {
 
 			}
 		}
+		*/
 	}
 
 	//DON'T MESS WITH THIS YET
 	public void calcTargets(int i, int j, int numSteps){
-		for (int i = 0; i < adjacencyLists.get(thisCell).size(); i++){
-			visited.add(adjacencyLists.get(thisCell).get(i));
+		/*
+		for (int x = 0; x < adjacencyLists.get(cells[i][j]).size(); x++){
+			visited.add(adjacencyLists.get(cells[i][j]).get(x));
 			if (numSteps == 1 ){
-				targets.add(adjacencyLists.get(thisCell).get(i));
+				targets.add(adjacencyLists.get(cells[i][j]).get(x));
+				System.out.println(i);
+				System.out.println(j);
+				System.out.println(adjacencyLists.get(cells[i][j]).get(x).getRow());
 			}
 
 			else {	
-				calcTargets(adjacencyLists.get(thisCell).get(i), numSteps-1);
-				visited.remove(adjacencyLists.get(thisCell).get(i));
+				calcTargets(adjacencyLists.get(cells[i][j]).get(x).getRow(), adjacencyLists.get(cells[i][j]).get(x).getColumn(), numSteps-1);
+				visited.remove(adjacencyLists.get(cells[i][j]).get(x));
 			}			
-		}
+		}*/
 	}
 
 	public LinkedList<BoardCell> getAdjList(int i, int j){
 		return adjacencyLists.get(cells[i][j]);
 	}
 
-	public Set<BoardCell> getTargets(BoardCell cell, int i){
-		visited = new HashSet<BoardCell>();
-		targets = new HashSet<BoardCell>();
-		visited.add(cell);
-		calcTargets(cell, i);
-		targets.remove(cell);
+	public Set<BoardCell> getTargets(){
+		
 		return targets;
 	}
 
