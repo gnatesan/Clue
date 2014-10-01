@@ -1,13 +1,13 @@
-package GameBoard;
+package clueGame;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.*;
 
-import GameBoard.RoomCell.DoorDirection;
+import clueGame.RoomCell.DoorDirection;
 
 public class Board {
-	private static BoardCell[][] cells;
+	private BoardCell[][] cells;
 	Map<Character, String> rooms;
 	private final int ROWS = 22;
 	private final int COLUMNS = 23;
@@ -17,16 +17,20 @@ public class Board {
 	private LinkedList<BoardCell> cellAdjList;
 	private Set<BoardCell> visited;
 	private Set<BoardCell> targets;
+	private String BoardConfig;
+	private String BoardRoomConfig;
 
-	public Board(){
+	public Board(String boardConfig, String boardRoomConfig){
 		super();
 		cells = new BoardCell[ROWS][COLUMNS];
 		rooms = new HashMap<Character, String>();
+		BoardConfig = boardConfig;
+		BoardRoomConfig = boardRoomConfig;
 		adjacencyLists = new HashMap<BoardCell, LinkedList<BoardCell>>();
 	}
-	public void loadGameBoardConfig(String BoardConfigFile) throws FileNotFoundException, BadConfigFormatException{
+	public void loadBoardConfig() throws FileNotFoundException, BadConfigFormatException{
 
-		FileReader reader = new FileReader(BoardConfigFile);
+		FileReader reader = new FileReader(BoardConfig);
 		Scanner in = new Scanner(reader);
 		int numRowsTemp = 0;
 
@@ -71,8 +75,8 @@ public class Board {
 		setNumRows(numRowsTemp);
 	}
 
-	public void loadRoomConfig(String BoardRoomConfigFile) throws FileNotFoundException{
-		FileReader reader2 = new FileReader(BoardRoomConfigFile);
+	public void loadRoomConfig() throws FileNotFoundException{
+		FileReader reader2 = new FileReader(BoardRoomConfig);
 		Scanner in2 = new Scanner(reader2);
 		while (in2.hasNextLine()){
 			String line = in2.nextLine();
@@ -95,11 +99,11 @@ public class Board {
 				cellAdjList = new LinkedList<BoardCell>();
 
 				if (i == 0 && j == 4){
-					System.out.println(cells[i][j].isWalkway());
-					System.out.println(cells[i][j].isDoorway());
-					System.out.println(cells[i][j].isRoom());
-					if((cells[i][j].isRoom()))
-						System.out.println(((RoomCell) cells[i][j]).getInitial());
+					//System.out.println(cells[i][j].isWalkway());
+					//System.out.println(cells[i][j].isDoorway());
+					//System.out.println(cells[i][j].isRoom());
+					//if((cells[i][j].isRoom()))
+					//System.out.println(((RoomCell) cells[i][j]).getInitial());
 				}
 
 				if(cells[i][j].isWalkway()){
@@ -114,7 +118,7 @@ public class Board {
 						cellAdjList.add(cells[i][j-1]);
 					}
 					if (j+1 < numColumns && (cells[i][j+1].isWalkway() || (cells[i][j+1].isDoorway() && (((RoomCell) cells[i][j+1]).getDoorDirection() == DoorDirection.LEFT)))){
-						System.out.println("Trig");
+						//System.out.println("Trig");
 						cellAdjList.add(cells[i][j+1]);
 					}
 
@@ -194,8 +198,4 @@ public class Board {
 	public RoomCell getRoomCellAt(int i, int j) {
 		return (RoomCell) cells[i][j];
 	}
-
-
-	//Test Comment
-
 }

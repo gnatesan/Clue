@@ -1,53 +1,42 @@
-package GameBoard;
+package clueGame;
 
 import java.io.FileNotFoundException;
-import java.util.*;
 
 public class ClueGame {
-	private Map<Character, String> rooms;
 	private Board clueBoard;
 	private String BoardConfig;
 	private String BoardRoomConfig;
-	
-	
 	public ClueGame(String s1, String s2) {
 		super();
-		rooms = new HashMap<Character, String>();
-		clueBoard = new Board();
 		BoardConfig = s1;
 		BoardRoomConfig = s2;
-				
+		clueBoard = new Board(BoardConfig, BoardRoomConfig);
 	}
 	public ClueGame() {
 		super();
-		rooms = new HashMap<Character, String>();
-		clueBoard = new Board();
-		BoardConfig = "ClueLayout 2.csv";
-		BoardRoomConfig = "ClueLegend 2.txt";
-				
+		BoardConfig = "ClueLayout.csv";
+		BoardRoomConfig = "ClueLegend.txt";
+		clueBoard = new Board(BoardConfig, BoardRoomConfig);
 	}
-	
-	public Board getBoard(){
+	public Board getBoard() {
 		return clueBoard;
 	}
-	
-	public void loadConfigFiles() throws FileNotFoundException, BadConfigFormatException{
-		clueBoard.loadRoomConfig(BoardRoomConfig);
-		clueBoard.loadGameBoardConfig(BoardConfig);
+	public void loadConfigFiles() {
+		try{
+			this.loadRoomConfig();
+			this.loadBoardConfig();
+		} catch (FileNotFoundException | BadConfigFormatException e){
+			System.out.println(e.getMessage());
+		}
 		clueBoard.calcAdjacencies();
-		
 	}
 	public void loadRoomConfig() throws FileNotFoundException, BadConfigFormatException {
-			clueBoard.loadRoomConfig(BoardRoomConfig);
-
+		clueBoard.loadRoomConfig();
 	}
-
 	public void loadBoardConfig() throws FileNotFoundException, BadConfigFormatException{
-		clueBoard.loadGameBoardConfig(BoardConfig);
-	
+		clueBoard.loadBoardConfig();
+
 	}
-
-
 }
 
 

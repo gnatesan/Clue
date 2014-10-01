@@ -1,4 +1,4 @@
-package ClueGameBoardTests;
+package clueTests;
 
 import static org.junit.Assert.*;
 
@@ -9,7 +9,7 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import GameBoard.*;
+import clueGame.*;
 public class AdjTest {
 
 	private static Board board;

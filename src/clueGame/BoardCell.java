@@ -1,4 +1,4 @@
-package GameBoard;
+package clueGame;
 
 public abstract class BoardCell {
 	private int row;

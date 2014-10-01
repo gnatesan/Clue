@@ -1,33 +1,34 @@
-package ClueGameBoardTests;
+package clueTests;
 
 // Doing a static import allows me to write assertEquals rather than
 // Assert.assertEquals
-import static junit.framework.Assert.assertEquals;
 import static org.junit.Assert.*;
 
 import java.io.FileNotFoundException;
 import java.util.Map;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import GameBoard.*;
+import clueGame.BadConfigFormatException;
+import clueGame.Board;
+import clueGame.BoardCell;
+import clueGame.ClueGame;
+import clueGame.RoomCell;
 
-public class ProfTest {
+public class CR_FileInitTests {
 	// I made this static because I only want to set it up one 
 	// time (using @BeforeClass), no need to do setup before each test
 	private static Board board;
 	public static final int NUM_ROOMS = 11;
 	public static final int NUM_ROWS = 22;
 	public static final int NUM_COLUMNS = 23;
-	
-	@Before
-	public void setUp() throws FileNotFoundException{
-		ClueGame game = new ClueGame("ClueLayout 2.csv", "ClueLegend 2.txt");
-		game.loadRoomConfig();
-		game.loadBoardConfig();
+
+	@BeforeClass
+	public static void setUp() {
+		ClueGame game = new ClueGame("ClueLayout.csv", "ClueLegend.txt");
+		game.loadConfigFiles();
 		board = game.getBoard();
 	}
 	@Test
@@ -43,14 +44,14 @@ public class ProfTest {
 		assertEquals("Dining room", rooms.get('D'));
 		assertEquals("Walkway", rooms.get('W'));
 	}
-	
+
 	@Test
 	public void testBoardDimensions() {
 		// Ensure we have the proper number of rows and columns
 		assertEquals(NUM_ROWS, board.getNumRows());
 		assertEquals(NUM_COLUMNS, board.getNumColumns());		
 	}
-	
+
 	// Test a doorway in each direction, plus two cells that are not
 	// a doorway.
 	// These cells are white on the planning spreadsheet
@@ -77,7 +78,7 @@ public class ProfTest {
 		assertFalse(cell.isDoorway());		
 
 	}
-	
+
 	// Test that we have the correct number of doors
 	@Test
 	public void testNumberOfDoorways() 
@@ -104,7 +105,8 @@ public class ProfTest {
 		assertEquals('O', board.getRoomCellAt(21, 22).getInitial());
 		assertEquals('K', board.getRoomCellAt(21, 0).getInitial());
 	}
-	
+
+	// Test that an exception is thrown for a bad config file
 	@Test (expected = BadConfigFormatException.class)
 	public void testBadColumns() throws BadConfigFormatException, FileNotFoundException {
 		// overloaded Game ctor takes config file names
@@ -113,7 +115,7 @@ public class ProfTest {
 		// My loadConfigFiles has a try/catch, so I can't call it directly to
 		// see test throwing the BadConfigFormatException
 		game.loadRoomConfig();
-		game.loadBoardConfig();
+		game.getBoard().loadBoardConfig();
 	}
 	// Test that an exception is thrown for a bad config file
 	@Test (expected = BadConfigFormatException.class)
@@ -121,7 +123,7 @@ public class ProfTest {
 		// overloaded Board ctor takes config file name
 		ClueGame game = new ClueGame("ClueLayoutBadRoom.csv", "ClueLegend.txt");
 		game.loadRoomConfig();
-		game.loadBoardConfig();
+		game.getBoard().loadBoardConfig();
 	}
 	// Test that an exception is thrown for a bad config file
 	@Test (expected = BadConfigFormatException.class)
@@ -129,6 +131,6 @@ public class ProfTest {
 		// overloaded Board ctor takes config file name
 		ClueGame game = new ClueGame("ClueLayout.csv", "ClueLegendBadFormat.txt");
 		game.loadRoomConfig();
-		game.loadBoardConfig();
+		game.getBoard().loadBoardConfig();
 	}
 }

@@ -1,4 +1,4 @@
-package ClueGameBoardTests;
+package clueTests;
 
 import static org.junit.Assert.*;
 
@@ -8,9 +8,9 @@ import java.util.Map;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import GameBoard.BadConfigFormatException;
-import GameBoard.Board;
-import GameBoard.ClueGame;
+import clueGame.BadConfigFormatException;
+import clueGame.Board;
+import clueGame.ClueGame;
 
 public class RoomTests {
 
