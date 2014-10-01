@@ -93,7 +93,6 @@ public class Board {
 	}
 
 	public void calcAdjacencies(){
-		/*
 		for(int i=0; i < numRows; i++){
 			for(int j=0; j < numColumns; j++){
 
@@ -127,16 +126,16 @@ public class Board {
 				}
 
 				else if(cells[i][j].isDoorway()){
-					if (((RoomCell) cells[i][j]).getDoorDirection() == DoorDirection.DOWN){
+					if (i+1 < numRows && ((RoomCell) cells[i][j]).getDoorDirection() == DoorDirection.DOWN){
 						cellAdjList.add(cells[i+1][j]);
 					}
-					else if (((RoomCell) cells[i][j]).getDoorDirection() == DoorDirection.UP){
+					else if (i-1 >= 0 && ((RoomCell) cells[i][j]).getDoorDirection() == DoorDirection.UP){
 						cellAdjList.add(cells[i-1][j]);
 					}
-					else if (((RoomCell) cells[i][j]).getDoorDirection() == DoorDirection.RIGHT){
+					else if (j+1 < numColumns && ((RoomCell) cells[i][j]).getDoorDirection() == DoorDirection.RIGHT){
 						cellAdjList.add(cells[i][j+1]);
 					}
-					else if (((RoomCell) cells[i][j]).getDoorDirection() == DoorDirection.LEFT){
+					else if (j-1 >= 0 && ((RoomCell) cells[i][j]).getDoorDirection() == DoorDirection.LEFT){
 						cellAdjList.add(cells[i][j-1]);
 					}
 
@@ -148,12 +147,11 @@ public class Board {
 
 			}
 		}
-		*/
+		
 	}
 
 	//DON'T MESS WITH THIS YET
 	public void calcTargets(int i, int j, int numSteps){
-		/*
 		for (int x = 0; x < adjacencyLists.get(cells[i][j]).size(); x++){
 			visited.add(adjacencyLists.get(cells[i][j]).get(x));
 			if (numSteps == 1 ){
@@ -167,7 +165,7 @@ public class Board {
 				calcTargets(adjacencyLists.get(cells[i][j]).get(x).getRow(), adjacencyLists.get(cells[i][j]).get(x).getColumn(), numSteps-1);
 				visited.remove(adjacencyLists.get(cells[i][j]).get(x));
 			}			
-		}*/
+		}
 	}
 
 	public LinkedList<BoardCell> getAdjList(int i, int j){

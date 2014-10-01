@@ -15,7 +15,7 @@ public class AdjTest {
 	private static Board board;
 	@BeforeClass
 	public static void setUp() {
-		ClueGame game = new ClueGame("ClueLayoutOurs.csv", "ClueLegendours.txt");
+		ClueGame game = new ClueGame("ClueLayoutOurs.csv", "ClueLegendOurs.txt");
 		game.loadConfigFiles();
 		board = game.getBoard();
 		board.calcAdjacencies();
