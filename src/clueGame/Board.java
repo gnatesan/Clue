@@ -180,7 +180,7 @@ public class Board {
 			
 			visited.add(adjacentCells.get(thisCell).get(i));
 			
-			if (numSteps == 1){
+			if (numSteps == 1 || adjacentCells.get(thisCell).get(i).isDoorway()){
 				System.out.println("Added (" + (adjacentCells.get(thisCell).get(i).getRow()) + ", " + (adjacentCells.get(thisCell).get(i).getColumn()) +") to valid targets cells");
 				targets.add(adjacentCells.get(thisCell).get(i));
 				
@@ -191,6 +191,7 @@ public class Board {
 				System.out.println("Recursive call to (" + (adjacentCells.get(thisCell).get(i).getRow()) + ", " + (adjacentCells.get(thisCell).get(i).getColumn()) +")");
 				calcTargetsRecursive(adjacentCells.get(thisCell).get(i), numSteps-1);
 			}
+			
 			visited.removeLast();
 			
 		}
