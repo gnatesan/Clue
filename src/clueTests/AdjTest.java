@@ -1,9 +1,6 @@
 package clueTests;
 
-import static org.junit.Assert.*;
-
 import java.util.*;
-import java.io.FileNotFoundException;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -120,10 +117,10 @@ public class AdjTest {
 		Assert.assertEquals(2, testList.size());
 
 	}
-	
+
 	@Test
 	public void targetWalkway(){
-		
+
 		board.calcTargets(8, 20, 2);
 		Set<BoardCell> targets= board.getTargets();
 		Assert.assertEquals(4, targets.size());
@@ -131,7 +128,7 @@ public class AdjTest {
 		Assert.assertTrue(targets.contains(board.getCellAt(7, 19)));
 		Assert.assertTrue(targets.contains(board.getCellAt(8, 22)));
 		Assert.assertTrue(targets.contains(board.getCellAt(9, 20)));
-		
+
 		board.calcTargets(16, 21, 2);
 		targets= board.getTargets();
 		Assert.assertEquals(4, targets.size());
@@ -139,12 +136,12 @@ public class AdjTest {
 		Assert.assertTrue(targets.contains(board.getCellAt(15, 22)));	
 		Assert.assertTrue(targets.contains(board.getCellAt(14, 21)));
 		Assert.assertTrue(targets.contains(board.getCellAt(17, 20)));
-		
+
 		board.calcTargets(18, 0, 1);
 		targets= board.getTargets();
 		Assert.assertEquals(1, targets.size());
 		Assert.assertTrue(targets.contains(board.getCellAt(18, 1)));
-		
+
 		board.calcTargets(18, 9, 3);
 		targets= board.getTargets();
 		Assert.assertEquals(5, targets.size());
@@ -153,10 +150,10 @@ public class AdjTest {
 		Assert.assertTrue(targets.contains(board.getCellAt(21, 9)));
 		Assert.assertTrue(targets.contains(board.getCellAt(19, 10)));
 		Assert.assertTrue(targets.contains(board.getCellAt(18, 6)));
-		
-		
+
+
 	}
-	
+
 	@Test
 	public void targetEnterRoom(){
 		board.calcTargets(18, 6, 1);
@@ -166,7 +163,7 @@ public class AdjTest {
 		Assert.assertTrue(targets.contains(board.getCellAt(19, 6)));
 		Assert.assertTrue(targets.contains(board.getCellAt(18, 5)));
 		Assert.assertTrue(targets.contains(board.getCellAt(18, 7)));
-		
+
 		board.calcTargets(16, 18, 3);
 		targets= board.getTargets();
 		Assert.assertEquals(11, targets.size());
@@ -181,24 +178,20 @@ public class AdjTest {
 		Assert.assertTrue(targets.contains(board.getCellAt(16, 21)));//
 		Assert.assertTrue(targets.contains(board.getCellAt(17, 18)));
 		Assert.assertTrue(targets.contains(board.getCellAt(16, 19)));
-		
+
 	}
-	
+
 	@Test public void targetLeaveRoom(){
 		board.calcTargets(17, 20, 1);
 		Set<BoardCell> targets= board.getTargets();
 		Assert.assertEquals(1, targets.size());
 		Assert.assertTrue(targets.contains(board.getCellAt(16, 20)));
-		
+
 		board.calcTargets(12, 17, 2);
 		targets= board.getTargets();
 		Assert.assertEquals(3, targets.size());
 		Assert.assertTrue(targets.contains(board.getCellAt(11, 16)));
 		Assert.assertTrue(targets.contains(board.getCellAt(12, 15)));
 		Assert.assertTrue(targets.contains(board.getCellAt(13, 16)));
-
 	}
-
-
-
 }

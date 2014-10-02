@@ -15,7 +15,6 @@ public class Board {
 	private int numColumns = 0;
 	private Map<BoardCell, LinkedList<BoardCell>> adjacencyLists;
 	private LinkedList<BoardCell> cellAdjList;
-	private LinkedList<BoardCell> paths;
 	private LinkedList<BoardCell> visited;
 	private Set<BoardCell> targets;
 	private Map<BoardCell, LinkedList<BoardCell>> adjacentCells;
@@ -31,7 +30,7 @@ public class Board {
 		adjacencyLists = new HashMap<BoardCell, LinkedList<BoardCell>>();
 		targets = new HashSet<BoardCell>();
 		visited = new LinkedList<BoardCell>();
-		
+
 	}
 	public void loadBoardConfig() throws FileNotFoundException, BadConfigFormatException{
 
@@ -101,15 +100,6 @@ public class Board {
 
 
 				cellAdjList = new LinkedList<BoardCell>();
-
-				if (i == 0 && j == 4){
-					//System.out.println(cells[i][j].isWalkway());
-					//System.out.println(cells[i][j].isDoorway());
-					//System.out.println(cells[i][j].isRoom());
-					//if((cells[i][j].isRoom()))
-					//System.out.println(((RoomCell) cells[i][j]).getInitial());
-				}
-
 				if(cells[i][j].isWalkway()){
 
 					if (i-1 >= 0 && (cells[i-1][j].isWalkway() || (cells[i-1][j].isDoorway() && (((RoomCell) cells[i-1][j]).getDoorDirection() == DoorDirection.DOWN)))){
@@ -122,7 +112,6 @@ public class Board {
 						cellAdjList.add(cells[i][j-1]);
 					}
 					if (j+1 < numColumns && (cells[i][j+1].isWalkway() || (cells[i][j+1].isDoorway() && (((RoomCell) cells[i][j+1]).getDoorDirection() == DoorDirection.LEFT)))){
-						//System.out.println("Trig");
 						cellAdjList.add(cells[i][j+1]);
 					}
 
@@ -150,77 +139,61 @@ public class Board {
 
 			}
 		}
-		
+
 	}
-	
+
 	public void calcTargets(int i, int j, int numSteps){
-		
+
 		targets = new HashSet<BoardCell>();
 		visited = new LinkedList<BoardCell>();
-		paths = new LinkedList<BoardCell>();
 		visited.add(cells[i][j]);
 		adjacentCells = new HashMap<BoardCell, LinkedList<BoardCell>>() ;
-		calcTargetsRecursive(cells[i][j], numSteps);
-		System.out.println("Targets are:");
-		/*
-		for (int x = 0; x < targets.size(); x++){
-			System.out.println("(" + (targets.iterator().) + ")");
-		}*/
-	
-		
+		calcTargetsRecursive(cells[i][j], numSteps);	
 	}
-
-	//DON'T MESS WITH THIS YET
 	public void calcTargetsRecursive(BoardCell thisCell, int numSteps){
 
-		
+
 		getAdjCell(thisCell);
-		
+
 		for (int i = 0; i < adjacentCells.get(thisCell).size(); i++){
-			
+
 			visited.add(adjacentCells.get(thisCell).get(i));
-			
+
 			if (numSteps == 1 || adjacentCells.get(thisCell).get(i).isDoorway()){
-				System.out.println("Added (" + (adjacentCells.get(thisCell).get(i).getRow()) + ", " + (adjacentCells.get(thisCell).get(i).getColumn()) +") to valid targets cells");
 				targets.add(adjacentCells.get(thisCell).get(i));
-				
-				
+
+
 			}
 
 			else {	
-				System.out.println("Recursive call to (" + (adjacentCells.get(thisCell).get(i).getRow()) + ", " + (adjacentCells.get(thisCell).get(i).getColumn()) +")");
 				calcTargetsRecursive(adjacentCells.get(thisCell).get(i), numSteps-1);
 			}
-			
+
 			visited.removeLast();
-			
+
 		}
-		
-		
-		System.out.println("Jumping to parent recursion");
 	}
 
 	public void getAdjCell(BoardCell thisCell){
-		
+
 		cellAdjList = new LinkedList<BoardCell>();
-		
+
 		for (int i = 0; i < adjacencyLists.get(thisCell).size(); i++){
 			if (!visited.contains(adjacencyLists.get(thisCell).get(i))){
 				cellAdjList.add(adjacencyLists.get(thisCell).get(i));
-				System.out.println("Added (" + (adjacencyLists.get(thisCell).get(i).getRow()) + ", " + (adjacencyLists.get(thisCell).get(i).getColumn()) +") to valid adjacent cells");
 			}
 		}
-		
+
 		adjacentCells.put(thisCell, cellAdjList);
-		
+
 	}
-	
+
 	public LinkedList<BoardCell> getAdjList(int i, int j){
 		return adjacencyLists.get(cells[i][j]);
 	}
 
 	public Set<BoardCell> getTargets(){
-		
+
 		return targets;
 	}
 

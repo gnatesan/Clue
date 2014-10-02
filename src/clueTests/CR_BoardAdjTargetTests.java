@@ -69,9 +69,9 @@ public class CR_BoardAdjTargetTests {
 		testList = board.getAdjList(5, 15);
 		Assert.assertEquals(1, testList.size());
 		Assert.assertTrue(testList.contains(board.getCellAt(6, 15)));
-		
+
 	}
-	
+
 	// Test adjacency at entrance to rooms
 	// These tests are GREEN in planning spreadsheet
 	@Test
@@ -114,7 +114,7 @@ public class CR_BoardAdjTargetTests {
 		LinkedList<BoardCell> testList = board.getAdjList(0, 4);
 		Assert.assertTrue(testList.contains(board.getCellAt(0, 5)));
 		Assert.assertEquals(1, testList.size());
-		
+
 		// Test on left edge of board, three walkway pieces
 		testList = board.getAdjList(6, 0);
 		Assert.assertTrue(testList.contains(board.getCellAt(5, 0)));
@@ -135,13 +135,13 @@ public class CR_BoardAdjTargetTests {
 		Assert.assertTrue(testList.contains(board.getCellAt(14, 7)));
 		Assert.assertTrue(testList.contains(board.getCellAt(16, 7)));
 		Assert.assertEquals(4, testList.size());
-		
+
 		// Test on bottom edge of board, next to 1 room piece
 		testList = board.getAdjList(21, 15);
 		Assert.assertTrue(testList.contains(board.getCellAt(21, 16)));
 		Assert.assertTrue(testList.contains(board.getCellAt(20, 15)));
 		Assert.assertEquals(2, testList.size());
-		
+
 		// Test on right edge of board, next to 1 room piece
 		testList = board.getAdjList(14, 22);
 		Assert.assertTrue(testList.contains(board.getCellAt(14, 21)));
@@ -156,8 +156,8 @@ public class CR_BoardAdjTargetTests {
 		Assert.assertTrue(testList.contains(board.getCellAt(6, 3)));
 		Assert.assertEquals(3, testList.size());
 	}
-	
-	
+
+
 	// Tests of just walkways, 1 step, includes on edge of board
 	// and beside room
 	// Have already tested adjacency lists on all four edges, will
@@ -170,7 +170,7 @@ public class CR_BoardAdjTargetTests {
 		Assert.assertEquals(2, targets.size());
 		Assert.assertTrue(targets.contains(board.getCellAt(20, 7)));
 		Assert.assertTrue(targets.contains(board.getCellAt(21, 6)));	
-		
+
 		board.calcTargets(14, 0, 1);
 		targets= board.getTargets();
 		Assert.assertEquals(3, targets.size());
@@ -178,7 +178,7 @@ public class CR_BoardAdjTargetTests {
 		Assert.assertTrue(targets.contains(board.getCellAt(13, 0)));	
 		Assert.assertTrue(targets.contains(board.getCellAt(15, 0)));			
 	}
-	
+
 	// Tests of just walkways, 2 steps
 	// These are LIGHT BLUE on the planning spreadsheet
 	@Test
@@ -188,16 +188,15 @@ public class CR_BoardAdjTargetTests {
 		Assert.assertEquals(2, targets.size());
 		Assert.assertTrue(targets.contains(board.getCellAt(19, 7)));
 		Assert.assertTrue(targets.contains(board.getCellAt(20, 6)));
-		/*
+
 		board.calcTargets(14, 0, 2);
 		targets= board.getTargets();
 		Assert.assertEquals(3, targets.size());
 		Assert.assertTrue(targets.contains(board.getCellAt(12, 0)));
 		Assert.assertTrue(targets.contains(board.getCellAt(14, 2)));	
-		Assert.assertTrue(targets.contains(board.getCellAt(15, 1)));		
-		*/	
+		Assert.assertTrue(targets.contains(board.getCellAt(15, 1)));			
 	}
-	
+
 	// Tests of just walkways, 4 steps
 	// These are LIGHT BLUE on the planning spreadsheet
 	@Test
@@ -209,8 +208,7 @@ public class CR_BoardAdjTargetTests {
 		Assert.assertTrue(targets.contains(board.getCellAt(19, 7)));
 		Assert.assertTrue(targets.contains(board.getCellAt(18, 6)));
 		Assert.assertTrue(targets.contains(board.getCellAt(20, 6)));
-		
-		System.out.println("Nexttext");
+
 		// Includes a path that doesn't have enough length
 		board.calcTargets(14, 0, 4);
 		targets= board.getTargets();
@@ -220,7 +218,7 @@ public class CR_BoardAdjTargetTests {
 		Assert.assertTrue(targets.contains(board.getCellAt(14, 2)));	
 		Assert.assertTrue(targets.contains(board.getCellAt(15, 1)));	
 	}	
-	
+
 	// Tests of just walkways plus one door, 6 steps
 	// These are LIGHT BLUE on the planning spreadsheet
 
@@ -228,7 +226,7 @@ public class CR_BoardAdjTargetTests {
 	public void testTargetsSixSteps() {
 		board.calcTargets(14, 0, 6);
 		Set<BoardCell> targets= board.getTargets();
-		//Assert.assertEquals(7, targets.size());
+		Assert.assertEquals(7, targets.size());
 		Assert.assertTrue(targets.contains(board.getCellAt(14, 6)));
 		Assert.assertTrue(targets.contains(board.getCellAt(15, 5)));	
 		Assert.assertTrue(targets.contains(board.getCellAt(15, 3)));	
@@ -237,7 +235,7 @@ public class CR_BoardAdjTargetTests {
 		Assert.assertTrue(targets.contains(board.getCellAt(14, 2)));	
 		Assert.assertTrue(targets.contains(board.getCellAt(13, 4)));	
 	}	
-	
+
 	// Test getting into a room
 	// These are LIGHT BLUE on the planning spreadsheet
 
@@ -259,7 +257,7 @@ public class CR_BoardAdjTargetTests {
 		Assert.assertTrue(targets.contains(board.getCellAt(16, 17)));
 		Assert.assertTrue(targets.contains(board.getCellAt(16, 15)));
 	}
-	
+
 	// Test getting into room, doesn't require all steps
 	// These are LIGHT BLUE on the planning spreadsheet
 	@Test
@@ -267,7 +265,7 @@ public class CR_BoardAdjTargetTests {
 	{
 		board.calcTargets(12, 7, 3);
 		Set<BoardCell> targets= board.getTargets();
-		//Assert.assertEquals(12, targets.size());
+		Assert.assertEquals(12, targets.size());
 		// directly up and down
 		Assert.assertTrue(targets.contains(board.getCellAt(15, 7)));
 		Assert.assertTrue(targets.contains(board.getCellAt(9, 7)));
@@ -287,7 +285,7 @@ public class CR_BoardAdjTargetTests {
 		// 
 		Assert.assertTrue(targets.contains(board.getCellAt(11, 7)));		
 		Assert.assertTrue(targets.contains(board.getCellAt(12, 8)));		
-		
+
 	}
 
 	// Test getting out of a room
