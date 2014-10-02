@@ -5,11 +5,11 @@ S,S,S,S,S,S,S,S,S,W,H,H,H,H,H,W,W,O,O,O,O,O,O
 S,S,S,SD,S,S,S,S,S,W,H,H,H,H,H,W,W,OL,O,O,O,O,O
 W,W,W,W,W,W,W,W,W,W,H,H,H,H,H,W,W,W,O,O,O,O,O
 W,W,W,W,W,W,W,W,W,W,H,H,H,H,HR,W,W,W,W,O,O,O,O
-LD,L,L,LU,L,L,L,L,L,W,H,W,W,W,H,W,W,W,W,W,O,O,OR
+LU,L,L,LU,L,L,L,L,L,W,H,W,W,W,H,W,W,W,W,W,O,O,OD
 W,W,W,L,L,L,L,L,L,W,W,W,W,W,W,W,W,W,W,W,W,W,W
 W,W,W,L,L,L,L,L,LR,W,X,X,X,X,X,W,W,D,D,D,DU,D,D
 W,W,W,L,L,L,L,L,L,W,X,X,X,X,X,W,W,D,D,D,D,D,D
-LU,L,L,L,L,LD,L,L,L,W,X,X,X,X,X,W,W,D,D,D,D,D,D
+LD,L,L,L,L,LD,L,L,L,W,X,X,X,X,X,W,W,D,D,D,D,D,D
 W,W,W,W,W,W,W,W,W,W,X,X,X,X,X,W,W,DL,D,D,D,D,D
 W,W,W,W,W,W,W,W,W,W,X,X,X,X,X,W,W,D,D,D,D,D,W
 R,R,RU,R,R,R,R,R,R,W,X,X,X,X,X,W,W,D,D,D,D,W,W
