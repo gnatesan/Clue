@@ -188,13 +188,14 @@ public class CR_BoardAdjTargetTests {
 		Assert.assertEquals(2, targets.size());
 		Assert.assertTrue(targets.contains(board.getCellAt(19, 7)));
 		Assert.assertTrue(targets.contains(board.getCellAt(20, 6)));
-		
+		/*
 		board.calcTargets(14, 0, 2);
 		targets= board.getTargets();
 		Assert.assertEquals(3, targets.size());
 		Assert.assertTrue(targets.contains(board.getCellAt(12, 0)));
 		Assert.assertTrue(targets.contains(board.getCellAt(14, 2)));	
-		Assert.assertTrue(targets.contains(board.getCellAt(15, 1)));			
+		Assert.assertTrue(targets.contains(board.getCellAt(15, 1)));		
+		*/	
 	}
 	
 	// Tests of just walkways, 4 steps
@@ -209,6 +210,7 @@ public class CR_BoardAdjTargetTests {
 		Assert.assertTrue(targets.contains(board.getCellAt(18, 6)));
 		Assert.assertTrue(targets.contains(board.getCellAt(20, 6)));
 		
+		System.out.println("Nexttext");
 		// Includes a path that doesn't have enough length
 		board.calcTargets(14, 0, 4);
 		targets= board.getTargets();

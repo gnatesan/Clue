@@ -15,8 +15,10 @@ public class Board {
 	private int numColumns = 0;
 	private Map<BoardCell, LinkedList<BoardCell>> adjacencyLists;
 	private LinkedList<BoardCell> cellAdjList;
-	private Set<BoardCell> visited;
+	private LinkedList<BoardCell> paths;
+	private LinkedList<BoardCell> visited;
 	private Set<BoardCell> targets;
+	private Map<BoardCell, LinkedList<BoardCell>> adjacentCells;
 	private String BoardConfig;
 	private String BoardRoomConfig;
 
@@ -28,7 +30,8 @@ public class Board {
 		BoardRoomConfig = boardRoomConfig;
 		adjacencyLists = new HashMap<BoardCell, LinkedList<BoardCell>>();
 		targets = new HashSet<BoardCell>();
-		visited = new HashSet<BoardCell>();
+		visited = new LinkedList<BoardCell>();
+		
 	}
 	public void loadBoardConfig() throws FileNotFoundException, BadConfigFormatException{
 
@@ -149,25 +152,68 @@ public class Board {
 		}
 		
 	}
+	
+	public void calcTargets(int i, int j, int numSteps){
+		
+		targets = new HashSet<BoardCell>();
+		visited = new LinkedList<BoardCell>();
+		paths = new LinkedList<BoardCell>();
+		visited.add(cells[i][j]);
+		adjacentCells = new HashMap<BoardCell, LinkedList<BoardCell>>() ;
+		calcTargetsRecursive(cells[i][j], numSteps);
+		System.out.println("Targets are:");
+		/*
+		for (int x = 0; x < targets.size(); x++){
+			System.out.println("(" + (targets.iterator().) + ")");
+		}*/
+	
+		
+	}
 
 	//DON'T MESS WITH THIS YET
-	public void calcTargets(int i, int j, int numSteps){
-		for (int x = 0; x < adjacencyLists.get(cells[i][j]).size(); x++){
-			visited.add(adjacencyLists.get(cells[i][j]).get(x));
-			if (numSteps == 1 ){
-				targets.add(adjacencyLists.get(cells[i][j]).get(x));
-				System.out.println(i);
-				System.out.println(j);
-				System.out.println(adjacencyLists.get(cells[i][j]).get(x).getRow());
+	public void calcTargetsRecursive(BoardCell thisCell, int numSteps){
+
+		
+		getAdjCell(thisCell);
+		
+		for (int i = 0; i < adjacentCells.get(thisCell).size(); i++){
+			
+			visited.add(adjacentCells.get(thisCell).get(i));
+			
+			if (numSteps == 1){
+				System.out.println("Added (" + (adjacentCells.get(thisCell).get(i).getRow()) + ", " + (adjacentCells.get(thisCell).get(i).getColumn()) +") to valid targets cells");
+				targets.add(adjacentCells.get(thisCell).get(i));
+				
+				
 			}
 
 			else {	
-				calcTargets(adjacencyLists.get(cells[i][j]).get(x).getRow(), adjacencyLists.get(cells[i][j]).get(x).getColumn(), numSteps-1);
-				visited.remove(adjacencyLists.get(cells[i][j]).get(x));
-			}			
+				System.out.println("Recursive call to (" + (adjacentCells.get(thisCell).get(i).getRow()) + ", " + (adjacentCells.get(thisCell).get(i).getColumn()) +")");
+				calcTargetsRecursive(adjacentCells.get(thisCell).get(i), numSteps-1);
+			}
+			visited.removeLast();
+			
 		}
+		
+		
+		System.out.println("Jumping to parent recursion");
 	}
 
+	public void getAdjCell(BoardCell thisCell){
+		
+		cellAdjList = new LinkedList<BoardCell>();
+		
+		for (int i = 0; i < adjacencyLists.get(thisCell).size(); i++){
+			if (!visited.contains(adjacencyLists.get(thisCell).get(i))){
+				cellAdjList.add(adjacencyLists.get(thisCell).get(i));
+				System.out.println("Added (" + (adjacencyLists.get(thisCell).get(i).getRow()) + ", " + (adjacencyLists.get(thisCell).get(i).getColumn()) +") to valid adjacent cells");
+			}
+		}
+		
+		adjacentCells.put(thisCell, cellAdjList);
+		
+	}
+	
 	public LinkedList<BoardCell> getAdjList(int i, int j){
 		return adjacencyLists.get(cells[i][j]);
 	}
