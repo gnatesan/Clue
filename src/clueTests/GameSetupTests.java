@@ -30,9 +30,9 @@ public class GameSetupTests {
 		Assert.assertEquals(21, game.getCards().size());
 		
 		// Verify the categories of cards and their count
-		Assert.assertEquals(Card.CardType.PERSON, game.getCards().get(0));
-		Assert.assertEquals(Card.CardType.WEAPON, game.getCards().get(6));
-		Assert.assertEquals(Card.CardType.ROOM, game.getCards().get(12));
+		Assert.assertEquals(Card.CardType.PERSON, game.getCards().get(0).getType());
+		Assert.assertEquals(Card.CardType.WEAPON, game.getCards().get(6).getType());
+		Assert.assertEquals(Card.CardType.ROOM, game.getCards().get(12).getType());
 	}
 	
 	@Test

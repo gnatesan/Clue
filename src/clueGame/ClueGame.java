@@ -82,7 +82,32 @@ public class ClueGame {
 	}
 	
 	public void loadCardConfig(String config) throws FileNotFoundException, BadConfigFormatException {
+		FileReader reader = new FileReader(config);
+		Scanner in = new Scanner(reader);
+		String[] line;
 		
+		while (in.hasNextLine()) {
+			line = in.nextLine().split(",");
+			Card nextCard;
+			
+			switch (line[0].trim()) {
+			case "person":
+				nextCard = new Card(line[1].trim(), Card.CardType.PERSON);
+				break;
+			case "weapon":
+				nextCard = new Card(line[1].trim(), Card.CardType.WEAPON);
+				break;
+			case "room":
+				nextCard = new Card(line[1].trim(), Card.CardType.ROOM);
+				break;
+			default:
+				throw new BadConfigFormatException("Invalid card configuration format.");
+			}
+			
+			this.cards.add(nextCard);
+		}
+		
+		in.close();
 	}
 	
 	public ArrayList<Card> getCards() {
