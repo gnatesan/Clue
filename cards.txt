@@ -1,21 +1,21 @@
-player,
-player,
-player,
-player,
-player,
-player,
-weapon,
-weapon,
-weapon,
-weapon,
-weapon,
-weapon,
-room,
-room,
-room,
-room,
-room,
-room,
-room,
-room,
-room,
+player, Miss Scarlet
+player, Professor Plum
+player, Mrs. Peacock
+player, Reverend Green
+player, Colonel Mustard
+player, Mrs. White
+weapon, Candlestick
+weapon, Knife
+weapon, Lead pipe
+weapon, Revolver
+weapon, Rope
+weapon, Wrench
+room, Kitchen
+room, Ballroom
+room, Conservatory
+room, Dining room
+room, Billiard Room
+room, Library
+room, Lounge
+room, Hall
+room, Study
