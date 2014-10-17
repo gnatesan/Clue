@@ -90,11 +90,21 @@ public class GameSetupTests {
 	
 	@Test
 	public void testAccusation() {
-		Solution s = game.getSolution();
-		game.makeAccusation();
-		Solution invalid = game.getAccusation();
-		Assert.assertEquals(s.getPerson(), invalid.getPerson());
+		//Get correct solution
+		Solution correct = game.getSolution();
 		
+		//Create wrong solutions for an incorrect person, weapon, and room
+		Solution w1 = new Solution(correct.getPerson(), correct.getWeapon(), "wrongroom");
+		Solution w2 = new Solution(correct.getPerson(), "wrongweapon", correct.getRoom());
+		Solution w3 = new Solution("wrongperson", correct.getWeapon(), correct.getRoom());
+		
+		//Check wrong solutions
+		Assert.assertFalse(game.checkAccusation(w1));
+		Assert.assertFalse(game.checkAccusation(w2));
+		Assert.assertFalse(game.checkAccusation(w3));
+		
+		//Check correct solutions
+		Assert.assertTrue(game.checkAccusation(correct));
 	}
 
 }

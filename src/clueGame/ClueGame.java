@@ -143,17 +143,21 @@ public class ClueGame {
 		return this.cards;
 	}
 	
-	public void makeAccusation() {
-		answer = new Solution ("wrong", "wrong", "wrong");
+	public boolean checkAccusation(Solution sol) {
+		if (sol.getPerson().equals(solution.getPerson())) {
+			if (sol.getWeapon().equals(solution.getWeapon())) {
+				if (sol.getRoom().equals(solution.getRoom())) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 	
 	public Solution getSolution() {
 		return solution;
 	}
 	
-	public Solution getAccusation() {
-		return answer;
-	}
 }
 
 

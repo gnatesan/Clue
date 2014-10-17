@@ -1,0 +1,430 @@
+commit e85430c55ab024bf37c5a7840b68ad613e4a7e5b
+Author: Gokul Natesan <gnatesan@mines.edu>
+Date:   Thu Oct 16 23:09:35 2014 -0600
+
+    Wrote the failing test for testAccusation
+
+commit 06ebae026a1aa01c9d95bce35125661e18796c16
+Author: Eric L. Dattore <eric.dattore@gmail.com>
+Date:   Thu Oct 16 22:02:59 2014 -0600
+
+    Minor refactoring to ensure correctness.
+
+commit 385bf1c8d0dceab3e8a68c4bc234b4673160b07d
+Author: Eric L. Dattore <eric.dattore@gmail.com>
+Date:   Thu Oct 16 21:59:21 2014 -0600
+
+    Wrote code to pass the card dealing tests.
+
+commit 5234e953af8f7cbd3e310f55f9d59bbafdfaf416
+Author: Eric L. Dattore <eric.dattore@gmail.com>
+Date:   Thu Oct 16 21:43:55 2014 -0600
+
+    Wrote failing tests for dealing the deck of cards.
+
+commit 32a3f27c397d91be56382c32a0157bf4db6ccd10
+Author: Eric L. Dattore <eric.dattore@gmail.com>
+Date:   Thu Oct 16 20:59:51 2014 -0600
+
+    Wrote code to pass card config loading tests. Amended slightly faulty card config test too.
+
+commit 0bd75257b56d7bea3ff323a2ec96532c9400133d
+Author: Eric L. Dattore <eric.dattore@gmail.com>
+Date:   Thu Oct 16 20:51:56 2014 -0600
+
+    Completed failing tests for loading cards.
+
+commit f74cb5da5a366b4ba19f674af9c805ac19efb79c
+Author: Eric L. Dattore <eric.dattore@gmail.com>
+Date:   Thu Oct 16 20:46:36 2014 -0600
+
+    Wrote tests for loading cards. Adding necessary components to make test fail and not result in error.
+
+commit 538947ea4665f91472042a5eebb3f02fce1f23a5
+Merge: 2b6cb95 9ac44ae
+Author: Eric L. Dattore <eric.dattore@gmail.com>
+Date:   Thu Oct 16 20:07:05 2014 -0600
+
+    Merged conflict in GameSetupTests between Gokul's version and mine.
+
+commit 9ac44aea647a01c96cd3efac35609699ad9361af
+Author: Gokul Natesan <gnatesan@mines.edu>
+Date:   Thu Oct 16 19:50:06 2014 -0600
+
+    Made the tests for loadPlayerConfig all pass
+
+commit 5b80188b9587fad08e89bf431a0de4a326218569
+Author: Gokul Natesan <gnatesan@mines.edu>
+Date:   Thu Oct 16 19:45:05 2014 -0600
+
+    Created classes for Player, HumanPlayer, and ComputerPlayer. Wrote the failing test for loadPlayerConfig
+
+commit 2b6cb9597db800b41ddbf22020795dbd728bead0
+Author: Eric L. Dattore <eric.dattore@gmail.com>
+Date:   Thu Oct 16 18:50:59 2014 -0600
+
+    Added skeleton of GameSetupTests.
+
+commit d6ecc5d6271a8927d75755c0bb1a92f4a9ef8a23
+Author: Eric L. Dattore <eric.dattore@gmail.com>
+Date:   Thu Oct 16 18:41:52 2014 -0600
+
+    Renamed cards config file.
+
+commit b0fff7e2b0996a19b21fff0f4f3e2bb5fad9d2fb
+Author: Eric L. Dattore <eric.dattore@gmail.com>
+Date:   Thu Oct 16 18:38:58 2014 -0600
+
+    Finished card config file.
+
+commit cefec791195123306db3aa23656664d927da7486
+Author: Eric L. Dattore <eric.dattore@gmail.com>
+Date:   Thu Oct 16 14:59:51 2014 -0600
+
+    Added skeleton of cards.txt.
+
+commit 1fe10193803696d5c5f4dad7b0775c70f73987a9
+Author: Tyler Thorn <tthorn@mines.edu>
+Date:   Wed Oct 1 20:17:52 2014 -0600
+
+    Fixed indentation and Sysout messages.
+
+commit 817aad8cccd2b6371cc2eaf5a91d9d0579319d91
+Author: Tyler Thorn <tthorn@mines.edu>
+Date:   Wed Oct 1 20:05:47 2014 -0600
+
+    All tests pass!
+
+commit bdadec418152c9b4ac68614694e5e9a1c22752d8
+Author: Stephen Kennicutt <skennicu@mymail.mines.edu>
+Date:   Wed Oct 1 19:37:21 2014 -0600
+
+    Profs adj tests work
+
+commit 299112751476c6d15c0f2445559164fa22f64781
+Author: Stephen Kennicutt <skennicu@mymail.mines.edu>
+Date:   Wed Oct 1 18:40:21 2014 -0600
+
+    Fixed most calcTargets issues
+
+commit fcef041102855d6d43085b237d597020fa7b1f4d
+Author: Tyler Thorn <tthorn@mines.edu>
+Date:   Wed Oct 1 11:36:34 2014 -0600
+
+    Passes all Adjacency tests, need to fix calcTargets.
+
+commit e363e5e31837e4ccbf8c80da59a7c8649d5ddf6f
+Author: Tyler Thorn <tthorn@mines.edu>
+Date:   Tue Sep 30 23:39:08 2014 -0600
+
+    ClueBoard part II finished
+
+commit 7df482b0531a51509b3b48a9f6fb79d7124c8544
+Author: Stephen Kennicutt <skennicu@mymail.mines.edu>
+Date:   Tue Sep 30 22:35:26 2014 -0600
+
+    Added our adj tests
+
+commit a698648f3bb40c939eb896f92abb3191ffe2f31c
+Author: Tyler Thorn <tthorn@mines.edu>
+Date:   Tue Sep 30 19:53:30 2014 -0600
+
+    Added Professors tests.
+
+commit b6fb0ddd7d419a4151acd1f9654d09b1518dbd62
+Author: Tyler Thorn <tthorn@mines.edu>
+Date:   Tue Sep 30 19:53:05 2014 -0600
+
+    Added Professors tests.
+
+commit e62b45e8503026692d28f8d230f522d30ec84c5f
+Author: Tyler Thorn <tthorn@mines.edu>
+Date:   Tue Sep 30 19:24:27 2014 -0600
+
+    Passes all CR tests without any modification!
+
+commit a0cb3dcb4096ad567b2c2dc63c46ef37759e26bf
+Author: Stephen Kennicutt <skennicu@mymail.mines.edu>
+Date:   Tue Sep 30 15:12:55 2014 -0600
+
+    All adj tests work. Need to work on targets
+
+commit 799529f5465c6355824df19f9c4241cd38cacae8
+Author: Stephen Kennicutt <skennicu@mymail.mines.edu>
+Date:   Tue Sep 30 14:45:09 2014 -0600
+
+    2 tests working
+
+commit d0ca08762f37712de97b49decea142d7af5fb9fb
+Author: Stephen Kennicutt <skennicu@mymail.mines.edu>
+Date:   Tue Sep 30 14:06:03 2014 -0600
+
+    Added test case for adjacency
+
+commit e426ee5299053470615d965c1d45fc46dd58b795
+Author: Tyler Thorn <tthorn@mines.edu>
+Date:   Tue Sep 30 13:47:20 2014 -0600
+
+    Started adjacency tests
+
+commit 6c7a3dbdb9e8e14953afd599997d7c4795913574
+Author: Stephen Kennicutt <skennicu@mymail.mines.edu>
+Date:   Tue Sep 30 13:36:38 2014 -0600
+
+    Added Proper Adj Create method
+
+commit 47258f8bad634bf21fedf0249cca49e5fec77a9b
+Author: Stephen Kennicutt <skennicu@mymail.mines.edu>
+Date:   Tue Sep 30 13:18:44 2014 -0600
+
+    Added Adj Stubs
+
+commit 74f2ffb7f7b1839c3890c5574ae83a092c50532c
+Author: Tyler Thorn <tthorn@mines.edu>
+Date:   Tue Sep 30 13:00:12 2014 -0600
+
+    Instructions for resetting to old commit
+
+commit 89dba9621a62660da0787d16892da8545874daa5
+Author: Tyler Thorn <tthorn@mines.edu>
+Date:   Tue Sep 30 12:55:44 2014 -0600
+
+    Back to working state
+
+commit f0ac136fcab36192250e9d611b0b2ef9fce44332
+Author: Tyler Thorn <tthorn@mines.edu>
+Date:   Tue Sep 30 12:35:01 2014 -0600
+
+    Passes all JUnit tests.
+
+commit d9fddd98a13bb62d68bc0080cc7c1de1ed562480
+Author: Stephen Kennicutt <skennicu@mymail.mines.edu>
+Date:   Tue Sep 30 11:31:08 2014 -0600
+
+    Everything but exception is finished
+    
+    Need to finish exception BadConfigFormat
+
+commit 21520c8f9a24ef1cca8aba95e12099ee29455b0c
+Author: Stephen Kennicutt <skennicu@mymail.mines.edu>
+Date:   Tue Sep 30 11:12:27 2014 -0600
+
+    Changes. Profs test doesn't work
+
+commit 4c2e6e37d10adbed1b89a160f9426ee7f005135c
+Author: Tyler Thorn <tthorn@mines.edu>
+Date:   Mon Sep 29 23:25:33 2014 -0600
+
+    Passes all BoardConfigTests.
+
+commit 94f07a6cb5767fb689f5c3da406cc78851e63e78
+Author: Stephen Kennicutt <skennicu@mymail.mines.edu>
+Date:   Mon Sep 29 22:20:05 2014 -0600
+
+    Random Changes
+
+commit c8ac3f3f7ec761c72633ff40d5b71852133d1c4c
+Author: Tyler Thorn <tthorn@mines.edu>
+Date:   Mon Sep 29 20:49:26 2014 -0600
+
+    Made some headway, causing NPE though.
+
+commit 3b830e096514c1d24d70c6705f6db6f1348d4460
+Author: Stephen Kennicutt <skennicu@mymail.mines.edu>
+Date:   Mon Sep 29 15:13:43 2014 -0600
+
+    Added some more functionality
+
+commit 01456a416e91de56aabb28fa0cc1231f4bd54053
+Author: Stephen Kennicutt <skennicu@mymail.mines.edu>
+Date:   Mon Sep 29 14:12:56 2014 -0600
+
+    Cleaned up code
+
+commit d5515734cd3f0c4c8e54cd07ca327f15f63d947a
+Author: Stephen Kennicutt <skennicu@mymail.mines.edu>
+Date:   Mon Sep 29 14:09:33 2014 -0600
+
+    Fixed null pointer exceptions
+
+commit 4b31002ebdc9132090e45b47370fec6e868b489e
+Author: Tyler Thorn <tthorn@mines.edu>
+Date:   Mon Sep 29 12:01:54 2014 -0600
+
+    Fixed wrong package error.
+
+commit 1b2a45696295a668a2a9baba3730698408f5d5f7
+Author: Tyler Thorn <tthorn@mines.edu>
+Date:   Sun Sep 28 19:05:43 2014 -0600
+
+    :circus_tent: Added .gitattributes
+
+commit 2b2a93a108a81e4824bc2b8e2c132222b9fbf8c9
+Author: Tyler Thorn <tthorn@mines.edu>
+Date:   Fri Sep 26 22:12:30 2014 -0600
+
+    Started implementing methods. Reads config file, still working at parcing at commas and can't add RoomCell to cells (Array of BoardCell).
+
+commit 2e3b06a589175860c5313f9123486a32fac2a50d
+Author: Tyler Thorn <tthorn@mines.edu>
+Date:   Thu Sep 25 23:21:07 2014 -0600
+
+    Fixed a few methods so tests will run and ready for methods to be implemented.
+
+commit 0315740fd1376dda3c88a2dccbb1c2224dde5d96
+Author: Stephen Kennicutt <skennicu@mymail.mines.edu>
+Date:   Thu Sep 25 22:39:52 2014 -0600
+
+    Added test framework
+
+commit 0abd8413eb2d0685f62ff976e13ec4919db952e2
+Author: Tyler Thorn <tthorn@mines.edu>
+Date:   Thu Sep 25 20:00:52 2014 -0600
+
+    Start of the real Clue
+
+commit 1e6bf2f74df76aff0d1c94e6d4a64be6d4a850b7
+Author: Tyler Thorn <tthorn@mines.edu>
+Date:   Thu Sep 25 19:32:05 2014 -0600
+
+    Passes all tests! Finally!
+
+commit b96d2f99fd1e61666dbe43de2685117a403d776b
+Merge: 027e0ef 586beed
+Author: Tyler Thorn <tthorn@mines.edu>
+Date:   Thu Sep 25 19:02:59 2014 -0600
+
+    Merge branch 'master' of https://github.com/tthorn/Clue
+
+commit 027e0ef8bc5d10d5952692c9fa3e3bab1fcca8e0
+Author: Tyler Thorn <tthorn@mines.edu>
+Date:   Thu Sep 25 19:02:52 2014 -0600
+
+    Passes all tests.
+
+commit 586beed2b3cbfd87c611fae20957b4925de248ce
+Author: Stephen Kennicutt <skennicu@mymail.mines.edu>
+Date:   Thu Sep 25 18:59:15 2014 -0600
+
+    Made some minor changes
+
+commit 3d9b525b26a6f8358dc03d658059f6ec649b796a
+Author: Stephen Kennicutt <skennicu@mymail.mines.edu>
+Date:   Thu Sep 25 18:40:00 2014 -0600
+
+    Stack overflow error is fixed
+
+commit 4bd38abe42b77b2988a2fc23c0ef14620dff725c
+Author: Tyler Thorn <tthorn@mines.edu>
+Date:   Thu Sep 25 17:39:04 2014 -0600
+
+    Tests work for roll of 1 but not higher
+
+commit 7008b9c86401245f4647ab2f71132a1203ec21e7
+Author: Stephen Kennicutt <skennicu@mymail.mines.edu>
+Date:   Thu Sep 25 17:10:22 2014 -0600
+
+    Finished the calcTargets and findAllTargets method
+
+commit 55972d1e09880332f8f2ddfc1c21663509460f11
+Author: Tyler Thorn <tthorn@mines.edu>
+Date:   Thu Sep 25 16:16:36 2014 -0600
+
+    Condenced the Adjacency finder, need help with targets.
+
+commit 315b9aea15c4c02583303ff2526e9d44020eeb34
+Author: Stephen Kennicutt <skennicu@mymail.mines.edu>
+Date:   Thu Sep 25 14:01:44 2014 -0600
+
+    Added a try/catch to create adjacency list
+
+commit 2b7981b09c3edb93904c508e1d6b8acec10d5e2e
+Author: Tyler Thorn <tthorn@mines.edu>
+Date:   Thu Sep 25 12:17:18 2014 -0600
+
+    Passes all adjacency tests
+
+commit 0499f2c31d0d042fe2cf08240935d360d1b2def0
+Author: Stephen Kennicutt <skennicu@mymail.mines.edu>
+Date:   Wed Sep 24 21:19:00 2014 -0600
+
+    Fixed NullPointerException when initializing board
+
+commit 081725ccb31d17c3ee28cdd3c3dd3ad6c5c499f4
+Author: Tyler Thorn <tthorn@mines.edu>
+Date:   Wed Sep 24 21:11:48 2014 -0600
+
+    Fixed return types.
+
+commit c860277d99e10914e55d78ce28ad78a27913001c
+Author: Tyler Thorn <tthorn@mines.edu>
+Date:   Wed Sep 24 15:53:55 2014 -0600
+
+    Finished up the failing tests.
+
+commit 9fc876522872bcd81d15aae5ad6f52f3460f253c
+Merge: 1acf7a7 e349b02
+Author: Tyler Thorn <tthorn@mines.edu>
+Date:   Wed Sep 24 15:30:59 2014 -0600
+
+    Merge branch 'master' of https://github.com/tthorn/Clue
+
+commit 1acf7a712eb3d7085f4cf7deb0aa54a575f45dbb
+Author: Tyler Thorn <tthorn@mines.edu>
+Date:   Wed Sep 24 15:30:26 2014 -0600
+
+    .gitignore changed.
+
+commit e349b0290f5885a6a6c81fb8d7bdc30a0bb2594c
+Author: Stephen Kennicutt <skennicu@mymail.mines.edu>
+Date:   Wed Sep 24 12:46:46 2014 -0600
+
+    Filled in the rest of the testing functions
+
+commit 36eaaaef39c5f5e248426e8ddaa4801809a81132
+Author: Stephen Kennicutt <skennicu@mymail.mines.edu>
+Date:   Wed Sep 24 12:40:33 2014 -0600
+
+    Added some more methods
+
+commit 3638e9f60154b6487822c8309773d84569309f5a
+Author: Stephen Kennicutt <skennicu@mymail.mines.edu>
+Date:   Wed Sep 24 12:30:25 2014 -0600
+
+    Added getCell method
+
+commit 96c4f151d4aa4b44eb9868b4178a31ead2c83f3f
+Author: Tyler Thorn <tthorn@mines.edu>
+Date:   Wed Sep 24 12:05:29 2014 -0600
+
+    Added some implementation to tests
+
+commit 4532941d57d60a5da07e4f3a2cfbd6fda6ba9240
+Author: Tyler Thorn <tthorn@mines.edu>
+Date:   Tue Sep 23 19:16:39 2014 -0600
+
+    Fixed two colors in the layout.
+
+commit e98f9ecbcffb7dec163d4e2bb261108cb2e78db4
+Author: Tyler Thorn <tthorn@mines.edu>
+Date:   Tue Sep 23 19:09:17 2014 -0600
+
+    Skeleton created. Put in a couple of TODOs and have some cclarification questions.
+
+commit 2635c663f81e7a995a8ba94338a8c3cfbec03c3d
+Author: unknown <tthorn@MZ022-27.adit.mines.edu>
+Date:   Tue Sep 23 12:11:16 2014 -0600
+
+    .gitignore commit
+
+commit d3a800c1c33ca45a4bc5341ef686117eab004ceb
+Author: unknown <tthorn@MZ022-27.adit.mines.edu>
+Date:   Tue Sep 23 12:07:43 2014 -0600
+
+    Clue board in both excel and csv files.
+
+commit 83b4c07d5219953db35240a6242a411a809fc8c7
+Author: Tyler Thorn <tthorn@mines.edu>
+Date:   Thu Sep 18 12:35:52 2014 -0600
+
+    Initial commit
