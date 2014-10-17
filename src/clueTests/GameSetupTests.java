@@ -15,7 +15,7 @@ public class GameSetupTests {
 	
 	@BeforeClass
 	public static void setUp() throws FileNotFoundException, BadConfigFormatException{
-		game = new ClueGame("ClueLayout.csv", "ClueLegend.txt", "CardConfig.csv");
+		game = new ClueGame("ClueLayout.csv", "ClueLegend.txt");
 		game.loadConfigFiles();
 		board = game.getBoard();
 	}
@@ -27,12 +27,12 @@ public class GameSetupTests {
 	@Test
 	public void testLoadCardConfig() {
 		// Verify the total number of cards loaded from the configuration file
-		Assert.assertEquals(21, game.getCards().size())
+		Assert.assertEquals(21, game.getCards().size());
 		
 		// Verify the categories of cards and their count
 		Assert.assertEquals(Card.CardType.PERSON, game.getCards().get(0));
-		Assert.assertEquals(Card.CardType.WEAPON, game.getCards.get(6));
-		Assert.assertEquals(Card.CardType.ROOM, game.getCards.get(12));
+		Assert.assertEquals(Card.CardType.WEAPON, game.getCards().get(6));
+		Assert.assertEquals(Card.CardType.ROOM, game.getCards().get(12));
 	}
 	
 	@Test

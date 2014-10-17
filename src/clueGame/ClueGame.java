@@ -11,7 +11,7 @@ public class ClueGame {
 	private ArrayList<Player> players;
 	private ArrayList<Card> cards;
 	
-	public ClueGame(String s1, String s2, String s3) {
+	public ClueGame(String s1, String s2) {
 		super();
 		BoardConfig = s1;
 		BoardRoomConfig = s2;
@@ -35,7 +35,7 @@ public class ClueGame {
 			this.loadRoomConfig();
 			this.loadBoardConfig();
 			this.loadPlayerConfig();
-			this.loadCardConfig();
+			this.loadCardConfig("CardConfig.csv");
 		} catch (FileNotFoundException | BadConfigFormatException e){
 			System.out.println(e.getMessage());
 		}
@@ -81,8 +81,12 @@ public class ClueGame {
 		in.close();
 	}
 	
-	public void loadCardConfig() throws FileNotFoundException, BadConfigFormatException {
+	public void loadCardConfig(String config) throws FileNotFoundException, BadConfigFormatException {
 		
+	}
+	
+	public ArrayList<Card> getCards() {
+		return this.cards;
 	}
 }
 
