@@ -11,6 +11,7 @@ public class ClueGame {
 	private ArrayList<Player> players;
 	private ArrayList<Card> cards;
 	private Solution solution;
+	private Solution answer;
 	
 	public ClueGame(String s1, String s2) {
 		super();
@@ -140,6 +141,18 @@ public class ClueGame {
 	
 	public ArrayList<Card> getCards() {
 		return this.cards;
+	}
+	
+	public void makeAccusation() {
+		answer = new Solution ("wrong", "wrong", "wrong");
+	}
+	
+	public Solution getSolution() {
+		return solution;
+	}
+	
+	public Solution getAccusation() {
+		return answer;
 	}
 }
 

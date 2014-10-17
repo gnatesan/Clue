@@ -87,5 +87,14 @@ public class GameSetupTests {
 		Assert.assertEquals(1, test.get(5).getCol());
 		
 	}
+	
+	@Test
+	public void testAccusation() {
+		Solution s = game.getSolution();
+		game.makeAccusation();
+		Solution invalid = game.getAccusation();
+		Assert.assertEquals(s.getPerson(), invalid.getPerson());
+		
+	}
 
 }
