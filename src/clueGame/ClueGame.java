@@ -8,21 +8,24 @@ public class ClueGame {
 	private Board clueBoard;
 	private String BoardConfig;
 	private String BoardRoomConfig;
-	private ArrayList <Player> players;
+	private ArrayList<Player> players;
+	private ArrayList<Card> cards;
 	
-	public ClueGame(String s1, String s2) {
+	public ClueGame(String s1, String s2, String s3) {
 		super();
 		BoardConfig = s1;
 		BoardRoomConfig = s2;
 		clueBoard = new Board(BoardConfig, BoardRoomConfig);
-		players = new ArrayList <Player> (6);
+		players = new ArrayList<Player>(6);
+		cards = new ArrayList<Card>(6);
 	}
 	public ClueGame() {
 		super();
 		BoardConfig = "ClueLayout.csv";
 		BoardRoomConfig = "ClueLegend.txt";
 		clueBoard = new Board(BoardConfig, BoardRoomConfig);
-		players = new ArrayList <Player> (6);
+		players = new ArrayList<Player>(6);
+		cards = new ArrayList<Card>(6);
 	}
 	public Board getBoard() {
 		return clueBoard;
@@ -32,6 +35,7 @@ public class ClueGame {
 			this.loadRoomConfig();
 			this.loadBoardConfig();
 			this.loadPlayerConfig();
+			this.loadCardConfig();
 		} catch (FileNotFoundException | BadConfigFormatException e){
 			System.out.println(e.getMessage());
 		}
@@ -75,6 +79,10 @@ public class ClueGame {
 			players.add(test);
 		}
 		in.close();
+	}
+	
+	public void loadCardConfig() throws FileNotFoundException, BadConfigFormatException {
+		
 	}
 }
 
