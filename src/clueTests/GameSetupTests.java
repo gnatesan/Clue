@@ -35,6 +35,31 @@ public class GameSetupTests {
 		Assert.assertEquals(Card.CardType.ROOM, game.getCards().get(12).getType());
 	}
 	
+	/**
+	 * Test the card dealing results. Test that the cards are dealt as evenly as possible and no duplicates are dealt.
+	 */
+	@Test
+	public void testCardDealing() {
+		ArrayList<Player> players = game.getPlayers();
+		// Check that each player has the correct number of cards
+		// Three cards should be taken out of play as the solution
+		// Leaving three for each of the six players
+		Assert.assertEquals(3, players.get(0).getCards());
+		Assert.assertEquals(3, players.get(1).getCards());
+		Assert.assertEquals(3, players.get(2).getCards());
+		Assert.assertEquals(3, players.get(3).getCards());
+		Assert.assertEquals(3, players.get(4).getCards());
+		Assert.assertEquals(3, players.get(5).getCards());
+		
+		// Check all cards have been dealt
+		Assert.assertEquals(0, game.getCards().size());
+		
+		// Three tests to check that players don't have identical cards
+		Assert.assertNotEquals(players.get(0).getCards().get(0), players.get(1).getCards().get(1));
+		Assert.assertNotEquals(players.get(1).getCards().get(1), players.get(2).getCards().get(2));
+		Assert.assertNotEquals(players.get(2).getCards().get(2), players.get(3).getCards().get(0));
+	}
+	
 	@Test
 	public void testLoadPlayerConfig() {
 		ArrayList <Player> test = game.getPlayers();

@@ -1,10 +1,17 @@
 package clueGame;
 
+import java.util.ArrayList;
+
 public class Player {
 	private String name;
 	private String color;
 	private int row;
 	private int col;
+	private ArrayList<Card> cards;
+	
+	public Player() {
+		this.cards = new ArrayList<Card>(3);
+	}
 	
 	public int getRow() {
 		return row;
@@ -40,6 +47,10 @@ public class Player {
 
 	public Player(String name) {
 		this.name = name;
+	}
+	
+	public ArrayList<Card> getCards() {
+		return this.cards;
 	}
 	
 	/*public Card disproveSuggestion(String person, String room, String weapon) {
