@@ -113,7 +113,25 @@ public class ClueGame {
 	}
 	
 	public void dealCards() {
+		ArrayList<Card> tempList = new ArrayList<Card>(this.cards);
+		// Choose random cards from the list for the solution
+		Random rand = new Random();
+		Card one = tempList.get(rand.nextInt(6));
+		Card two = tempList.get(rand.nextInt(6) + 6);
+		Card three = tempList.get(rand.nextInt(9) + 12);
 		
+		this.solution = new Solution(one.getName(), two.getName(), three.getName());
+
+		tempList.remove(one);
+		tempList.remove(two);
+		tempList.remove(three);
+
+		// Go from 0 to size - 1 of the cards and apply modulus to get player #
+		for (int i = 0; i < tempList.size(); i++) {
+			int player = i % 6;
+			
+			this.players.get(player).addCard(tempList.get(rand.nextInt(tempList.size())));
+		}
 	}
 	
 	public ArrayList<Card> getCards() {

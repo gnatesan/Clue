@@ -44,15 +44,20 @@ public class GameSetupTests {
 		// Check that each player has the correct number of cards
 		// Three cards should be taken out of play as the solution
 		// Leaving three for each of the six players
-		Assert.assertEquals(3, players.get(0).getCards());
-		Assert.assertEquals(3, players.get(1).getCards());
-		Assert.assertEquals(3, players.get(2).getCards());
-		Assert.assertEquals(3, players.get(3).getCards());
-		Assert.assertEquals(3, players.get(4).getCards());
-		Assert.assertEquals(3, players.get(5).getCards());
+		Assert.assertEquals(3, players.get(0).getCards().size());
+		Assert.assertEquals(3, players.get(1).getCards().size());
+		Assert.assertEquals(3, players.get(2).getCards().size());
+		Assert.assertEquals(3, players.get(3).getCards().size());
+		Assert.assertEquals(3, players.get(4).getCards().size());
+		Assert.assertEquals(3, players.get(5).getCards().size());
 		
 		// Check all cards have been dealt
-		Assert.assertEquals(0, game.getCards().size());
+		int dealtCards = 0;
+		for (int i = 0; i < game.getPlayers().size(); i++) {
+			dealtCards += game.getPlayers().get(i).getCards().size();
+		}
+		
+		Assert.assertEquals(18, dealtCards);
 		
 		// Three tests to check that players don't have identical cards
 		Assert.assertNotEquals(players.get(0).getCards().get(0), players.get(1).getCards().get(1));

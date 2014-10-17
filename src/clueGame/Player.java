@@ -9,8 +9,9 @@ public class Player {
 	private int col;
 	private ArrayList<Card> cards;
 	
-	public Player() {
-		this.cards = new ArrayList<Card>(3);
+	public Player(String name) {
+		this.name = name;
+		this.cards = new ArrayList<Card>();
 	}
 	
 	public int getRow() {
@@ -44,9 +45,9 @@ public class Player {
 	public void setColor(String color) {
 		this.color = color;
 	}
-
-	public Player(String name) {
-		this.name = name;
+	
+	public void addCard(Card c) {
+		cards.add(c);
 	}
 	
 	public ArrayList<Card> getCards() {
