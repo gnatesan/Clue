@@ -55,12 +55,26 @@ public class ClueGame {
 	}
 	
 	public void loadPlayerConfig() throws FileNotFoundException, BadConfigFormatException{
-		//Player test = new Player("wrong name");
-		Player test = new Player("wrong name");
-		test.setColor("wrong color");
-		test.setRow(-1);
-		test.setCol(-1);
-		players.add(test);
+		Player test;
+		boolean first = true;
+		String[] line;
+		FileReader reader = new FileReader("Player.txt");
+		Scanner in = new Scanner(reader);
+		while (in.hasNextLine()) {
+			line = in.nextLine().split(" ");
+			if (!first) {
+				test = new HumanPlayer(line[0]);
+				first = false;
+			}
+			else {
+				test = new ComputerPlayer(line[0]);
+			}
+			test.setColor(line[1]);
+			test.setRow(Integer.parseInt(line[2]));
+			test.setCol(Integer.parseInt(line[3]));
+			players.add(test);
+		}
+		in.close();
 	}
 }
 
