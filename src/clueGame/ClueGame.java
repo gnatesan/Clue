@@ -127,10 +127,14 @@ public class ClueGame {
 		tempList.remove(three);
 
 		// Go from 0 to size - 1 of the cards and apply modulus to get player #
-		for (int i = 0; i < tempList.size(); i++) {
+		int totalCards = tempList.size();
+		for (int i = 0; i < totalCards; i++) {
 			int player = i % 6;
+			Card nextCard = tempList.get(rand.nextInt(tempList.size()));
 			
-			this.players.get(player).addCard(tempList.get(rand.nextInt(tempList.size())));
+			this.players.get(player).addCard(nextCard);
+			
+			tempList.remove(nextCard);
 		}
 	}
 	
