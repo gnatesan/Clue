@@ -247,6 +247,7 @@ public class GameActionTests {
 	public void testComputerSuggestion() {
 		int Ecount = 0;
 		int Scount = 0;
+		int randCount = 0;
 		ComputerPlayer cp = new ComputerPlayer("computer");
 		Suggestion one = new Suggestion("Emily", "Rope", "Ballroom");
 		for (int i = 0; i < game.getPlayers().size(); i++) {
@@ -260,8 +261,11 @@ public class GameActionTests {
 				cp.updateSeen(game.getPlayers().get(i).getCards().get(j));
 			}
 		}
-		//Test for only suggestion is possible
-		Assert.assertTrue(cp.createSuggestion("Ballroom", game.getCards()).equals(one));
+		//Test suggestions aren't found in the seen card list
+		Suggestion s1 = cp.createSuggestion("Ballroom", game.getCards());
+		Assert.assertFalse(cp.getSeen().contains(s1.getPerson()));
+		Assert.assertFalse(cp.getSeen().contains(s1.getWeapon()));
+		Assert.assertFalse(cp.getSeen().contains(s1.getRoom()));
 		
 		
 		ComputerPlayer cp2 = new ComputerPlayer("computer2");
@@ -281,17 +285,20 @@ public class GameActionTests {
 		
 		// Loop to get suggestions, count each suggestion returned
 		for (int i = 0; i < 100; i++) {
-			Suggestion s = cp.createSuggestion("Ballroom", game.getCards());
+			Suggestion s = cp2.createSuggestion("Ballroom", game.getCards());
 			if (s.equals(one)) {
 				Ecount++;
 			} else if (s.equals(two)) {
 				Scount++;
+			} else {
+				randCount++;
 			}
 		}
 		
 		//Test for 2 possible suggestions
-		Assert.assertEquals(100, Ecount + Scount);
+		Assert.assertEquals(100, Ecount + Scount + randCount);
 		Assert.assertTrue(Ecount > 0);
 		Assert.assertTrue(Scount > 0);
+		Assert.assertTrue(randCount > 0);
 	}
 }

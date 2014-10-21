@@ -38,17 +38,32 @@ public class ComputerPlayer extends Player {
 	}
 
 	public Suggestion createSuggestion(String currentRoom, ArrayList<Card> cards) {
-//		for (Card c : seen) {
-//			System.out.println(c.getName() + " " + c.getType());
-//		}
+		ArrayList<String> personOptions = new ArrayList<String>();
+		ArrayList<String> weaponOptions = new ArrayList<String>();
 		
 		for (int i = 0; i < cards.size(); i++) {
 			if (!seen.contains(cards.get(i))) {
-				if (cards.get(i).getType() == Card.CardType.PERSON)
-						person = cards.get(i).getName();
-				else if (cards.get(i).getType() == Card.CardType.WEAPON)
-						weapon = cards.get(i).getName();
+				if (cards.get(i).getType() == Card.CardType.PERSON) {
+						personOptions.add(cards.get(i).getName());
+				}
+				else if (cards.get(i).getType() == Card.CardType.WEAPON) {
+						weaponOptions.add(cards.get(i).getName());
+				}
 			}
+		}
+		
+		// Pick suggestion from lists
+		Random rand = new Random();
+		if (personOptions.size() > 1) {
+			person = personOptions.get(rand.nextInt(personOptions.size()));
+		} else {
+			person = personOptions.get(0);
+		}
+		
+		if (weaponOptions.size() > 1) {
+			weapon = weaponOptions.get(rand.nextInt(weaponOptions.size()));
+		} else {
+			weapon = weaponOptions.get(0);
 		}
 		
 		return new Suggestion(person, weapon, currentRoom);
