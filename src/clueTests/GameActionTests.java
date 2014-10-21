@@ -33,7 +33,7 @@ public class GameActionTests {
 		LindaCard = new Card("Linda", Card.CardType.PERSON);
 		WrenchCard = new Card("Wrench", Card.CardType.WEAPON);
 		RopeCard = new Card("Rope", Card.CardType.WEAPON);
-		KitchenCard = new Card("Kitcheh", Card.CardType.ROOM);
+		KitchenCard = new Card("Kitchen", Card.CardType.ROOM);
 		LoungeCard = new Card("Lounge", Card.CardType.ROOM);
 		game.loadConfigFiles();
 		board = game.getBoard();
@@ -61,11 +61,13 @@ public class GameActionTests {
 	@Test
 	public void testDisprovingSuggestion() {
 		ArrayList <Player> test = new ArrayList <Player>();
+		ArrayList <Player> test2 = new ArrayList <Player>();
 		Player first = new Player("first");
 		Player second = new Player("second");
 		int roomCount = 0;
 		int playerCount = 0;
 		int weaponCount = 0;
+		int nullCount = 0;
 		Card r = new Card("wrong room", Card.CardType.ROOM);
 		Card w = new Card("wrong weapon", Card.CardType.WEAPON);
 		Card p = new Card("wrong person", Card.CardType.PERSON);
@@ -86,22 +88,26 @@ public class GameActionTests {
 		Assert.assertEquals(game.getNullCard(), game.disproveSuggestion(r.getName(), w.getName(), p.getName(), test));
 		
 		//Test for one player, multiple possible matches
+		test.clear();
 		second.addCard(TomCard);
 		second.addCard(WrenchCard);
 		second.addCard(KitchenCard);
-		test.clear();
-		test.add(second);
-		for (int i = 0; i < 25; i++) {
-			if (game.disproveSuggestion(TomCard.getName(), WrenchCard.getName(), KitchenCard.getName(), test).equals(TomCard))
+		test2.add(second);
+		for (int i = 0; i < 5; i++) {
+			Card answer = game.disproveSuggestion(TomCard.getName(), WrenchCard.getName(), KitchenCard.getName(), test2);
+			if (answer.equals(TomCard))
 				playerCount++;
-			else if (game.disproveSuggestion(TomCard.getName(), WrenchCard.getName(), KitchenCard.getName(), test).equals(WrenchCard))
+			else if (answer.equals(WrenchCard))
 				weaponCount++;
-			else if (game.disproveSuggestion(TomCard.getName(), WrenchCard.getName(), KitchenCard.getName(), test).equals(KitchenCard))
+			else if (answer.equals(KitchenCard))
 				roomCount++;
+			else
+				nullCount++;
 		}
-		System.out.println(weaponCount);
+		
 		Assert.assertTrue(playerCount > 0);
 		Assert.assertTrue(weaponCount > 0);
 		Assert.assertTrue(roomCount > 0);
+		Assert.assertEquals(nullCount, 0);
 	}
 }

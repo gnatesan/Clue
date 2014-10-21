@@ -161,15 +161,24 @@ public class ClueGame {
 	}
 	
 	public Card disproveSuggestion(String room, String weapon, String person, ArrayList<Player> test) {
+		//choices.clear();
+		ArrayList <Card> choices = new ArrayList<Card>();
 		for (int i = 0; i < test.size(); i++) {
 			for (int j = 0; j < test.get(i).getCards().size(); j++) {
 				if (test.get(i).getCards().get(j).getName().equals(room))
-					return test.get(i).getCards().get(j);
-				if (test.get(i).getCards().get(j).getName().equals(weapon))
-					return test.get(i).getCards().get(j);
-				if (test.get(i).getCards().get(j).getName().equals(person))
-					return test.get(i).getCards().get(j);
+					choices.add(test.get(i).getCards().get(j));
+				else if (test.get(i).getCards().get(j).getName().equals(weapon))
+					choices.add(test.get(i).getCards().get(j));
+				else if (test.get(i).getCards().get(j).getName().equals(person))
+					choices.add(test.get(i).getCards().get(j));
 			}
+			if (choices.size() == 1)
+				return choices.get(0);
+			else if (choices.size() > 1) {
+				Random r = new Random();
+				int index = r.nextInt(choices.size());
+				return choices.get(index);
+			}	
 		}
 		return cannotDisprove;
 	}
