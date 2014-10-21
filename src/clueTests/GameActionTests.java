@@ -19,7 +19,6 @@ public class GameActionTests {
 	private static ClueGame game;
 	private static Board board;
 	private static Card TomCard;
-	private static Card T;
 	private static Card LindaCard;
 	private static Card WrenchCard;
 	private static Card RopeCard;
@@ -64,6 +63,9 @@ public class GameActionTests {
 		ArrayList <Player> test = new ArrayList <Player>();
 		Player first = new Player("first");
 		Player second = new Player("second");
+		int roomCount = 0;
+		int playerCount = 0;
+		int weaponCount = 0;
 		Card r = new Card("wrong room", Card.CardType.ROOM);
 		Card w = new Card("wrong weapon", Card.CardType.WEAPON);
 		Card p = new Card("wrong person", Card.CardType.PERSON);
@@ -77,14 +79,29 @@ public class GameActionTests {
 		first.addCard(KitchenCard);
 		first.addCard(LoungeCard);
 		test.add(first);
-		System.out.println(game.disproveSuggestion(r.getName(), w.getName(), TomCard.getName(), test).getName() + " " + game.disproveSuggestion(r.getName(), w.getName(), TomCard.getName(), test).getType());
-		//Assert.assertEquals("a", "a");
+		
 		Assert.assertEquals(TomCard, game.disproveSuggestion(r.getName(), w.getName(), TomCard.getName(), test));
 		Assert.assertEquals(KitchenCard, game.disproveSuggestion(KitchenCard.getName(), w.getName(), p.getName(), test));
 		Assert.assertEquals(WrenchCard, game.disproveSuggestion(r.getName(), WrenchCard.getName(), p.getName(), test));
 		Assert.assertEquals(game.getNullCard(), game.disproveSuggestion(r.getName(), w.getName(), p.getName(), test));
 		
 		//Test for one player, multiple possible matches
-		
+		second.addCard(TomCard);
+		second.addCard(WrenchCard);
+		second.addCard(KitchenCard);
+		test.clear();
+		test.add(second);
+		for (int i = 0; i < 25; i++) {
+			if (game.disproveSuggestion(TomCard.getName(), WrenchCard.getName(), KitchenCard.getName(), test).equals(TomCard))
+				playerCount++;
+			else if (game.disproveSuggestion(TomCard.getName(), WrenchCard.getName(), KitchenCard.getName(), test).equals(WrenchCard))
+				weaponCount++;
+			else if (game.disproveSuggestion(TomCard.getName(), WrenchCard.getName(), KitchenCard.getName(), test).equals(KitchenCard))
+				roomCount++;
+		}
+		System.out.println(weaponCount);
+		Assert.assertTrue(playerCount > 0);
+		Assert.assertTrue(weaponCount > 0);
+		Assert.assertTrue(roomCount > 0);
 	}
 }
