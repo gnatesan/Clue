@@ -168,9 +168,9 @@ public class ClueGame {
 	}
 	
 	public Card disproveSuggestion(String room, String weapon, String person, ArrayList<Player> test) {
-		this.setTurn(test.get(0));
+		//this.setTurn(test.get(0));
 		ArrayList <Card> choices = new ArrayList<Card>();
-		for (int i = 1; i < test.size(); i++) { 
+		for (int i = 0; i < test.size(); i++) { 
 			for (int j = 1; j < test.get(i).getCards().size(); j++) {
 					if (this.getTurn() != test.get(i)) {
 						if (test.get(i).getCards().get(j).getName().equals(room))
@@ -182,20 +182,20 @@ public class ClueGame {
 					}
 			}
 			if (choices.size() == 1) {
-				test.add(test.get(0));
-				test.remove(0);
+				/*test.add(test.get(0));
+				test.remove(0);*/
 				return choices.get(0);
 			}
 			else if (choices.size() > 1) {
-				test.add(test.get(0));
-				test.remove(0);
+				/*test.add(test.get(0));
+				test.remove(0);*/
 				Random r = new Random();
 				int index = r.nextInt(choices.size());
 				return choices.get(index);
 			}	
 		}
-		test.add(test.get(0));
-		test.remove(0);
+		/*test.add(test.get(0));
+		test.remove(0);*/
 		return cannotDisprove;
 	}
 	public Card getNullCard() {
