@@ -23,6 +23,12 @@ public class ClueGame {
 		players = new ArrayList<Player>(6);
 		cards = new ArrayList<Card>(6);
 	}
+	public Player getTurn() {
+		return turn;
+	}
+	public void setTurn(Player turn) {
+		this.turn = turn;
+	}
 	public ClueGame() {
 		super();
 		BoardConfig = "ClueLayout.csv";
@@ -162,25 +168,34 @@ public class ClueGame {
 	}
 	
 	public Card disproveSuggestion(String room, String weapon, String person, ArrayList<Player> test) {
-		//choices.clear();
+		this.setTurn(test.get(0));
 		ArrayList <Card> choices = new ArrayList<Card>();
-		for (int i = 0; i < test.size(); i++) {
-			for (int j = 0; j < test.get(i).getCards().size(); j++) {
-				if (test.get(i).getCards().get(j).getName().equals(room))
-					choices.add(test.get(i).getCards().get(j));
-				else if (test.get(i).getCards().get(j).getName().equals(weapon))
-					choices.add(test.get(i).getCards().get(j));
-				else if (test.get(i).getCards().get(j).getName().equals(person))
-					choices.add(test.get(i).getCards().get(j));
+		for (int i = 1; i < test.size(); i++) { 
+			for (int j = 1; j < test.get(i).getCards().size(); j++) {
+					if (this.getTurn() != test.get(i)) {
+						if (test.get(i).getCards().get(j).getName().equals(room))
+							choices.add(test.get(i).getCards().get(j));
+						else if (test.get(i).getCards().get(j).getName().equals(weapon))
+							choices.add(test.get(i).getCards().get(j));
+						else if (test.get(i).getCards().get(j).getName().equals(person))
+							choices.add(test.get(i).getCards().get(j));
+					}
 			}
-			if (choices.size() == 1)
+			if (choices.size() == 1) {
+				test.add(test.get(0));
+				test.remove(0);
 				return choices.get(0);
+			}
 			else if (choices.size() > 1) {
+				test.add(test.get(0));
+				test.remove(0);
 				Random r = new Random();
 				int index = r.nextInt(choices.size());
 				return choices.get(index);
 			}	
 		}
+		test.add(test.get(0));
+		test.remove(0);
 		return cannotDisprove;
 	}
 	public Card getNullCard() {
