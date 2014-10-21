@@ -158,11 +158,14 @@ public class ClueGame {
 		return solution;
 	}
 	
+	public Card disproveSuggestion(Card room, Card weapon, Card person) {
+		Card r = new Card("wrong type", Card.CardType.ROOM);	
+		return r;
+	}
 }
 
 
 //To reset origin master to old commit:
-
 //git checkout master
 //git reset --hard e3f1e37
 //git push --force origin master
