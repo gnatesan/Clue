@@ -20,7 +20,7 @@ public class GameActionTests {
 	
 	@BeforeClass
 	public static void setUp() throws FileNotFoundException, BadConfigFormatException{
-		game = new ClueGame("ClueLayout.csv", "ClueLegend.txt");
+		game = new ClueGame("ClueLayoutOurs.csv", "ClueLegend.txt");
 		game.loadConfigFiles();
 		board = game.getBoard();
 	}
@@ -45,7 +45,7 @@ public class GameActionTests {
 	}
 	
 	@Test
-	public void testPickLocationSelectsRoom() {
+	public void testPickLocationSelectsRandom() {
 		ComputerPlayer computer = new ComputerPlayer("Test");
 		
 		board.calcTargets(14, 16, 1);
@@ -74,21 +74,32 @@ public class GameActionTests {
 	}
 	
 	@Test
-	public void testPickLocationSelectsRandom() {
+	public void testPickLocationSelectsRoomTwoSteps() {
 		ComputerPlayer computer = new ComputerPlayer("Test");
 		
-		board.calcTargets(9,9,1);
+		board.calcTargets(13, 16, 2);
 		
 		BoardCell selected = computer.pickLocation(board.getTargets());
 		
+		Assert.assertEquals(12, selected.getRow());
+		Assert.assertEquals(17, selected.getColumn());
+	}
+	
+	@Test
+	public void testPickLocationSelectsRoom() {
+		ComputerPlayer computer = new ComputerPlayer("Test");
+		
+		board.calcTargets(9,9,1);
+
+		BoardCell selected = computer.pickLocation(board.getTargets());
+
 		Assert.assertEquals(9, selected.getRow());
-		Assert.assertEquals(8, selected.getRow());
+		Assert.assertEquals(8, selected.getColumn());
 	}
 	
 	@Test
 	public void testPickLocationRandomFromIfVisitedRoomInTargetList() {
 		ComputerPlayer computer = new ComputerPlayer("Test");
-		computer.setLastRoomVisited('L');
 		
 		board.calcTargets(9,9,1);
 		
@@ -97,6 +108,7 @@ public class GameActionTests {
 		int loc_10_9 = 0;
 		
 		for (int i = 0; i < 100; i++) {
+			computer.setLastRoomVisited('L');
 			BoardCell selected = computer.pickLocation(board.getTargets());
 			
 			if (selected == board.getCellAt(8, 9)) {
@@ -109,8 +121,8 @@ public class GameActionTests {
 		}
 		
 		Assert.assertEquals(100, loc_8_9 + loc_9_8 + loc_10_9);
-		Assert.assertTrue(loc_8_9 > 10);
-		Assert.assertTrue(loc_9_8 > 10);
-		Assert.assertTrue(loc_10_9 > 10);
+		Assert.assertTrue(loc_8_9 > 0);
+		Assert.assertTrue(loc_9_8 > 0);
+		Assert.assertTrue(loc_10_9 > 0);
 	}
 }
