@@ -11,6 +11,7 @@ import clueGame.BadConfigFormatException;
 import clueGame.Board;
 import clueGame.Card;
 import clueGame.ClueGame;
+import clueGame.HumanPlayer;
 import clueGame.Player;
 import clueGame.Solution;
 
@@ -62,8 +63,13 @@ public class GameActionTests {
 	public void testDisprovingSuggestion() {
 		ArrayList <Player> test = new ArrayList <Player>();
 		ArrayList <Player> test2 = new ArrayList <Player>();
+		ArrayList <Player> test3 = new ArrayList <Player>();
 		Player first = new Player("first");
 		Player second = new Player("second");
+		Player computer1 = new Player("cp1");
+		Player computer2 = new Player("cp2");
+		Player computer3 = new Player("cp3");
+		Player human = new HumanPlayer("human");
 		int roomCount = 0;
 		int playerCount = 0;
 		int weaponCount = 0;
@@ -88,7 +94,6 @@ public class GameActionTests {
 		Assert.assertEquals(game.getNullCard(), game.disproveSuggestion(r.getName(), w.getName(), p.getName(), test));
 		
 		//Test for one player, multiple possible matches
-		test.clear();
 		second.addCard(TomCard);
 		second.addCard(WrenchCard);
 		second.addCard(KitchenCard);
@@ -109,5 +114,19 @@ public class GameActionTests {
 		Assert.assertTrue(weaponCount > 0);
 		Assert.assertTrue(roomCount > 0);
 		Assert.assertEquals(nullCount, 0);
+		
+		//Test that all players are queried
+		computer1.addCard(TomCard);
+		computer2.addCard(LindaCard);
+		computer3.addCard(RopeCard);
+		human.addCard(WrenchCard);
+		human.addCard(KitchenCard);
+		test3.add(computer1);
+		test3.add(computer2);
+		test3.add(computer3);
+		test3.add(human);
+		
+		Assert.assertEquals(game.getNullCard(), game.disproveSuggestion("wrong", "wrong", "wrong", test3));
+		Assert.assertEquals(human.getCards().get(1), game.disproveSuggestion("wrong", "wrong", KitchenCard.getName(), test3));
 	}
 }

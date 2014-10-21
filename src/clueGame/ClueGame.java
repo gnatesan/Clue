@@ -13,6 +13,7 @@ public class ClueGame {
 	private Card cannotDisprove;
 	private Solution solution;
 	private Solution answer;
+	private Player turn;
 	
 	public ClueGame(String s1, String s2) {
 		super();
