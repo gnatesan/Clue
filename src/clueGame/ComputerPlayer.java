@@ -9,12 +9,17 @@ public class ComputerPlayer extends Player {
 		super(name);
 	}
 	
-	public void pickLocation(Set<BoardCell> targets) {
-		
+	public BoardCell pickLocation(Set<BoardCell> targets) {
+		return new WalkwayCell(1,1, 'W');
 	}
 
 	public void createSuggestion() {
 		
+	}
+	
+	// Setter only for debugging purposes
+	public void setLastRoomVisited(char room) {
+		this.lastRoomVisited = room;
 	}
 	
 	/*public void updateSeen(Card seen) {
