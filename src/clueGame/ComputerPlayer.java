@@ -1,11 +1,13 @@
 package clueGame;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Random;
 import java.util.Set;
 
 public class ComputerPlayer extends Player {
 	private char lastRoomVisited;
+	ArrayList <Card> seen = new ArrayList <Card>();
 	
 	public ComputerPlayer(String name) {
 		super(name);
@@ -29,8 +31,13 @@ public class ComputerPlayer extends Player {
 		return boardList.get(rand.nextInt(boardList.size()));
 	}
 
-	public void createSuggestion() {
-		
+	public ArrayList<Card> getSeen() {
+		return seen;
+	}
+
+	public Suggestion createSuggestion(String currentRoom) {
+		Suggestion wrong = new Suggestion("wrong", "wrong", currentRoom);
+		return wrong;
 	}
 	
 	// Setter only for debugging purposes
@@ -38,7 +45,7 @@ public class ComputerPlayer extends Player {
 		this.lastRoomVisited = room;
 	}
 	
-	/*public void updateSeen(Card seen) {
-		
-	}*/
+	public void updateSeen(Card showed) {
+		seen.add(showed);
+	}
 }

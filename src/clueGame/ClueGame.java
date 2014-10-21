@@ -61,7 +61,6 @@ public class ClueGame {
 
 	}
 	
-	//GETTER AND SETTER METHODS FOR PLAYER ARRAYLIST, FOR TESTING PURPOSES ONLY
 	public ArrayList<Player> getPlayers() {
 		return players;
 	}
@@ -118,7 +117,6 @@ public class ClueGame {
 			
 			this.cards.add(nextCard);
 		}
-		
 		in.close();
 	}
 	
@@ -168,36 +166,30 @@ public class ClueGame {
 	}
 	
 	public Card disproveSuggestion(String room, String weapon, String person, ArrayList<Player> test) {
-		//this.setTurn(test.get(0));
 		ArrayList <Card> choices = new ArrayList<Card>();
 		for (int i = 0; i < test.size(); i++) { 
-			for (int j = 1; j < test.get(i).getCards().size(); j++) {
+			for (int j = 0; j < test.get(i).getCards().size(); j++) {
 					if (this.getTurn() != test.get(i)) {
 						if (test.get(i).getCards().get(j).getName().equals(room))
 							choices.add(test.get(i).getCards().get(j));
 						else if (test.get(i).getCards().get(j).getName().equals(weapon))
 							choices.add(test.get(i).getCards().get(j));
-						else if (test.get(i).getCards().get(j).getName().equals(person))
+						if (test.get(i).getCards().get(j).getName().equals(person))
 							choices.add(test.get(i).getCards().get(j));
 					}
 			}
 			if (choices.size() == 1) {
-				/*test.add(test.get(0));
-				test.remove(0);*/
 				return choices.get(0);
 			}
 			else if (choices.size() > 1) {
-				/*test.add(test.get(0));
-				test.remove(0);*/
 				Random r = new Random();
 				int index = r.nextInt(choices.size());
 				return choices.get(index);
 			}	
 		}
-		/*test.add(test.get(0));
-		test.remove(0);*/
 		return cannotDisprove;
 	}
+
 	public Card getNullCard() {
 		return cannotDisprove;
 	}

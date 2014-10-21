@@ -2,6 +2,7 @@ package clueTests;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Random;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -16,6 +17,7 @@ import clueGame.Card;
 import clueGame.HumanPlayer;
 import clueGame.Player;
 import clueGame.Solution;
+import clueGame.Suggestion;
 
 public class GameActionTests {
 	
@@ -198,7 +200,7 @@ public class GameActionTests {
 		second.addCard(WrenchCard);
 		second.addCard(KitchenCard);
 		test2.add(second);
-		for (int i = 0; i < 5; i++) {
+		for (int i = 0; i < 25; i++) {
 			Card answer = game.disproveSuggestion(TomCard.getName(), WrenchCard.getName(), KitchenCard.getName(), test2);
 			if (answer.equals(TomCard))
 				playerCount++;
@@ -229,13 +231,51 @@ public class GameActionTests {
 		//Suggestion that no player could disprove
 		Assert.assertEquals(game.getNullCard(), game.disproveSuggestion("wrong", "wrong", "wrong", test3));
 		//Suggestion that only the human could disprove
+		Assert.assertEquals(human.getCards().get(0), game.disproveSuggestion("wrong", "wrong", WrenchCard.getName(), test3));
+		//Test if last person who can disprove suggestion can do so
 		Assert.assertEquals(human.getCards().get(1), game.disproveSuggestion("wrong", "wrong", KitchenCard.getName(), test3));
+		//Test if first person who can disprove suggestion can do so
+		Assert.assertEquals(computer2.getCards().get(0), game.disproveSuggestion(LindaCard.getName(), "wrong", "wrong", test3));
 		//Make sure if person who made suggestion was only one who could disprove it, null is returned
-		Assert.assertEquals(game.getNullCard(), game.disproveSuggestion(LindaCard.getName(), "wrong", "wrong", test3));
-		//Test the order that players are queried
-		/*for (int i = 0; i < test3.size(); i++) {
-			System.out.println(test3.get(i).get);
+		game.setTurn(test3.get(0));
+		Assert.assertEquals(null, game.disproveSuggestion(TomCard.getName(), "wrong", "wrong", test3));
+		test3.add(test3.get(0));
+		test3.remove(0);
+	}
+	
+	@Test
+	public void testComputerSuggestion() {
+		int Ecount = 0;
+		int Scount = 0;
+		ComputerPlayer cp = new ComputerPlayer("computer");
+		Suggestion one = new Suggestion("Emily", "Rope", "Ballroom");
+		for (int i = 0; i < game.getPlayers().size(); i++) {
+			for (int j = 0; j < game.getPlayers().get(i).getCards().size(); j++) {
+				if (game.getPlayers().get(i).getCards().get(j).getName() != "Emily" && game.getPlayers().get(i).getCards().get(j).getName() != "Rope" && game.getPlayers().get(i).getCards().get(j).getName() != "Ballroom") {
+					//System.out.println(game.getPlayers().get(i).getCards().get(j).getName());
+					cp.updateSeen(game.getPlayers().get(i).getCards().get(j));
+				}
+			}
+		}
+		//Test for only suggestion is possible
+		//Assert.assertEquals(cp.createSuggestion("Ballroom"), one);
+		
+		ComputerPlayer cp2 = new ComputerPlayer("computer2");
+		Suggestion two = new Suggestion("Emily", "Rope", "Ballroom");
+		Suggestion three = new Suggestion("Susan", "Rope", "Ballroom");
+		for (int x = 0; x < game.getPlayers().size(); x++) {
+			for (int y = 0; y < game.getPlayers().get(x).getCards().size(); y++) {
+				if (game.getPlayers().get(x).getCards().get(y).getName() != "Emily" && game.getPlayers().get(x).getCards().get(y).getName() != "Rope" && game.getPlayers().get(x).getCards().get(y).getName() != "Ballroom" && game.getPlayers().get(x).getCards().get(y).getName() != "Susan") {
+					cp2.updateSeen(game.getPlayers().get(x).getCards().get(y));
+				}	
+			}
+		}
+		/*for (int a = 0; a < 15; a++) {
+			Random r = new Random();
+			int index = r.nextInt();
+			
 		}*/
-		Assert.assertEquals(computer1.getCards().get(0), game.disproveSuggestion(TomCard.getName(), "wrong", "wrong", test3));
+		Assert.assertTrue(Ecount > 0);
+		Assert.assertTrue(Scount > 0);
 	}
 }
