@@ -21,7 +21,7 @@ public class ClueGame {
 		BoardRoomConfig = s2;
 		clueBoard = new Board(BoardConfig, BoardRoomConfig);
 		players = new ArrayList<Player>(6);
-		cards = new ArrayList<Card>(6);
+		cards = new ArrayList<Card>();
 	}
 	public Player getTurn() {
 		return turn;
@@ -35,7 +35,7 @@ public class ClueGame {
 		BoardRoomConfig = "ClueLegend.txt";
 		clueBoard = new Board(BoardConfig, BoardRoomConfig);
 		players = new ArrayList<Player>(6);
-		cards = new ArrayList<Card>(6);
+		cards = new ArrayList<Card>();
 		cannotDisprove = new Card(null, Card.CardType.ROOM);
 	}
 	public Board getBoard() {

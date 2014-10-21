@@ -9,7 +9,6 @@ public class ComputerPlayer extends Player {
 	private char lastRoomVisited;
 	private String weapon;
 	private String person;
-	private ClueGame game;
 	ArrayList <Card> seen = new ArrayList <Card>();
 	
 	public ComputerPlayer(String name) {
@@ -38,15 +37,20 @@ public class ComputerPlayer extends Player {
 		return seen;
 	}
 
-	public Suggestion createSuggestion(String currentRoom) {
-		for (int i = 0; i < game.getCards().size(); i++) {
-			if (!seen.contains(game.getCards().get(i))) {
-				if (game.getCards().get(i).getType().equals(Card.CardType.PERSON))
-						person = game.getCards().get(i).getName();
-				else if (game.getCards().get(i).getType().equals(Card.CardType.WEAPON))
-						weapon = game.getCards().get(i).getName();
+	public Suggestion createSuggestion(String currentRoom, ArrayList<Card> cards) {
+//		for (Card c : seen) {
+//			System.out.println(c.getName() + " " + c.getType());
+//		}
+		
+		for (int i = 0; i < cards.size(); i++) {
+			if (!seen.contains(cards.get(i))) {
+				if (cards.get(i).getType() == Card.CardType.PERSON)
+						person = cards.get(i).getName();
+				else if (cards.get(i).getType() == Card.CardType.WEAPON)
+						weapon = cards.get(i).getName();
 			}
 		}
+		
 		return new Suggestion(person, weapon, currentRoom);
 	}
 	
@@ -55,7 +59,7 @@ public class ComputerPlayer extends Player {
 		this.lastRoomVisited = room;
 	}
 	
-	public void updateSeen(Card showed) {
-		seen.add(showed);
+	public void updateSeen(Card shown) {
+		seen.add(shown);
 	}
 }

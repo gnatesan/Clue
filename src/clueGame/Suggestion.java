@@ -12,9 +12,25 @@ public class Suggestion {
 		this.weapon = weapon;
 	}
 	
-	boolean equals(Suggestion s) {
-		if (this.room.equals(s.room) && this.weapon.equals(s.weapon) && this.person.equals(s.person))
+	public String getPerson() {
+		return this.person;
+	}
+	
+	public String getRoom() {
+		return this.room;
+	}
+	
+	public String getWeapon() {
+		return this.weapon;
+	}
+	
+	@Override
+	public boolean equals(Object s) {
+		if (this.room.equalsIgnoreCase(((Suggestion)s).getRoom()) 
+				&& this.weapon.equalsIgnoreCase(((Suggestion)s).getWeapon()) 
+				&& this.person.equalsIgnoreCase(((Suggestion)s).getPerson())) {
 			return true;
+		}
 		return false;
 	}
 	

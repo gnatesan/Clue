@@ -250,33 +250,47 @@ public class GameActionTests {
 		ComputerPlayer cp = new ComputerPlayer("computer");
 		Suggestion one = new Suggestion("Emily", "Rope", "Ballroom");
 		for (int i = 0; i < game.getPlayers().size(); i++) {
-			for (int j = 0; j < game.getPlayers().get(i).getCards().size(); j++) {
-				if (game.getPlayers().get(i).getCards().get(j).getName() != "Emily" && game.getPlayers().get(i).getCards().get(j).getName() != "Rope" && game.getPlayers().get(i).getCards().get(j).getName() != "Ballroom") {
-					//System.out.println(game.getPlayers().get(i).getCards().get(j).getName());
-					cp.updateSeen(game.getPlayers().get(i).getCards().get(j));
+			for (int j = 0; j < game.getPlayers().get(i).getCards().size(); j++) {				
+				if (game.getPlayers().get(i).getCards().get(j).getName().equals("Emily") ||
+						game.getPlayers().get(i).getCards().get(j).getName().equals("Rope") ||
+						game.getPlayers().get(i).getCards().get(j).getName().equals("Ballroom")) {
+					continue;
 				}
+				
+				cp.updateSeen(game.getPlayers().get(i).getCards().get(j));
 			}
 		}
 		//Test for only suggestion is possible
-		Assert.assertEquals(cp.createSuggestion("Ballroom"), one);
+		Assert.assertTrue(cp.createSuggestion("Ballroom", game.getCards()).equals(one));
 		
 		
 		ComputerPlayer cp2 = new ComputerPlayer("computer2");
-		Suggestion two = new Suggestion("Emily", "Rope", "Ballroom");
-		Suggestion three = new Suggestion("Susan", "Rope", "Ballroom");
+		Suggestion two = new Suggestion("Susan", "Rope", "Ballroom");
 		for (int x = 0; x < game.getPlayers().size(); x++) {
-			for (int y = 0; y < game.getPlayers().get(x).getCards().size(); y++) {
-				if (game.getPlayers().get(x).getCards().get(y).getName() != "Emily" && game.getPlayers().get(x).getCards().get(y).getName() != "Rope" && game.getPlayers().get(x).getCards().get(y).getName() != "Ballroom" && game.getPlayers().get(x).getCards().get(y).getName() != "Susan") {
-					cp2.updateSeen(game.getPlayers().get(x).getCards().get(y));
-				}	
+			for (int y = 0; y < game.getPlayers().get(x).getCards().size(); y++) {				
+				if (game.getPlayers().get(x).getCards().get(y).getName().equals("Emily") ||
+						game.getPlayers().get(x).getCards().get(y).getName().equals("Rope") ||
+						game.getPlayers().get(x).getCards().get(y).getName().equals("Ballroom") ||
+						game.getPlayers().get(x).getCards().get(y).getName().equals("Susan")) {
+					continue;
+				}
+				
+				cp.updateSeen(game.getPlayers().get(x).getCards().get(y));
 			}
 		}
-		/*for (int a = 0; a < 15; a++) {
-			Random r = new Random();
-			int index = r.nextInt();
-			
-		}*/
+		
+		// Loop to get suggestions, count each suggestion returned
+		for (int i = 0; i < 100; i++) {
+			Suggestion s = cp.createSuggestion("Ballroom", game.getCards());
+			if (s.equals(one)) {
+				Ecount++;
+			} else if (s.equals(two)) {
+				Scount++;
+			}
+		}
+		
 		//Test for 2 possible suggestions
+		Assert.assertEquals(100, Ecount + Scount);
 		Assert.assertTrue(Ecount > 0);
 		Assert.assertTrue(Scount > 0);
 	}
