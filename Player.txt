@@ -2,5 +2,5 @@ John Blue 21 9
 Susan Red 16 16
 Tom Green 6 3
 Linda Orange 7 19
-Dave Brown 18 4
-Emily Purple 9 1
+Dave Gray 18 4
+Emily Pink 9 1

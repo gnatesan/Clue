@@ -1,10 +1,12 @@
 package clueGame;
 
+import java.awt.Color;
 import java.util.ArrayList;
+import java.lang.reflect.Field;
 
 public class Player {
 	private String name;
-	private String color;
+	private Color color;
 	private int row;
 	private int col;
 	private ArrayList<Card> cards;
@@ -38,12 +40,18 @@ public class Player {
 		this.name = name;
 	}
 
-	public String getColor() {
+	public Color getColor() {
 		return color;
 	}
 
-	public void setColor(String color) {
-		this.color = color;
+	public void setColor(String strColor) { 
+		try {     
+			// We can use reflection to convert the string to a color
+			Field field = Class.forName("java.awt.Color").getField(strColor.trim().toUpperCase());     
+			this.color = (Color)field.get(null); } 
+		catch (Exception e) {  
+			color = null; // Not defined } 
+		}
 	}
 	
 	public void addCard(Card c) {

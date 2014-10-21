@@ -1,8 +1,11 @@
 package clueTests;
 
 import org.junit.Assert;
+
+import java.awt.Color;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -70,19 +73,19 @@ public class GameSetupTests {
 		ArrayList <Player> test = game.getPlayers();
 		//Test human player
 		Assert.assertEquals("John", test.get(0).getName());
-		Assert.assertEquals("Blue", test.get(0).getColor());
+		Assert.assertEquals(Color.BLUE, test.get(0).getColor());
 		Assert.assertEquals(21, test.get(0).getRow());
 		Assert.assertEquals(9, test.get(0).getCol());
 		
 		//Test second to last computer player
 		Assert.assertEquals("Dave", test.get(4).getName());
-		Assert.assertEquals("Brown", test.get(4).getColor());
+		Assert.assertEquals(Color.GRAY, test.get(4).getColor());
 		Assert.assertEquals(18, test.get(4).getRow());
 		Assert.assertEquals(4, test.get(4).getCol());
 		
 		//Test last computer player
 		Assert.assertEquals("Emily", test.get(5).getName());
-		Assert.assertEquals("Purple", test.get(5).getColor());
+		Assert.assertEquals(Color.PINK, test.get(5).getColor());
 		Assert.assertEquals(9, test.get(5).getRow());
 		Assert.assertEquals(1, test.get(5).getCol());
 		
