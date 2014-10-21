@@ -61,16 +61,20 @@ public class GameActionTests {
 		Assert.assertTrue(game.checkAccusation(correct));
 	}
 	
+	// Test that the computer player selects a room at random
 	@Test
 	public void testPickLocationSelectsRandom() {
 		ComputerPlayer computer = new ComputerPlayer("Test");
 		
+		// Calculate the target given one move
 		board.calcTargets(14, 16, 1);
 		
+		// Totals of all adjacent spaces
 		int loc_13_16 = 0;
 		int loc_15_16 = 0;
 		int loc_14_15 = 0;
 		
+		// Iterate 100 times to get a reasonable distribution
 		for (int i = 0; i < 100; i++) {
 			BoardCell selected = computer.pickLocation(board.getTargets());
 			
@@ -83,6 +87,7 @@ public class GameActionTests {
 			}
 		}
 		
+		// Probabilistically, there should be more than 10 hits on each square for 100 runs
 		Assert.assertEquals(100, loc_13_16 + loc_15_16 + loc_14_15);
 		Assert.assertTrue(loc_13_16 > 10);
 		Assert.assertTrue(loc_15_16 > 10);
@@ -90,40 +95,50 @@ public class GameActionTests {
 		
 	}
 	
+	// Test that it picks a room with two steps
 	@Test
 	public void testPickLocationSelectsRoomTwoSteps() {
 		ComputerPlayer computer = new ComputerPlayer("Test");
 		
+		// Two step target
 		board.calcTargets(13, 16, 2);
 		
 		BoardCell selected = computer.pickLocation(board.getTargets());
 		
+		// Assert that it picks the correct doorway
 		Assert.assertEquals(12, selected.getRow());
 		Assert.assertEquals(17, selected.getColumn());
 	}
 	
+	// Test it selects the room/doorway for one move
 	@Test
 	public void testPickLocationSelectsRoom() {
 		ComputerPlayer computer = new ComputerPlayer("Test");
 		
+		// One move calcTargets
 		board.calcTargets(9,9,1);
 
 		BoardCell selected = computer.pickLocation(board.getTargets());
-
+		
+		// Assert at doorway location
 		Assert.assertEquals(9, selected.getRow());
 		Assert.assertEquals(8, selected.getColumn());
 	}
 	
+	// Assert that it the computer player picks a random space in a room it's already visited
 	@Test
 	public void testPickLocationRandomFromIfVisitedRoomInTargetList() {
 		ComputerPlayer computer = new ComputerPlayer("Test");
 		
+		// CalcTargets for one move
 		board.calcTargets(9,9,1);
 		
+		// Totals for each adjacent square
 		int loc_8_9 = 0;
 		int loc_9_8 = 0;
 		int loc_10_9 = 0;
 		
+		// Run it 100 times and add up the hits on each of the targets.
 		for (int i = 0; i < 100; i++) {
 			computer.setLastRoomVisited('L');
 			BoardCell selected = computer.pickLocation(board.getTargets());
@@ -137,6 +152,7 @@ public class GameActionTests {
 			}
 		}
 		
+		// Assert final totals
 		Assert.assertEquals(100, loc_8_9 + loc_9_8 + loc_10_9);
 		Assert.assertTrue(loc_8_9 > 0);
 		Assert.assertTrue(loc_9_8 > 0);
