@@ -1,6 +1,7 @@
 package clueTests;
 
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -18,6 +19,7 @@ public class GameActionTests {
 	private static ClueGame game;
 	private static Board board;
 	private static Card TomCard;
+	private static Card T;
 	private static Card LindaCard;
 	private static Card WrenchCard;
 	private static Card RopeCard;
@@ -59,21 +61,30 @@ public class GameActionTests {
 	
 	@Test
 	public void testDisprovingSuggestion() {
+		ArrayList <Player> test = new ArrayList <Player>();
 		Player first = new Player("first");
+		Player second = new Player("second");
 		Card r = new Card("wrong room", Card.CardType.ROOM);
 		Card w = new Card("wrong weapon", Card.CardType.WEAPON);
 		Card p = new Card("wrong person", Card.CardType.PERSON);
 		Card n = new Card(null, Card.CardType.ROOM);
-		//Test for one player, one match
+		
+		//Test for one player, one correct match
 		first.addCard(TomCard);
 		first.addCard(LindaCard);
 		first.addCard(WrenchCard);
 		first.addCard(RopeCard);
 		first.addCard(KitchenCard);
 		first.addCard(LoungeCard);
-		Assert.assertEquals(TomCard, game.disproveSuggestion(r, w, TomCard));
-		Assert.assertEquals(KitchenCard, game.disproveSuggestion(KitchenCard, w, p));
-		Assert.assertEquals(WrenchCard, game.disproveSuggestion(r, WrenchCard, p));
-		Assert.assertEquals(n, game.disproveSuggestion(r, w, p));
+		test.add(first);
+		System.out.println(game.disproveSuggestion(r.getName(), w.getName(), TomCard.getName(), test).getName() + " " + game.disproveSuggestion(r.getName(), w.getName(), TomCard.getName(), test).getType());
+		//Assert.assertEquals("a", "a");
+		Assert.assertEquals(TomCard, game.disproveSuggestion(r.getName(), w.getName(), TomCard.getName(), test));
+		Assert.assertEquals(KitchenCard, game.disproveSuggestion(KitchenCard.getName(), w.getName(), p.getName(), test));
+		Assert.assertEquals(WrenchCard, game.disproveSuggestion(r.getName(), WrenchCard.getName(), p.getName(), test));
+		Assert.assertEquals(game.getNullCard(), game.disproveSuggestion(r.getName(), w.getName(), p.getName(), test));
+		
+		//Test for one player, multiple possible matches
+		
 	}
 }

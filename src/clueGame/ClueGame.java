@@ -10,6 +10,7 @@ public class ClueGame {
 	private String BoardRoomConfig;
 	private ArrayList<Player> players;
 	private ArrayList<Card> cards;
+	private Card cannotDisprove;
 	private Solution solution;
 	private Solution answer;
 	
@@ -28,6 +29,7 @@ public class ClueGame {
 		clueBoard = new Board(BoardConfig, BoardRoomConfig);
 		players = new ArrayList<Player>(6);
 		cards = new ArrayList<Card>(6);
+		cannotDisprove = new Card(null, Card.CardType.ROOM);
 	}
 	public Board getBoard() {
 		return clueBoard;
@@ -158,10 +160,23 @@ public class ClueGame {
 		return solution;
 	}
 	
-	public Card disproveSuggestion(Card room, Card weapon, Card person) {
-		Card r = new Card("wrong type", Card.CardType.ROOM);	
-		return r;
+	public Card disproveSuggestion(String room, String weapon, String person, ArrayList<Player> test) {
+		for (int i = 0; i < test.size(); i++) {
+			for (int j = 0; j < test.get(i).getCards().size(); j++) {
+				if (test.get(i).getCards().get(j).getName().equals(room))
+					return test.get(i).getCards().get(j);
+				if (test.get(i).getCards().get(j).getName().equals(weapon))
+					return test.get(i).getCards().get(j);
+				if (test.get(i).getCards().get(j).getName().equals(person))
+					return test.get(i).getCards().get(j);
+			}
+		}
+		return cannotDisprove;
 	}
+	public Card getNullCard() {
+		return cannotDisprove;
+	}
+	
 }
 
 
