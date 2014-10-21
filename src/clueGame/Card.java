@@ -20,4 +20,10 @@ public class Card {
 	public CardType getType() {
 		return this.type;
 	}
+	
+	public boolean equals(Card c) {
+		if (this.name.equals(c.getName()) && this.type.equals(c.getType()))
+				return true;
+		return false;
+	}
 }

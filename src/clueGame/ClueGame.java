@@ -10,8 +10,10 @@ public class ClueGame {
 	private String BoardRoomConfig;
 	private ArrayList<Player> players;
 	private ArrayList<Card> cards;
+	private Card cannotDisprove;
 	private Solution solution;
 	private Solution answer;
+	private Player turn;
 	
 	public ClueGame(String s1, String s2) {
 		super();
@@ -21,6 +23,12 @@ public class ClueGame {
 		players = new ArrayList<Player>(6);
 		cards = new ArrayList<Card>(6);
 	}
+	public Player getTurn() {
+		return turn;
+	}
+	public void setTurn(Player turn) {
+		this.turn = turn;
+	}
 	public ClueGame() {
 		super();
 		BoardConfig = "ClueLayout.csv";
@@ -28,6 +36,7 @@ public class ClueGame {
 		clueBoard = new Board(BoardConfig, BoardRoomConfig);
 		players = new ArrayList<Player>(6);
 		cards = new ArrayList<Card>(6);
+		cannotDisprove = new Card(null, Card.CardType.ROOM);
 	}
 	public Board getBoard() {
 		return clueBoard;
@@ -158,11 +167,45 @@ public class ClueGame {
 		return solution;
 	}
 	
+	public Card disproveSuggestion(String room, String weapon, String person, ArrayList<Player> test) {
+		this.setTurn(test.get(0));
+		ArrayList <Card> choices = new ArrayList<Card>();
+		for (int i = 1; i < test.size(); i++) { 
+			for (int j = 1; j < test.get(i).getCards().size(); j++) {
+					if (this.getTurn() != test.get(i)) {
+						if (test.get(i).getCards().get(j).getName().equals(room))
+							choices.add(test.get(i).getCards().get(j));
+						else if (test.get(i).getCards().get(j).getName().equals(weapon))
+							choices.add(test.get(i).getCards().get(j));
+						else if (test.get(i).getCards().get(j).getName().equals(person))
+							choices.add(test.get(i).getCards().get(j));
+					}
+			}
+			if (choices.size() == 1) {
+				test.add(test.get(0));
+				test.remove(0);
+				return choices.get(0);
+			}
+			else if (choices.size() > 1) {
+				test.add(test.get(0));
+				test.remove(0);
+				Random r = new Random();
+				int index = r.nextInt(choices.size());
+				return choices.get(index);
+			}	
+		}
+		test.add(test.get(0));
+		test.remove(0);
+		return cannotDisprove;
+	}
+	public Card getNullCard() {
+		return cannotDisprove;
+	}
+	
 }
 
 
 //To reset origin master to old commit:
-
 //git checkout master
 //git reset --hard e3f1e37
 //git push --force origin master
