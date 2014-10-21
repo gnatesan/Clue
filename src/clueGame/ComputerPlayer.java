@@ -7,6 +7,9 @@ import java.util.Set;
 
 public class ComputerPlayer extends Player {
 	private char lastRoomVisited;
+	private String weapon;
+	private String person;
+	private ClueGame game;
 	ArrayList <Card> seen = new ArrayList <Card>();
 	
 	public ComputerPlayer(String name) {
@@ -36,8 +39,15 @@ public class ComputerPlayer extends Player {
 	}
 
 	public Suggestion createSuggestion(String currentRoom) {
-		Suggestion wrong = new Suggestion("wrong", "wrong", currentRoom);
-		return wrong;
+		for (int i = 0; i < game.getCards().size(); i++) {
+			if (!seen.contains(game.getCards().get(i))) {
+				if (game.getCards().get(i).getType().equals(Card.CardType.PERSON))
+						person = game.getCards().get(i).getName();
+				else if (game.getCards().get(i).getType().equals(Card.CardType.WEAPON))
+						weapon = game.getCards().get(i).getName();
+			}
+		}
+		return new Suggestion(person, weapon, currentRoom);
 	}
 	
 	// Setter only for debugging purposes

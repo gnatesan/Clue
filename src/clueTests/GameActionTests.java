@@ -258,7 +258,8 @@ public class GameActionTests {
 			}
 		}
 		//Test for only suggestion is possible
-		//Assert.assertEquals(cp.createSuggestion("Ballroom"), one);
+		Assert.assertEquals(cp.createSuggestion("Ballroom"), one);
+		
 		
 		ComputerPlayer cp2 = new ComputerPlayer("computer2");
 		Suggestion two = new Suggestion("Emily", "Rope", "Ballroom");
@@ -275,6 +276,7 @@ public class GameActionTests {
 			int index = r.nextInt();
 			
 		}*/
+		//Test for 2 possible suggestions
 		Assert.assertTrue(Ecount > 0);
 		Assert.assertTrue(Scount > 0);
 	}
