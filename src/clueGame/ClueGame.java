@@ -65,6 +65,7 @@ public class ClueGame extends JFrame {
 			this.loadPlayerConfig();
 			this.loadCardConfig("CardConfig.csv");
 			this.dealCards();
+			clueBoard.setPlayers(players);
 			this.setUpGui();
 		} catch (FileNotFoundException | BadConfigFormatException e) {
 			System.out.println(e.getMessage());
@@ -221,7 +222,7 @@ public class ClueGame extends JFrame {
 	}
 	
 	public static void main(String args[]) {
-		ClueGame game = new ClueGame("ClueLayout.csv", "ClueLegend.txt");
+		ClueGame game = new ClueGame("ClueLayoutOurs.csv", "ClueLegendOurs.txt");
 		game.loadConfigFiles();
 	}
 

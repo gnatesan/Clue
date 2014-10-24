@@ -24,6 +24,7 @@ public class Board extends JPanel {
 	private Map<BoardCell, LinkedList<BoardCell>> adjacentCells;
 	private String BoardConfig;
 	private String BoardRoomConfig;
+	private ArrayList<Player> players;
 
 	public Board(String boardConfig, String boardRoomConfig) {
 		super();
@@ -34,17 +35,20 @@ public class Board extends JPanel {
 		adjacencyLists = new HashMap<BoardCell, LinkedList<BoardCell>>();
 		targets = new HashSet<BoardCell>();
 		visited = new LinkedList<BoardCell>();
-
 	}
 
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		
+
 		for (int i = 0; i < numRows; i++) {
 			for (int j = 0; j < numColumns; j++) {
 				getCellAt(i, j).draw(g);
 			}
+		}
+		
+		for (Player player : players) {
+			player.draw(g);
 		}
 	}
 
@@ -216,6 +220,10 @@ public class Board extends JPanel {
 
 		adjacentCells.put(thisCell, cellAdjList);
 
+	}
+
+	public void setPlayers(ArrayList<Player> players) {
+		this.players = players;
 	}
 
 	public LinkedList<BoardCell> getAdjList(int i, int j) {

@@ -1,6 +1,7 @@
 package clueGame;
 
 import java.awt.Color;
+import java.awt.Graphics;
 import java.util.ArrayList;
 import java.lang.reflect.Field;
 
@@ -10,6 +11,7 @@ public class Player {
 	private int row;
 	private int col;
 	private ArrayList<Card> cards;
+	private static final int PLAYER_RADIUS = 25;
 	
 	public Player(String name) {
 		this.name = name;
@@ -60,6 +62,11 @@ public class Player {
 	
 	public ArrayList<Card> getCards() {
 		return this.cards;
+	}
+	
+	public void draw(Graphics g) {
+		g.setColor(getColor());
+		g.fillOval(getRow() * PLAYER_RADIUS, getCol() * PLAYER_RADIUS, PLAYER_RADIUS, PLAYER_RADIUS);
 	}
 	
 	/*public Card disproveSuggestion(String person, String room, String weapon) {
