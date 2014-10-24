@@ -1,5 +1,6 @@
 package clueGame;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -38,8 +39,10 @@ public class Board extends JPanel {
 
 	@Override
 	public void paintComponent(Graphics g) {
-		for (int i = 0; i < ROWS; i++) {
-			for (int j = 0; j < COLUMNS; j++) {
+		super.paintComponent(g);
+		
+		for (int i = 0; i < numRows; i++) {
+			for (int j = 0; j < numColumns; j++) {
 				getCellAt(i, j).draw(g);
 			}
 		}

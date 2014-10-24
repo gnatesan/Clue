@@ -14,14 +14,13 @@ public class WalkwayCell extends BoardCell {
 	public boolean isWalkway() {
 		return true;
 	}
-
+	
 	@Override
 	public void draw(Graphics g) {
-		// Draw the walkway cell
 		g.setColor(Color.YELLOW);
-		g.drawRect(getRow(), getColumn(), 5, 5);
+		g.fillRect(getRow() * CELL_SIZE, getColumn() * CELL_SIZE, CELL_SIZE, CELL_SIZE);
 		g.setColor(Color.BLACK);
-		g.drawRect(getRow(), getColumn(), 5, 5);
+		g.drawRect(getRow() * CELL_SIZE,  getColumn() * CELL_SIZE,  CELL_SIZE, CELL_SIZE);
 	}
 
 }
