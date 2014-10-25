@@ -1,3 +1,198 @@
+commit 16538bb00162a3b830b411b3dde7ce051b4dace4
+Author: unknown <gnatesan@mines.edu>
+
+Date:   Tue Oct 21 02:52:00 2014 -0700
+
+    
+	almost finished the first test
+
+
+
+commit 1ea73fdf282958d06eef23516ceadd94969aee04
+
+Author: unknown <gnatesan@mines.edu>
+
+Date:   Tue Oct 21 02:32:17 2014 -0700
+
+    
+	Wrote failing tests for making computer suggestions.
+
+
+
+commit a8f8aba9338a85317563d03c4e7f68374fa2933d
+Merge: f5cb9e2 f7478b4
+
+Author: Eric L. Dattore <eric.dattore@gmail.com>
+
+Date:   Mon Oct 20 23:51:11 2014 -0600
+
+    
+	Merge branch 'master' of github.com:ELD/Clue
+
+
+
+commit f7478b4c9fefce846627918d91308456feb7ada0
+
+Author: unknown <gnatesan@mines.edu>
+
+Date:   Mon Oct 20 22:50:34 2014 -0700
+
+    
+	more changes to code.
+
+
+
+commit f5cb9e20a9ed707d79062c058c1da6b711dd4fac
+
+Author: Eric L. Dattore <eric.dattore@gmail.com>
+
+Date:   Mon Oct 20 23:49:02 2014 -0600
+
+    
+	Added comments to computer targets tests.
+
+
+
+commit c3a8480837dfc9c36ddb06a774654f67bd3edf30
+Merge: 37a2927 d16050f
+
+Author: Eric L. Dattore <eric.dattore@gmail.com>
+
+Date:   Mon Oct 20 23:45:14 2014 -0600
+
+    
+	Merged files.
+
+
+
+commit d16050fcfc5baf4c7073fe3bbf9bbf55a8af5876
+
+Author: unknown <gnatesan@mines.edu>
+
+Date:   Mon Oct 20 22:41:29 2014 -0700
+
+    
+	Made tests pass for disproveSuggestion
+
+
+
+commit 37a292728a277b7a5f3b7e961226ba11a4f24bf9
+
+Author: Eric L. Dattore <eric.dattore@gmail.com>
+
+Date:   Mon Oct 20 23:35:25 2014 -0600
+
+    Wrote passing code for computer selecting target. 
+	Added additional test for choosing room in two steps.
+commit 708117be21b0c84b23c174389cdfec98079aa20b
+Author: unknown <gnatesan@mines.edu>
+Author: unknown <gnatesan@mines.edu>
+
+Date:   Mon Oct 20 21:47:34 2014 -0700
+
+    
+	wrote all failing tests for disproving suggestions.
+
+
+
+commit 9b5157ffcf99d5f0d210ee9e21b34d2961fd85eb
+
+Author: Eric L. Dattore <eric.dattore@gmail.com>
+
+Date:   Mon Oct 20 22:32:44 2014 -0600
+
+    Wrote failing tests for computer player's target selection.
+
+
+
+commit 25d010b36b16a3d9a4ff6e7e709091409a0b17b6
+
+Author: unknown <gnatesan@mines.edu>
+
+Date:   Mon Oct 20 21:11:30 2014 -0700
+
+    
+	Made the test pass for one player multiple matches.
+
+
+
+commit a0c66e785c214d7387aa84bba75bb55df037259b
+
+Author: unknown <gnatesan@mines.edu>
+
+Date:   Mon Oct 20 20:31:07 2014 -0700
+
+    
+	Wrote the failing test for disprove Suggestion one player multiple possible matches.
+
+
+
+commit c4e7ef5125c8e23acb18c6d17aa28ad3bffb1fef
+
+Author: unknown <gnatesan@mines.edu>
+
+Date:   Mon Oct 20 20:19:19 2014 -0700
+
+    
+	Made the test pass for one player, one correct match.
+
+
+
+commit 5d59befeddc32ea52b7f0f4aaeca39668af4c569
+
+Author: unknown <gnatesan@mines.edu>
+
+Date:   Mon Oct 20 19:32:46 2014 -0700
+
+    
+	Wrote the failing test in disproveSuggestion for one player one possible match.
+
+
+
+commit f60f324e49fc9555ef2a70f07d0f5c5167710cca
+
+Author: Eric L. Dattore <eric.dattore@gmail.com>
+
+Date:   Mon Oct 20 19:34:09 2014 -0600
+
+    
+	Modified player config to parse color to java.awt.Color.
+
+
+
+commit ed33cca1a98904ce0b4d7b3d226de7c230d29b01
+Author: Eric L. Dattore <eric.dattore@gmail.com>
+
+Date:   Mon Oct 20 19:17:55 2014 -0600
+
+    
+Refactored tests. Added GameActionTests class and moved testAccusation to new class.
+
+
+
+commit fa87ab9196fee650a1d4016350c78c5d8dce2a4d
+
+Author: Eric L. Dattore <eric.dattore@gmail.com>
+
+Date:   Mon Oct 20 19:08:55 2014 -0600
+
+    
+	Added experimental control gui.
+
+
+
+commit 7826b1233eb1d0e7de215e857d184279af01c123
+
+Author: Gokul Natesan <gnatesan@mines.edu>
+
+Date:   Thu Oct 16 23:28:27 2014 -0600
+
+    
+	Made all of the accusation tests pass
+
+
+
+
 commit e85430c55ab024bf37c5a7840b68ad613e4a7e5b
 Author: Gokul Natesan <gnatesan@mines.edu>
 Date:   Thu Oct 16 23:09:35 2014 -0600
@@ -428,3 +623,4 @@ Author: Tyler Thorn <tthorn@mines.edu>
 Date:   Thu Sep 18 12:35:52 2014 -0600
 
     Initial commit
+

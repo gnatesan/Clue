@@ -1,10 +1,20 @@
 package clueGame;
 
+import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.*;
 
-public class ClueGame {
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+
+public class ClueGame extends JFrame{
 	private Board clueBoard;
 	private String BoardConfig;
 	private String BoardRoomConfig;
@@ -14,9 +24,13 @@ public class ClueGame {
 	private Solution solution;
 	private Solution answer;
 	private Player turn;
+	private JMenuBar bar;
+	private JMenu file;
+	private JMenuItem notes;
+	private JMenuItem exit;
 	
 	public ClueGame(String s1, String s2) {
-		super();
+		//super();
 		BoardConfig = s1;
 		BoardRoomConfig = s2;
 		clueBoard = new Board(BoardConfig, BoardRoomConfig);
@@ -37,6 +51,11 @@ public class ClueGame {
 		players = new ArrayList<Player>(6);
 		cards = new ArrayList<Card>();
 		cannotDisprove = new Card(null, Card.CardType.ROOM);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setTitle("Clue Game");
+		setSize(500, 500);
+		add(clueBoard, BorderLayout.CENTER);
+		createMenu();
 	}
 	public Board getBoard() {
 		return clueBoard;
@@ -192,6 +211,37 @@ public class ClueGame {
 
 	public Card getNullCard() {
 		return cannotDisprove;
+	}
+	
+	public void createMenu() {
+		bar = new JMenuBar();
+		file = new JMenu("File");
+		bar.add(file);
+		notes = new JMenuItem("Show Detective Notes");
+		//ourNotes = new DetectiveNotes();
+		exit = new JMenuItem("Exit");
+		exit.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				System.exit(0);
+			}
+		});
+		notes.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				//ourNotes.setVisible(true);
+			}
+		});
+		file.add(notes);
+		file.add(exit);
+		setJMenuBar(bar);
+		
+	}
+	
+	public static void main (String[] args) {
+		ClueGame g = new ClueGame();
+		g.loadConfigFiles();
+		g.setVisible(true);
 	}
 	
 }

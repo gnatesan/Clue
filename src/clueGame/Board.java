@@ -1,14 +1,18 @@
 package clueGame;
 
+import java.awt.Graphics;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.*;
 
+import javax.swing.JPanel;
+
 import clueGame.RoomCell.DoorDirection;
 
-public class Board {
+public class Board extends JPanel{
 	private BoardCell[][] cells;
 	Map<Character, String> rooms;
+	Set <BoardCell> centers;
 	private final int ROWS = 22;
 	private final int COLUMNS = 23;
 	private int numRows = 0;
@@ -30,6 +34,7 @@ public class Board {
 		adjacencyLists = new HashMap<BoardCell, LinkedList<BoardCell>>();
 		targets = new HashSet<BoardCell>();
 		visited = new LinkedList<BoardCell>();
+		centers = new HashSet<BoardCell>();
 
 	}
 	public void loadBoardConfig() throws FileNotFoundException, BadConfigFormatException{
@@ -82,18 +87,29 @@ public class Board {
 	public void loadRoomConfig() throws FileNotFoundException{
 		FileReader reader2 = new FileReader(BoardRoomConfig);
 		Scanner in2 = new Scanner(reader2);
+		int count = 0;
 		while (in2.hasNextLine()){
 			String line = in2.nextLine();
 			List<String> temp = Arrays.asList(line.split(","));
+			//Nested for loop to locate cells with a label start location and add them to the centers HashSet 
+			for (int i = 0; i < temp.size(); i++) {
+				if (temp.get(i).length() == 2 && temp.get(i).charAt(1) == 'N') { //EX:"CN" is the center for the conservatory label
+					centers.add(new RoomCell(count, i, temp.get(i).charAt(0), 'N')); //if it is a center then add it to HashSet
+				}
+			}
 			if (temp.size() != 2){
 				throw new BadConfigFormatException();
 			}
 			rooms.put(line.charAt(0), line.substring(3));
-
+			count++;
 		}
 
 	}
 
+	public Set<BoardCell> getCenters() {
+		return centers;
+	}
+	
 	public void calcAdjacencies(){
 		for(int i=0; i < numRows; i++){
 			for(int j=0; j < numColumns; j++){
@@ -195,6 +211,20 @@ public class Board {
 	public Set<BoardCell> getTargets(){
 
 		return targets;
+	}
+	
+	public void paintComponent (Graphics g) {
+		super.paintComponent(g);
+		for (int row = 0; row < this.getNumRows(); row++) {
+			for (int col = 0; col < this.getNumColumns(); col++) {
+				getCellAt(row, col).draw(g, this);
+			}
+		}
+		for (int row = 0; row < this.getNumRows(); row++) {
+			for (int col = 0; col < this.getNumColumns(); col++) {
+				getCellAt(row, col).drawName(g, this);
+			}
+		}
 	}
 
 
