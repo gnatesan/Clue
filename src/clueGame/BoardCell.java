@@ -37,8 +37,10 @@ public abstract class BoardCell {
 		int x = column;
 		return x;
 	}
-
-	// Add this later:
-	public abstract void draw(Graphics g);
+	
+	 
+	 public abstract void draw(Graphics g);
+	 
+	 public abstract void drawName(Graphics g, Board board);
 
 }
