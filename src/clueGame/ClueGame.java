@@ -44,7 +44,8 @@ public class ClueGame extends JFrame{
 		add(this.clueBoard, BorderLayout.CENTER);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("Clue Game");
-		setSize(1000, 600);
+		setSize(600, 600);
+		createMenu();
 		setVisible(true);
 	}
 
@@ -64,11 +65,6 @@ public class ClueGame extends JFrame{
 		players = new ArrayList<Player>(6);
 		cards = new ArrayList<Card>();
 		cannotDisprove = new Card(null, Card.CardType.ROOM);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setTitle("Clue Game");
-		setSize(500, 500);
-		add(clueBoard, BorderLayout.CENTER);
-		createMenu();
 	}
 
 	public Board getBoard() {
@@ -239,7 +235,7 @@ public class ClueGame extends JFrame{
 	}
 	
 	public static void main(String args[]) {
-		ClueGame game = new ClueGame("ClueLayoutOurs.csv", "ClueLegendOurs.txt");
+		ClueGame game = new ClueGame("ClueLayout.csv", "ClueLegendOurs.txt");
 		game.loadConfigFiles();
 	}
 

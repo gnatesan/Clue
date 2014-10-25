@@ -48,18 +48,35 @@ public class RoomCell extends BoardCell {
 	
 	
 	@Override
-	public void draw(Graphics g) {
-		if (isRoom()) {
-			if (doorway) {
-				g.setColor(Color.BLUE);
+	public void draw(Graphics g) {		
+		
+		if (roomInitial == 'X') {
+			g.setColor(Color.RED);
+		} else {
+			g.setColor(Color.GRAY);
+		}
+		
+		g.fillRect(this.getColumn() * CELL_SIZE, this.getRow() * CELL_SIZE, CELL_SIZE, CELL_SIZE);
+		
+		if (doorway) {
+			g.setColor(Color.BLUE);
+			
+			switch (doorDirection) {
+			case UP:
+				g.fillRect(getColumn() * CELL_SIZE, getRow() * CELL_SIZE, CELL_SIZE, CELL_SIZE / 4);
+				break;
+			case DOWN:
+				g.fillRect(getColumn() * CELL_SIZE, getRow() * CELL_SIZE + 3 * (CELL_SIZE / 4), CELL_SIZE, CELL_SIZE / 4);
+				break;
+			case LEFT:
+				g.fillRect(getColumn() * CELL_SIZE, getRow() * CELL_SIZE, CELL_SIZE / 4, CELL_SIZE);
+				break;
+			case RIGHT:
+				g.fillRect(getColumn() * CELL_SIZE + 3 * (CELL_SIZE / 4), getRow() * CELL_SIZE, CELL_SIZE, CELL_SIZE);
+				break;
+			case NONE:
+				break;
 			}
-			else {
-				g.setColor(Color.GRAY);
-				if (roomInitial == 'X') {
-					g.setColor(Color.RED);
-				}
-			}
-			g.fillRect(this.getColumn()*25, this.getRow()*25, 25, 25);
 		}
 	}
 	
