@@ -30,6 +30,7 @@ public class ClueGame extends JFrame{
 	private JMenu file;
 	private JMenuItem notes;
 	private JMenuItem exit;
+	private DetectiveDialog det;
 	
 	public ClueGame(String s1, String s2) {
 		//super();
@@ -47,6 +48,7 @@ public class ClueGame extends JFrame{
 		setSize(600, 600);
 		createMenu();
 		setVisible(true);
+		det = new DetectiveDialog(cards);
 	}
 
 	public Player getTurn() {
@@ -255,7 +257,7 @@ public class ClueGame extends JFrame{
 		notes.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				//ourNotes.setVisible(true);
+				det.setVisible(true);
 			}
 		});
 		file.add(notes);
