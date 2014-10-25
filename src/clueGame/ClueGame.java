@@ -235,7 +235,7 @@ public class ClueGame extends JFrame{
 	}
 	
 	public static void main(String args[]) {
-		ClueGame game = new ClueGame("ClueLayout.csv", "ClueLegendOurs.txt");
+		ClueGame game = new ClueGame("ClueLayout.csv", "ClueLegend.txt");
 		game.loadConfigFiles();
 	}
 

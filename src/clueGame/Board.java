@@ -13,7 +13,7 @@ import clueGame.RoomCell.DoorDirection;
 public class Board extends JPanel {
 	private BoardCell[][] cells;
 	Map<Character, String> rooms;
-	Set <BoardCell> centers;
+	List<BoardCell> centers;
 	private final int ROWS = 22;
 	private final int COLUMNS = 23;
 	private int numRows = 0;
@@ -36,7 +36,7 @@ public class Board extends JPanel {
 		adjacencyLists = new HashMap<BoardCell, LinkedList<BoardCell>>();
 		targets = new HashSet<BoardCell>();
 		visited = new LinkedList<BoardCell>();
-		centers = new HashSet<BoardCell>();
+		centers = new LinkedList<BoardCell>();
 	}
 
 	public void loadBoardConfig() throws FileNotFoundException,
@@ -74,6 +74,10 @@ public class Board extends JPanel {
 							cells[numRowsTemp][numColumnsTemp] = new RoomCell(
 									numRowsTemp, numColumnsTemp, s.charAt(0),
 									s.charAt(1));
+							
+							if (s.charAt(1) == 'N') {
+								centers.add(cells[numRowsTemp][numColumnsTemp]);
+							}
 
 						}
 					}
@@ -94,31 +98,27 @@ public class Board extends JPanel {
 		FileReader reader2 = new FileReader(BoardRoomConfig);
 		Scanner in2 = new Scanner(reader2);
 		int count = 0;
-		while (in2.hasNextLine()){
+		while (in2.hasNextLine()) {
 			String line = in2.nextLine();
 			List<String> temp = Arrays.asList(line.split(","));
-			//Nested for loop to locate cells with a label start location and add them to the centers HashSet 
-			for (int i = 0; i < temp.size(); i++) {
-				if (temp.get(i).length() == 2 && temp.get(i).charAt(1) == 'N') { //EX:"CN" is the center for the conservatory label
-					centers.add(new RoomCell(count, i, temp.get(i).charAt(0), 'N')); //if it is a center then add it to HashSet
-				}
-			}
-			if (temp.size() != 2){
+			
+			if (temp.size() != 2) {
 				throw new BadConfigFormatException();
 			}
+			
 			rooms.put(line.charAt(0), line.substring(3));
 			count++;
 		}
 
 	}
 
-	public Set<BoardCell> getCenters() {
+	public List<BoardCell> getCenters() {
 		return centers;
 	}
-	
-	public void calcAdjacencies(){
-		for(int i=0; i < numRows; i++){
-			for(int j=0; j < numColumns; j++){
+
+	public void calcAdjacencies() {
+		for (int i = 0; i < numRows; i++) {
+			for (int j = 0; j < numColumns; j++) {
 
 				cellAdjList = new LinkedList<BoardCell>();
 				if (cells[i][j].isWalkway()) {
@@ -232,19 +232,19 @@ public class Board extends JPanel {
 
 		return targets;
 	}
-	
+
 	@Override
-	public void paintComponent (Graphics g) {
+	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		for (int row = 0; row < this.getNumRows(); row++) {
 			for (int col = 0; col < this.getNumColumns(); col++) {
 				getCellAt(row, col).draw(g);
-			}
-		}
-		for (int row = 0; row < this.getNumRows(); row++) {
-			for (int col = 0; col < this.getNumColumns(); col++) {
 				getCellAt(row, col).drawName(g, this);
 			}
+		}
+
+		for (Player p : players) {
+			p.draw(g);
 		}
 	}
 
