@@ -61,7 +61,7 @@ public class Board extends JPanel {
 
 					if (s.charAt(0) == 'W') {
 						cells[numRowsTemp][numColumnsTemp] = new WalkwayCell(
-								numRowsTemp, numColumnsTemp, s.charAt(0));
+								numRowsTemp, numColumnsTemp);
 					}
 
 					else if (s != "W" && s != "X") {

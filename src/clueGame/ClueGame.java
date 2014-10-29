@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.*;
@@ -15,6 +14,8 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+
+import clueGame.Card.CardType;
 
 public class ClueGame extends JFrame{
 	private Board clueBoard;
@@ -31,6 +32,7 @@ public class ClueGame extends JFrame{
 	private JMenuItem notes;
 	private JMenuItem exit;
 	private DetectiveDialog det;
+	private Card disproveCard;
 	
 	public ClueGame(String s1, String s2) {
 		//super();
@@ -200,6 +202,67 @@ public class ClueGame extends JFrame{
 			}
 		}
 		return false;
+	}
+	
+	public void handleSuggestion(String person, String room, String weapon, Player accuser) {
+			ArrayList<Card> choices = new ArrayList<Card>();
+			for (int i = 0; i < players.size(); i++) {
+				if (!players.get(i).equals(accuser)) {
+					disproveCard = players.get(i).disproveSuggestion(person, room, weapon);
+				if (disproveCard != null)
+					break;
+				}
+			}
+			
+			//accusingPerson is the person making the suggestion
+			int playerPosition = 0;
+			int initialPosition = 0;
+
+			//find accusingPerson in arrayList of players, 
+			for(int i = 0; i < players.size(); i++) {
+				if(players.get(i).equals(accuser)) {
+
+					playerPosition = i;
+					initialPosition = i;
+				}
+			}
+
+			if(playerPosition == players.size()-1) {
+				playerPosition = 0;
+			}
+			else playerPosition++;
+
+
+			//loop through and ask each player to disprove suggestion
+
+			//for person at that location, call disprove suggestion
+			disproveCard = players.get(playerPosition).disproveSuggestion(person, weapon, room);
+			while(disproveCard == null && (playerPosition != initialPosition)) {
+
+				if(playerPosition == players.size()-1) {
+					playerPosition = 0;
+				}
+				else playerPosition++;
+				if(playerPosition != initialPosition) {
+					disproveCard = players.get(playerPosition).disproveSuggestion(person, weapon, room);
+				}
+			}
+			if(disproveCard != null) {
+				//update seenCards
+				for(Player p: players) {
+					if(p instanceof ComputerPlayer){
+						p = (ComputerPlayer)p;
+						if(((ComputerPlayer)p).getSeen().contains(disproveCard));
+						((ComputerPlayer)p).updateSeen(disproveCard);
+					}
+				}
+			}
+			//if someone can disprove the suggestion, then disproveSuggestion will return a card instead of null and stop
+			
+	}
+
+	public Card getDisproveCard() {
+		return disproveCard;
 	}
 
 	public Solution getSolution() {

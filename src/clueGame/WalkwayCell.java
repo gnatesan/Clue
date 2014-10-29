@@ -5,7 +5,7 @@ import java.awt.Graphics;
 
 public class WalkwayCell extends BoardCell {
 
-	public WalkwayCell(int r, int c, char i) {
+	public WalkwayCell(int r, int c) {
 		super(r, c);
 		// TODO Auto-generated constructor stub
 	}

@@ -70,7 +70,7 @@ public class Player {
 		g.fillOval(getRow() * PLAYER_RADIUS, getCol() * PLAYER_RADIUS, PLAYER_RADIUS, PLAYER_RADIUS);
 	}
 
-	public Card disproveSuggestion(String room, String weapon, String person) {
+	public Card disproveSuggestion(String person, String weapon, String room) {
 		ArrayList<Card> choices = new ArrayList<Card>();
 		for (int j = 0; j < this.cards.size(); j++) {
 			if (this.getCards().get(j).getName().equals(room))
