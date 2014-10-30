@@ -183,8 +183,6 @@ public class ClueGame extends JFrame{
 		tempList.remove(one);
 		tempList.remove(two);
 		tempList.remove(three);
-		
-		Collections.shuffle(cards);
 
 		// Go from 0 to size - 1 of the cards and apply modulus to get player #
 		int totalCards = tempList.size();
