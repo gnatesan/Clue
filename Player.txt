@@ -1,0 +1,6 @@
+John Blue 16 9
+Susan Red 16 16
+Tom Green 6 3
+Linda Orange 7 19
+Dave Gray 18 4
+Emily Pink 12 1
