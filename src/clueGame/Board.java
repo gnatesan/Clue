@@ -239,7 +239,8 @@ public class Board extends JPanel {
 		for (int row = 0; row < this.getNumRows(); row++) {
 			for (int col = 0; col < this.getNumColumns(); col++) {
 				getCellAt(row, col).draw(g);
-				getCellAt(row, col).drawName(g, this);
+				if(getCellAt(row, col) instanceof RoomCell)
+				((RoomCell)getCellAt(row, col)).drawName(g, this);
 			}
 		}
 

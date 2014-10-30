@@ -80,7 +80,6 @@ public class RoomCell extends BoardCell {
 		}
 	}
 	
-	@Override
 	public void drawName(Graphics g, Board board) {
 		g.setColor(Color.BLACK);
 		g.setFont(new Font("SansSerif", Font.PLAIN, 12));

@@ -41,6 +41,5 @@ public abstract class BoardCell {
 	 
 	 public abstract void draw(Graphics g);
 	 
-	 public abstract void drawName(Graphics g, Board board);
 
 }

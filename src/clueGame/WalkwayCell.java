@@ -23,8 +23,4 @@ public class WalkwayCell extends BoardCell {
 		g.drawRect(getColumn() * CELL_SIZE,  getRow() * CELL_SIZE,  CELL_SIZE, CELL_SIZE);	
 	}
 	
-	public void drawName(Graphics g, Board b) {
-		
-	}
-
 }
