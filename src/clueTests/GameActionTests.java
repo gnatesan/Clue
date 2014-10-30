@@ -1,3 +1,4 @@
+//Test comment.
 package clueTests;
 
 import static org.junit.Assert.*;
@@ -23,7 +24,7 @@ import clueGame.Player;
 import clueGame.Solution;
 import clueGame.Suggestion;
 import clueGame.WalkwayCell;
-
+//Second commit test
 public class GameActionTests {
 	
 	private static ClueGame game;
@@ -34,6 +35,7 @@ public class GameActionTests {
 	private static Card RopeCard;
 	private static Card KitchenCard;
 	private static Card LoungeCard;
+	private static Card GunCard;
 	
 	
 	@BeforeClass
@@ -45,6 +47,7 @@ public class GameActionTests {
 		RopeCard = new Card("Rope", Card.CardType.WEAPON);
 		KitchenCard = new Card("Kitchen", Card.CardType.ROOM);
 		LoungeCard = new Card("Lounge", Card.CardType.ROOM);
+		GunCard = new Card("Gun", Card.CardType.WEAPON);
 		game.loadConfigFiles();
 		board = game.getBoard();
 	}
@@ -168,8 +171,11 @@ public class GameActionTests {
 	
 	@Test
 	public void testDisprovingSuggestion() {
+		ArrayList <Player> group = new ArrayList();
 		Player first = new Player("first");
 		Player second = new Player("second");
+		group.add(first);
+		group.add(second);
 		int roomCount = 0;
 		int playerCount = 0;
 		int weaponCount = 0;
@@ -221,7 +227,10 @@ public class GameActionTests {
 		//Test if first person who can disprove suggestion can do so
 		Assert.assertEquals(LindaCard, first.disproveSuggestion(LindaCard.getName(), "wrong", "wrong"));
 		//Make sure if person who made suggestion was only one who could disprove it, null is returned
-		Assert.assertEquals(null, first.disproveSuggestion(TomCard.getName(), "wrong", "wrong"));
+		//System.out.println(game.);
+		//Assert.assertEquals(null, first.disproveSuggestion(RopeCard.getName(), "wrong", "wrong"));
+		game.handleSuggestion(LindaCard.getName(), "wrong", "wrong", first, group);
+		Assert.assertEquals(null, game.getDisproveCard());
 	}
 	
 	@Test
@@ -252,24 +261,24 @@ public class GameActionTests {
 		tempPlayer.addCard(new Card("Axe", CardType.WEAPON));
 
 		//test making a suggestion that no players can disprove
-		game.handleSuggestion("Prof. Plum", "Study", "Wrench", players.get(3));
-		System.out.println(game.getDisproveCard().getName());
+		game.handleSuggestion("Prof. Plum", "Study", "Wrench", players.get(3), players);
+		//System.out.println(game.getDisproveCard().getName());
 		
 		assertTrue(game.getDisproveCard() == null);
 		//function that returns player and card that disproved suggestion
 		//make a suggestion that only one person can disprove
-		game.handleSuggestion("Ms. Scarlet", "Study", "Wrench", players.get(4));
-		System.out.println(game.getDisproveCard().getName());
+		game.handleSuggestion("Ms. Scarlet", "Study", "Wrench", players.get(4), players);
+		//System.out.println(game.getDisproveCard().getName());
 		assertTrue(game.getDisproveCard().equals(new Card("Ms. Scarlet", CardType.PERSON)));
 		
 		
 		//ensure that if person who made the suggestion was the only one who could disprove it, then null was returned
-		game.handleSuggestion("Mrs. Peacock", "Study", "Wrench", players.get(2));
+		game.handleSuggestion("Mrs. Peacock", "Study", "Wrench", players.get(2), players);
 		assertTrue(game.getDisproveCard() == null);
 		
 		
 		//make sure that if 2 players can disprove something, the first player does the disproving
-		game.handleSuggestion("Mrs. Peacock", "Study", "Knife", players.get(1));
+		game.handleSuggestion("Mrs. Peacock", "Study", "Knife", players.get(1), players);
 		assertTrue(game.getDisproveCard().equals(new Card("Mrs. Peacock", CardType.PERSON)));
 
 	}

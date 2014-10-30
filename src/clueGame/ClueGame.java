@@ -204,11 +204,11 @@ public class ClueGame extends JFrame{
 		return false;
 	}
 	
-	public void handleSuggestion(String person, String room, String weapon, Player accuser) {
+	public void handleSuggestion(String person, String room, String weapon, Player accuser, ArrayList<Player> group) {
 			ArrayList<Card> choices = new ArrayList<Card>();
-			for (int i = 0; i < players.size(); i++) {
-				if (!players.get(i).equals(accuser)) {
-					disproveCard = players.get(i).disproveSuggestion(person, room, weapon);
+			for (int i = 0; i < group.size(); i++) {
+				if (!group.get(i).equals(accuser)) {
+					disproveCard = group.get(i).disproveSuggestion(person, room, weapon);
 				if (disproveCard != null)
 					break;
 				}
@@ -219,15 +219,15 @@ public class ClueGame extends JFrame{
 			int initialPosition = 0;
 
 			//find accusingPerson in arrayList of players, 
-			for(int i = 0; i < players.size(); i++) {
-				if(players.get(i).equals(accuser)) {
+			for(int i = 0; i < group.size(); i++) {
+				if(group.get(i).equals(accuser)) {
 
 					playerPosition = i;
 					initialPosition = i;
 				}
 			}
 
-			if(playerPosition == players.size()-1) {
+			if(playerPosition == group.size()-1) {
 				playerPosition = 0;
 			}
 			else playerPosition++;
@@ -236,20 +236,20 @@ public class ClueGame extends JFrame{
 			//loop through and ask each player to disprove suggestion
 
 			//for person at that location, call disprove suggestion
-			disproveCard = players.get(playerPosition).disproveSuggestion(person, weapon, room);
+			disproveCard = group.get(playerPosition).disproveSuggestion(person, weapon, room);
 			while(disproveCard == null && (playerPosition != initialPosition)) {
 
-				if(playerPosition == players.size()-1) {
+				if(playerPosition == group.size()-1) {
 					playerPosition = 0;
 				}
 				else playerPosition++;
 				if(playerPosition != initialPosition) {
-					disproveCard = players.get(playerPosition).disproveSuggestion(person, weapon, room);
+					disproveCard = group.get(playerPosition).disproveSuggestion(person, weapon, room);
 				}
 			}
 			if(disproveCard != null) {
 				//update seenCards
-				for(Player p: players) {
+				for(Player p: group) {
 					if(p instanceof ComputerPlayer){
 						p = (ComputerPlayer)p;
 						if(((ComputerPlayer)p).getSeen().contains(disproveCard));
