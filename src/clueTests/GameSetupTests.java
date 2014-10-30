@@ -74,7 +74,7 @@ public class GameSetupTests {
 		//Test human player
 		Assert.assertEquals("John", test.get(0).getName());
 		Assert.assertEquals(Color.BLUE, test.get(0).getColor());
-		Assert.assertEquals(21, test.get(0).getRow());
+		Assert.assertEquals(16, test.get(0).getRow());
 		Assert.assertEquals(9, test.get(0).getCol());
 		
 		//Test second to last computer player
@@ -86,7 +86,7 @@ public class GameSetupTests {
 		//Test last computer player
 		Assert.assertEquals("Emily", test.get(5).getName());
 		Assert.assertEquals(Color.PINK, test.get(5).getColor());
-		Assert.assertEquals(9, test.get(5).getRow());
+		Assert.assertEquals(12, test.get(5).getRow());
 		Assert.assertEquals(1, test.get(5).getCol());
 		
 	}
