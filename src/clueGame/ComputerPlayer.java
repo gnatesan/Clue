@@ -10,9 +10,15 @@ public class ComputerPlayer extends Player {
 	private String weapon;
 	private String person;
 	ArrayList <Card> seen = new ArrayList <Card>();
+	ArrayList<String> personOptions;
+	ArrayList<String> weaponOptions;
+	ArrayList<String> roomOptions;
 	
 	public ComputerPlayer(String name) {
 		super(name);
+		roomOptions = new ArrayList<String>();
+		weaponOptions = new ArrayList<String>();
+		personOptions = new ArrayList<String>();
 	}
 	
 	public BoardCell pickLocation(Set<BoardCell> targets) {		
@@ -76,5 +82,16 @@ public class ComputerPlayer extends Player {
 	
 	public void updateSeen(Card shown) {
 		seen.add(shown);
+		switch(shown.getType()){
+		case PERSON:
+			personOptions.remove(shown.getName());
+			break;
+		case ROOM:
+			roomOptions.remove(shown.getName());
+			break;
+		case WEAPON:
+			weaponOptions.remove(shown.getName());
+			break;
+		}
 	}
 }
