@@ -81,7 +81,13 @@ public class ClueGame extends JFrame{
 			this.loadBoardConfig();
 			this.loadPlayerConfig();
 			this.loadCardConfig("CardConfig.csv");
+			for(Player p: players){
+				if(p instanceof ComputerPlayer){
+					((ComputerPlayer)p).getDeck(cards);
+				}
+			}
 			this.dealCards();
+			
 			clueBoard.setPlayers(players);
 			this.setUpGui();
 		} catch (FileNotFoundException | BadConfigFormatException e) {
@@ -160,6 +166,7 @@ public class ClueGame extends JFrame{
 			this.cards.add(nextCard);
 		}
 		in.close();
+		
 	}
 
 	public void dealCards() {
