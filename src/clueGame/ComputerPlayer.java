@@ -9,6 +9,7 @@ public class ComputerPlayer extends Player {
 	private char lastRoomVisited;
 	private String weapon;
 	private String person;
+	private String room;
 	ArrayList <Card> seen = new ArrayList <Card>();
 	ArrayList<String> personOptions;
 	ArrayList<String> weaponOptions;
@@ -23,11 +24,9 @@ public class ComputerPlayer extends Player {
 	
 	public void getDeck(ArrayList<Card> deck){
 		for(Card c: deck){
-			//System.out.println(c.getName());
 			switch(c.getType()){
 			case PERSON:
 				personOptions.add(c.getName());
-				//System.out.println(c.getName());
 				break;
 			case ROOM:
 				roomOptions.add(c.getName());
@@ -63,7 +62,6 @@ public class ComputerPlayer extends Player {
 	public Suggestion createSuggestion(String currentRoom) {
 		
 
-		Solution s = new Solution("", "", " ");
 		//weapons and players only contain unseen cards, randomly choose a card from each to be part of your suggestion
 		Random rand = new Random();
 		int r1 = rand.nextInt(personOptions.size());
@@ -73,22 +71,20 @@ public class ComputerPlayer extends Player {
 		weapon = weaponOptions.get(r2);
 
 		return new Suggestion(person, weapon, currentRoom);
-		// Pick suggestion from lists
-		/*Random rand = new Random();
-		if (personOptions.size() > 1) {
-			person = personOptions.get(rand.nextInt(personOptions.size()));
-		} else {
-			person = personOptions.get(0);
-		}
-		
-		if (weaponOptions.size() > 1) {
-			weapon = weaponOptions.get(rand.nextInt(weaponOptions.size()));
-		} else {
-			weapon = weaponOptions.get(0);
-		}
-		
-		return new Suggestion(person, weapon, currentRoom);
-		*/
+	}
+	
+	public Solution createAccusation() {
+		//weapons and players only contain unseen cards, randomly choose a card from each to be part of your suggestion
+		Random rand = new Random();
+		int r1 = rand.nextInt(personOptions.size());
+		int r2 = rand.nextInt(weaponOptions.size());
+		int r3 = rand.nextInt(roomOptions.size());
+
+		person = personOptions.get(r1);
+		weapon = weaponOptions.get(r2);
+		room = roomOptions.get(r3);
+
+		return new Solution(person, weapon, room);
 	}
 	
 	// Setter only for debugging purposes
@@ -98,7 +94,7 @@ public class ComputerPlayer extends Player {
 	
 	public void updateSeen(Card shown) {
 		//this updates the cards seen and also removes cards
-		//
+		//from the options lists
 		seen.add(shown);
 		switch(shown.getType()){
 		case PERSON:
