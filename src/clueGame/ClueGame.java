@@ -8,12 +8,14 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.*;
 
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 
 import clueGame.Card.CardType;
 
@@ -33,7 +35,7 @@ public class ClueGame extends JFrame{
 	private JMenuItem exit;
 	private DetectiveDialog det;
 	private Card disproveCard;
-	
+
 	public ClueGame(String s1, String s2) {
 		//super();
 		BoardConfig = s1;
@@ -41,22 +43,28 @@ public class ClueGame extends JFrame{
 		clueBoard = new Board(BoardConfig, BoardRoomConfig);
 		players = new ArrayList<Player>(6);
 		cards = new ArrayList<Card>();
-		//add(new ControlGui());
 	}
-	
+
 	private void setUpGui() {
 		add(this.clueBoard, BorderLayout.CENTER);
+		add(new ControlGui(), BorderLayout.SOUTH);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("Clue Game");
-		setSize(600, 600);
+		setSize(600, 700);
 		createMenu();
 		setVisible(true);
+		JOptionPane.showMessageDialog(this, "You are " + getName() + ", press Next Player to begin playing", 
+				"Welcome to Clue", JOptionPane.INFORMATION_MESSAGE);
 		det = new DetectiveDialog(cards);
-		add(new ControlGui(), BorderLayout.SOUTH);
 	}
-	
+
+	public String getName(){
+		//gets and returns the name of the human player
+		return players.get(0).getName();
+	}
+
 	private void splashScreen(){
-		
+
 	}
 
 	public Player getTurn() {
@@ -93,7 +101,7 @@ public class ClueGame extends JFrame{
 				}
 			}
 			this.dealCards();
-			
+
 			clueBoard.setPlayers(players);
 			this.setUpGui();
 		} catch (FileNotFoundException | BadConfigFormatException e) {
@@ -103,12 +111,12 @@ public class ClueGame extends JFrame{
 	}
 
 	public void loadRoomConfig() throws FileNotFoundException,
-			BadConfigFormatException {
+	BadConfigFormatException {
 		clueBoard.loadRoomConfig();
 	}
 
 	public void loadBoardConfig() throws FileNotFoundException,
-			BadConfigFormatException {
+	BadConfigFormatException {
 		clueBoard.loadBoardConfig();
 
 	}
@@ -122,7 +130,7 @@ public class ClueGame extends JFrame{
 	}
 
 	public void loadPlayerConfig() throws FileNotFoundException,
-			BadConfigFormatException {
+	BadConfigFormatException {
 		Player test;
 		boolean first = true;
 		String[] line;
@@ -145,7 +153,7 @@ public class ClueGame extends JFrame{
 	}
 
 	public void loadCardConfig(String config) throws FileNotFoundException,
-			BadConfigFormatException {
+	BadConfigFormatException {
 		FileReader reader = new FileReader(config);
 		Scanner in = new Scanner(reader);
 		String[] line;
@@ -172,7 +180,7 @@ public class ClueGame extends JFrame{
 			this.cards.add(nextCard);
 		}
 		in.close();
-		
+
 	}
 
 	public void dealCards() {
@@ -217,62 +225,62 @@ public class ClueGame extends JFrame{
 		}
 		return false;
 	}
-	
+
 	public void handleSuggestion(String person, String room, String weapon, Player accuser, ArrayList<Player> group) {
-			ArrayList<Card> choices = new ArrayList<Card>();
-			for (int i = 0; i < group.size(); i++) {
-				if (!group.get(i).equals(accuser)) {
-					disproveCard = group.get(i).disproveSuggestion(person, room, weapon);
+		ArrayList<Card> choices = new ArrayList<Card>();
+		for (int i = 0; i < group.size(); i++) {
+			if (!group.get(i).equals(accuser)) {
+				disproveCard = group.get(i).disproveSuggestion(person, room, weapon);
 				if (disproveCard != null)
 					break;
-				}
 			}
-			
-			//accusingPerson is the person making the suggestion
-			int playerPosition = 0;
-			int initialPosition = 0;
+		}
 
-			//find accusingPerson in arrayList of players, 
-			for(int i = 0; i < group.size(); i++) {
-				if(group.get(i).equals(accuser)) {
+		//accusingPerson is the person making the suggestion
+		int playerPosition = 0;
+		int initialPosition = 0;
 
-					playerPosition = i;
-					initialPosition = i;
-				}
+		//find accusingPerson in arrayList of players, 
+		for(int i = 0; i < group.size(); i++) {
+			if(group.get(i).equals(accuser)) {
+
+				playerPosition = i;
+				initialPosition = i;
 			}
+		}
+
+		if(playerPosition == group.size()-1) {
+			playerPosition = 0;
+		}
+		else playerPosition++;
+
+
+		//loop through and ask each player to disprove suggestion
+
+		//for person at that location, call disprove suggestion
+		disproveCard = group.get(playerPosition).disproveSuggestion(person, weapon, room);
+		while(disproveCard == null && (playerPosition != initialPosition)) {
 
 			if(playerPosition == group.size()-1) {
 				playerPosition = 0;
 			}
 			else playerPosition++;
-
-
-			//loop through and ask each player to disprove suggestion
-
-			//for person at that location, call disprove suggestion
-			disproveCard = group.get(playerPosition).disproveSuggestion(person, weapon, room);
-			while(disproveCard == null && (playerPosition != initialPosition)) {
-
-				if(playerPosition == group.size()-1) {
-					playerPosition = 0;
-				}
-				else playerPosition++;
-				if(playerPosition != initialPosition) {
-					disproveCard = group.get(playerPosition).disproveSuggestion(person, weapon, room);
+			if(playerPosition != initialPosition) {
+				disproveCard = group.get(playerPosition).disproveSuggestion(person, weapon, room);
+			}
+		}
+		if(disproveCard != null) {
+			//update seenCards
+			for(Player p: group) {
+				if(p instanceof ComputerPlayer){
+					p = (ComputerPlayer)p;
+					if(((ComputerPlayer)p).getSeen().contains(disproveCard));
+					((ComputerPlayer)p).updateSeen(disproveCard);
 				}
 			}
-			if(disproveCard != null) {
-				//update seenCards
-				for(Player p: group) {
-					if(p instanceof ComputerPlayer){
-						p = (ComputerPlayer)p;
-						if(((ComputerPlayer)p).getSeen().contains(disproveCard));
-						((ComputerPlayer)p).updateSeen(disproveCard);
-					}
-				}
-			}
-			//if someone can disprove the suggestion, then disproveSuggestion will return a card instead of null and stop
-			
+		}
+		//if someone can disprove the suggestion, then disproveSuggestion will return a card instead of null and stop
+
 	}
 
 	public Card getDisproveCard() {
@@ -287,7 +295,7 @@ public class ClueGame extends JFrame{
 	public Card getNullCard() {
 		return cannotDisprove;
 	}
-	
+
 	public static void main(String args[]) {
 		ClueGame game = new ClueGame("ClueLayout.csv", "ClueLegend.txt");
 		game.loadConfigFiles();
@@ -315,7 +323,7 @@ public class ClueGame extends JFrame{
 		file.add(notes);
 		file.add(exit);
 		setJMenuBar(bar);
-		
+
 	}
 
 }
