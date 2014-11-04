@@ -41,6 +41,7 @@ public class ClueGame extends JFrame{
 		clueBoard = new Board(BoardConfig, BoardRoomConfig);
 		players = new ArrayList<Player>(6);
 		cards = new ArrayList<Card>();
+		//add(new ControlGui());
 	}
 	
 	private void setUpGui() {
@@ -51,6 +52,11 @@ public class ClueGame extends JFrame{
 		createMenu();
 		setVisible(true);
 		det = new DetectiveDialog(cards);
+		add(new ControlGui(), BorderLayout.SOUTH);
+	}
+	
+	private void splashScreen(){
+		
 	}
 
 	public Player getTurn() {

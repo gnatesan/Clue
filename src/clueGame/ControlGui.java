@@ -10,10 +10,10 @@ import javax.swing.JTextField;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
-public class ControlGui extends JFrame {
+public class ControlGui extends JPanel {
 	public ControlGui() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setTitle("Clue Control GUI");
+		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		//setTitle("Clue Control GUI");
 		setSize(650, 250);
 		setLayout(new GridLayout(2, 1));
 		
