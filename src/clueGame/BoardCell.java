@@ -38,6 +38,11 @@ public abstract class BoardCell {
 		return x;
 	}
 	
+	@Override
+	public String toString(){
+		return ("ROW = " + row + " COL = " + column);
+	}
+	
 	 
 	 public abstract void draw(Graphics g);
 	 

@@ -1,6 +1,9 @@
 package clueGame;
 
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Random;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -11,9 +14,12 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
 public class ControlGui extends JPanel {
-	public ControlGui() {
-		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		//setTitle("Clue Control GUI");
+	private JTextField rollText;
+	private JTextField turnField;
+	private ClueGame game;
+	
+	public ControlGui(ClueGame game) {
+		this.game = game;
 		setSize(650, 250);
 		setLayout(new GridLayout(2, 1));
 		
@@ -36,10 +42,42 @@ public class ControlGui extends JPanel {
 	private JPanel createTopButtonPanel() {
 		JPanel panel = new JPanel();
 		JButton nextPlayerButton = new JButton("Next Player");
+		//need to make a listener for this button\
+		nextPlayerButton.addActionListener(new ActionListener() {
+			//this implements the interface, which allows us to do this because
+			//ActionListener is an interface
+			public void actionPerformed(ActionEvent e)
+			{
+				//check that it's OK to move to next turn
+				
+				//if OK
+				//Determine next player
+				game.setTurn();
+				//update panel to display next player
+				updateTurnPanel(game.getTurn().getName());
+				//call appropriate method for player to move
+				if(game.getTurn() instanceof HumanPlayer){
+					//call humanplayer move method
+					
+				}
+				else {
+					//call computerplayer move method
+					game.makeMove(((ComputerPlayer)game.getTurn()));
+				}
+				//roll the die and update the display
+				updateDiePanel();
+				//determine the targets and display them if human
+				
+			}
+
+		});
+		
+		
 		JButton makeAccuseButton = new JButton("Make Accusation");
 		
 		panel.setLayout(new GridLayout(1,0));
 		panel.add(nextPlayerButton);
+		
 		panel.add(makeAccuseButton);
 		
 		
@@ -51,7 +89,7 @@ public class ControlGui extends JPanel {
 		turnPanel.setLayout(new GridLayout(2,0));
 		
 		JLabel turnLabel = new JLabel("Whose turn?", JLabel.CENTER);
-		JTextField turnField = new JTextField();
+		turnField = new JTextField();
 		
 		turnPanel.add(turnLabel);
 		turnPanel.add(turnField);
@@ -59,12 +97,17 @@ public class ControlGui extends JPanel {
 		return turnPanel;
 	}
 	
+	private void updateTurnPanel(String s){
+		turnField.setText(s);
+	}
+	
 	private JPanel createDicePanel() {
 		JPanel dicePanel = new JPanel();
 		
 		JLabel roll = new JLabel("Roll");
-		JTextField rollText = new JTextField(2);
-		rollText.setEditable(false);
+		rollText = new JTextField("");
+		//want to be able to change the number whenever we roll for each turn
+		rollText.setEditable(true);
 		
 		dicePanel.add(roll);
 		dicePanel.add(rollText);
@@ -73,6 +116,12 @@ public class ControlGui extends JPanel {
 		return dicePanel;
 	}
 	
+	private void updateDiePanel(){
+		int n = game.getRandomNumber();
+		String s = "";
+		rollText.setText(s + n);
+	}
+
 	private JPanel createGuessPanel() {
 		JPanel guessPanel = new JPanel();
 		
@@ -101,9 +150,9 @@ public class ControlGui extends JPanel {
 		return guessResultPanel;
 	}
 
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		ControlGui gui = new ControlGui();
 		gui.setVisible(true);
-	}
+	}*/
 
 }

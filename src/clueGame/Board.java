@@ -193,16 +193,13 @@ public class Board extends JPanel {
 
 			if (numSteps == 1 || adjacentCells.get(thisCell).get(i).isDoorway()) {
 				targets.add(adjacentCells.get(thisCell).get(i));
-
 			}
-
 			else {
 				calcTargetsRecursive(adjacentCells.get(thisCell).get(i),
 						numSteps - 1);
 			}
 
 			visited.removeLast();
-
 		}
 	}
 

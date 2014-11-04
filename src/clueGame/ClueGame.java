@@ -35,6 +35,8 @@ public class ClueGame extends JFrame{
 	private JMenuItem exit;
 	private DetectiveDialog det;
 	private Card disproveCard;
+	private final int MAX_NUM_ON_DIE = 6;
+	private int randomNumber;
 
 	public ClueGame(String s1, String s2) {
 		//super();
@@ -47,10 +49,11 @@ public class ClueGame extends JFrame{
 
 	private void setUpGui() {
 		add(this.clueBoard, BorderLayout.CENTER);
-		add(new ControlGui(), BorderLayout.SOUTH);
+		add(new ControlGui(this), BorderLayout.SOUTH);
+		add(new CardPanel(getHuman().getCards()), BorderLayout.EAST);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("Clue Game");
-		setSize(600, 700);
+		setSize(700, 700);
 		createMenu();
 		setVisible(true);
 		JOptionPane.showMessageDialog(this, "You are " + getName() + ", press Next Player to begin playing", 
@@ -58,21 +61,47 @@ public class ClueGame extends JFrame{
 		det = new DetectiveDialog(cards);
 	}
 
+	public HumanPlayer getHuman(){
+		//returns the human player
+		return ((HumanPlayer)players.get(0));
+	}
+	
 	public String getName(){
 		//gets and returns the name of the human player
 		return players.get(0).getName();
 	}
-
-	private void splashScreen(){
-
+	
+	public int getRandomNumber(){
+		return randomNumber;
 	}
-
+	
+	public void makeMove(ComputerPlayer p){
+		//choose the target
+		Board b = this.getBoard();
+		Random rand = new Random();
+		randomNumber = rand.nextInt(MAX_NUM_ON_DIE-1) + 1;
+		System.out.println(randomNumber + " this is the roll");
+		b.calcTargets(p.getRow(), p.getCol(), randomNumber);
+		BoardCell newLoc = p.pickLocation(b.getTargets());
+		//update players row and column
+		p.setRow(newLoc.getRow());
+		p.setCol(newLoc.getColumn());
+		//repaint board
+		getBoard().repaint();
+	}
+	
 	public Player getTurn() {
 		return turn;
 	}
 
-	public void setTurn(Player turn) {
-		this.turn = turn;
+	public void setTurn() {
+		int index = players.indexOf(turn);
+		if(index != players.size()-1){
+			turn = players.get(index+1);
+		}
+		else{
+			turn = players.get(0);
+		}
 	}
 
 	public ClueGame() {
@@ -138,8 +167,9 @@ public class ClueGame extends JFrame{
 		Scanner in = new Scanner(reader);
 		while (in.hasNextLine()) {
 			line = in.nextLine().split(" ");
-			if (!first) {
+			if (first) {
 				test = new HumanPlayer(line[0]);
+				turn = (HumanPlayer)test;
 				first = false;
 			} else {
 				test = new ComputerPlayer(line[0]);

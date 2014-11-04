@@ -20,6 +20,9 @@ public class ComputerPlayer extends Player {
 		roomOptions = new ArrayList<String>();
 		weaponOptions = new ArrayList<String>();
 		personOptions = new ArrayList<String>();
+		//sets the lastRoomVisited to Z so we know that they haven't
+		//visited any rooms
+		lastRoomVisited = 'Z';
 	}
 	
 	public void getDeck(ArrayList<Card> deck){
@@ -44,15 +47,25 @@ public class ComputerPlayer extends Player {
 		for (BoardCell cell : targets) {
 			if (cell.isDoorway()) {
 				if (((RoomCell)cell).getInitial() != lastRoomVisited) {
+					System.out.println(cell.toString() + " I returned this");
 					return cell;
 				}
-				boardList.add(cell);
+				else if (((RoomCell)cell).getInitial() != 'Z'){
+					boardList.add(cell);
+					System.out.println(cell.toString());
+				}
+				
 			} else {
 				boardList.add(cell);
+				System.out.println(cell.toString());
 			}
 		}
 		Random rand = new Random();
 		return boardList.get(rand.nextInt(boardList.size()));
+	}
+	
+	public void makeMove(){
+		
 	}
 
 	public ArrayList<Card> getSeen() {
