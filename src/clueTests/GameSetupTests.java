@@ -48,7 +48,14 @@ public class GameSetupTests {
 		// Three cards should be taken out of play as the solution
 		// Leaving three for each of the six players
 		Assert.assertEquals(3, players.get(0).getCards().size());
+		System.out.println(players.get(0).getCards().get(0).getName());
 		Assert.assertEquals(3, players.get(1).getCards().size());
+		System.out.println(players.get(1).getCards().get(0).getName());
+		System.out.println(players.get(2).getCards().get(0).getName());
+		System.out.println(players.get(3).getCards().get(0).getName());
+		System.out.println(players.get(4).getCards().get(0).getName());
+		System.out.println(players.get(5).getCards().get(0).getName());
+
 		Assert.assertEquals(3, players.get(2).getCards().size());
 		Assert.assertEquals(3, players.get(3).getCards().size());
 		Assert.assertEquals(3, players.get(4).getCards().size());
@@ -75,19 +82,19 @@ public class GameSetupTests {
 		Assert.assertEquals("John", test.get(0).getName());
 		Assert.assertEquals(Color.BLUE, test.get(0).getColor());
 		Assert.assertEquals(16, test.get(0).getRow());
-		Assert.assertEquals(9, test.get(0).getCol());
+		Assert.assertEquals(8, test.get(0).getCol());
 		
 		//Test second to last computer player
 		Assert.assertEquals("Dave", test.get(4).getName());
 		Assert.assertEquals(Color.GRAY, test.get(4).getColor());
 		Assert.assertEquals(18, test.get(4).getRow());
-		Assert.assertEquals(4, test.get(4).getCol());
+		Assert.assertEquals(6, test.get(4).getCol());
 		
 		//Test last computer player
 		Assert.assertEquals("Emily", test.get(5).getName());
 		Assert.assertEquals(Color.PINK, test.get(5).getColor());
 		Assert.assertEquals(12, test.get(5).getRow());
-		Assert.assertEquals(1, test.get(5).getCol());
+		Assert.assertEquals(0, test.get(5).getCol());
 		
 	}
 

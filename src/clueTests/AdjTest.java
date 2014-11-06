@@ -1,5 +1,7 @@
 package clueTests;
 
+import static org.junit.Assert.*;
+
 import java.util.*;
 
 import org.junit.Assert;
@@ -194,4 +196,10 @@ public class AdjTest {
 		Assert.assertTrue(targets.contains(board.getCellAt(12, 15)));
 		Assert.assertTrue(targets.contains(board.getCellAt(13, 16)));
 	}
+	
+	@Test
+	public void testNotDoorway(){
+		Assert.assertFalse(board.getCellAt(3, 4).isDoorway());
+	}
+		
 }

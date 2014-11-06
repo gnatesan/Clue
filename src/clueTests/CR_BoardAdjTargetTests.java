@@ -155,6 +155,14 @@ public class CR_BoardAdjTargetTests {
 		Assert.assertTrue(testList.contains(board.getCellAt(5, 4)));
 		Assert.assertTrue(testList.contains(board.getCellAt(6, 3)));
 		Assert.assertEquals(3, testList.size());
+		
+		//test Linda's location
+		testList = board.getAdjList(19, 7);
+		Assert.assertTrue(testList.contains(board.getCellAt(18, 7)));
+		Assert.assertTrue(testList.contains(board.getCellAt(20, 7)));
+		Assert.assertTrue(testList.contains(board.getCellAt(19, 6)));
+		Assert.assertEquals(3, testList.size());
+		
 	}
 
 

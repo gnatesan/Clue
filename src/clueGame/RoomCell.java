@@ -9,7 +9,7 @@ public class RoomCell extends BoardCell {
 	private DoorDirection doorDirection;
 	private char roomInitial;
 	
-	public RoomCell(int r, int c, char i, char j ) {
+	public RoomCell(int r, int c, char i, char j) {
 		super(r, c);
 		roomInitial = i;		
 		switch (j){
@@ -53,7 +53,7 @@ public class RoomCell extends BoardCell {
 		if (roomInitial == 'X') {
 			g.setColor(Color.RED);
 		} else {
-			g.setColor(Color.GRAY);
+			g.setColor(Color.lightGray);
 		}
 		
 		g.fillRect(this.getColumn() * CELL_SIZE, this.getRow() * CELL_SIZE, CELL_SIZE, CELL_SIZE);
@@ -95,9 +95,4 @@ public class RoomCell extends BoardCell {
 	public DoorDirection getDoorDirection() {
 		return doorDirection;
 	}
-	
-	
-	
-	
-
 }

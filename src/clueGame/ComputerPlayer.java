@@ -43,24 +43,22 @@ public class ComputerPlayer extends Player {
 	
 	public BoardCell pickLocation(Set<BoardCell> targets) {		
 		LinkedList<BoardCell> boardList = new LinkedList<BoardCell>();
-		
-		for (BoardCell cell : targets) {
-			if (cell.isDoorway()) {
-				if (((RoomCell)cell).getInitial() != lastRoomVisited) {
-					System.out.println(cell.toString() + " I returned this");
-					return cell;
-				}
-				else if (((RoomCell)cell).getInitial() != 'Z'){
-					boardList.add(cell);
-					System.out.println(cell.toString());
-				}
-				
-			} else {
-				boardList.add(cell);
-				System.out.println(cell.toString());
+		LinkedList<BoardCell> doorList = new LinkedList<BoardCell>();
+		for(BoardCell c: targets){
+			if(c.isDoorway() && ((RoomCell)c).getInitial()!=lastRoomVisited){
+				doorList.add(c);
 			}
 		}
 		Random rand = new Random();
+		if(!doorList.isEmpty()){
+			int randNum = rand.nextInt(doorList.size());
+			setLastRoomVisited(((RoomCell)doorList.get(randNum)).getInitial());
+			return doorList.get(randNum);
+		}
+		
+		for (BoardCell cell : targets) {
+				boardList.add(cell);
+		}
 		return boardList.get(rand.nextInt(boardList.size()));
 	}
 	

@@ -14,6 +14,10 @@ public class Player {
 	private ArrayList<Card> cards;
 	private static final int PLAYER_RADIUS = 25;
 
+	public boolean isHuman(){
+		return (this instanceof HumanPlayer);
+	}
+	
 	public Player(String name) {
 		this.name = name;
 		this.cards = new ArrayList<Card>();
@@ -67,7 +71,7 @@ public class Player {
 
 	public void draw(Graphics g) {
 		g.setColor(getColor());
-		g.fillOval(getRow() * PLAYER_RADIUS, getCol() * PLAYER_RADIUS, PLAYER_RADIUS, PLAYER_RADIUS);
+		g.fillOval(getCol() * PLAYER_RADIUS, getRow() * PLAYER_RADIUS, PLAYER_RADIUS, PLAYER_RADIUS);
 	}
 
 	public Card disproveSuggestion(String person, String weapon, String room) {

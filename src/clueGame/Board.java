@@ -2,15 +2,20 @@ package clueGame;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.*;
 
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import clueGame.RoomCell.DoorDirection;
 
-public class Board extends JPanel {
+public class Board extends JPanel implements MouseListener{
 	private BoardCell[][] cells;
 	Map<Character, String> rooms;
 	List<BoardCell> centers;
@@ -26,6 +31,13 @@ public class Board extends JPanel {
 	private String BoardConfig;
 	private String BoardRoomConfig;
 	private ArrayList<Player> players;
+	private static final int CELL_SIZE = 25;
+	//private boolean humanTurn;
+	private int x, y;
+	private BoardCell returnCell;
+	private boolean humanMustFinish;
+	private Player turn;
+	//private boolean clicked;
 
 	public Board(String boardConfig, String boardRoomConfig) {
 		super();
@@ -38,9 +50,80 @@ public class Board extends JPanel {
 		visited = new LinkedList<BoardCell>();
 		centers = new LinkedList<BoardCell>();
 	}
+	
+	public void setTurn(Player p){
+		turn = p;
+	}
+
+	public void highlightTargets(Graphics g){
+		//highlights the targets and makes them blue
+		for(BoardCell cell: targets){
+			g.setColor(Color.CYAN);
+			g.fillRect(cell.getColumn() * CELL_SIZE, cell.getRow() * CELL_SIZE, CELL_SIZE, CELL_SIZE);
+			g.setColor(Color.BLACK);
+			g.drawRect(cell.getColumn() * CELL_SIZE,  cell.getRow() * CELL_SIZE,  CELL_SIZE, CELL_SIZE);	
+		}
+	}
+
+
+	@Override
+	public void mousePressed(MouseEvent e) {}
+	@Override
+	public void mouseReleased(MouseEvent e) {}
+	@Override
+	public void mouseEntered(MouseEvent e) {}
+	@Override
+	public void mouseExited(MouseEvent e) {}
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		x = e.getX();
+		y = e.getY();
+		
+		for(BoardCell cell: targets){
+			if(y<=(cell.getRow()*CELL_SIZE + 3*CELL_SIZE-1) && y >=(cell.getRow()*CELL_SIZE + 50)&&
+					x<=(cell.getColumn()*CELL_SIZE + CELL_SIZE-1) && x >=(cell.getColumn()*CELL_SIZE)){
+				returnCell = cell;
+				humanMustFinish = false;
+				//have to call makeMove somehow
+				((HumanPlayer)turn).makeMove(this, returnCell);
+			}
+		}
+		if(humanMustFinish) JOptionPane.showMessageDialog(null,"Please select a valid move!","Invalid Move!", JOptionPane.INFORMATION_MESSAGE);
+
+	}
+
+
+	public BoardCell getReturnCell(){
+		return returnCell;
+	}
+
+	boolean isHumanMustFinish(){
+		return humanMustFinish;
+	}
+
+	public void setHumanMustFinish(boolean t){
+		humanMustFinish = t;
+	}
+
+	@Override
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		for (int row = 0; row < this.getNumRows(); row++) {
+			for (int col = 0; col < this.getNumColumns(); col++) {
+				getCellAt(row, col).draw(g);
+				if(getCellAt(row, col) instanceof RoomCell)
+					((RoomCell)getCellAt(row, col)).drawName(g, this);
+			}
+		}
+		if(humanMustFinish) highlightTargets(g);
+		for (Player p : players) {
+			p.draw(g);
+		}
+	}
+
 
 	public void loadBoardConfig() throws FileNotFoundException,
-			BadConfigFormatException {
+	BadConfigFormatException {
 
 		FileReader reader = new FileReader(BoardConfig);
 		Scanner in = new Scanner(reader);
@@ -74,7 +157,6 @@ public class Board extends JPanel {
 							cells[numRowsTemp][numColumnsTemp] = new RoomCell(
 									numRowsTemp, numColumnsTemp, s.charAt(0),
 									s.charAt(1));
-							
 							if (s.charAt(1) == 'N') {
 								centers.add(cells[numRowsTemp][numColumnsTemp]);
 							}
@@ -101,11 +183,11 @@ public class Board extends JPanel {
 		while (in2.hasNextLine()) {
 			String line = in2.nextLine();
 			List<String> temp = Arrays.asList(line.split(","));
-			
+
 			if (temp.size() != 2) {
 				throw new BadConfigFormatException();
 			}
-			
+
 			rooms.put(line.charAt(0), line.substring(3));
 			count++;
 		}
@@ -122,35 +204,34 @@ public class Board extends JPanel {
 
 				cellAdjList = new LinkedList<BoardCell>();
 				if (cells[i][j].isWalkway()) {
-
 					if (i - 1 >= 0
 							&& (cells[i - 1][j].isWalkway() || (cells[i - 1][j]
 									.isDoorway() && (((RoomCell) cells[i - 1][j])
-									.getDoorDirection() == DoorDirection.DOWN)))) {
+											.getDoorDirection() == DoorDirection.DOWN)))) {
 						cellAdjList.add(cells[i - 1][j]);
 					}
 					if (i + 1 < numRows
 							&& (cells[i + 1][j].isWalkway() || (cells[i + 1][j]
 									.isDoorway() && (((RoomCell) cells[i + 1][j])
-									.getDoorDirection() == DoorDirection.UP)))) {
+											.getDoorDirection() == DoorDirection.UP)))) {
 						cellAdjList.add(cells[i + 1][j]);
 					}
 					if (j - 1 >= 0
 							&& (cells[i][j - 1].isWalkway() || (cells[i][j - 1]
 									.isDoorway() && (((RoomCell) cells[i][j - 1])
-									.getDoorDirection() == DoorDirection.RIGHT)))) {
+											.getDoorDirection() == DoorDirection.RIGHT)))) {
 						cellAdjList.add(cells[i][j - 1]);
 					}
 					if (j + 1 < numColumns
 							&& (cells[i][j + 1].isWalkway() || (cells[i][j + 1]
 									.isDoorway() && (((RoomCell) cells[i][j + 1])
-									.getDoorDirection() == DoorDirection.LEFT)))) {
+											.getDoorDirection() == DoorDirection.LEFT)))) {
 						cellAdjList.add(cells[i][j + 1]);
 					}
-
 				}
 
 				else if (cells[i][j].isDoorway()) {
+
 					if (i + 1 < numRows
 							&& ((RoomCell) cells[i][j]).getDoorDirection() == DoorDirection.DOWN) {
 						cellAdjList.add(cells[i + 1][j]);
@@ -164,15 +245,16 @@ public class Board extends JPanel {
 							&& ((RoomCell) cells[i][j]).getDoorDirection() == DoorDirection.LEFT) {
 						cellAdjList.add(cells[i][j - 1]);
 					}
-
 				}
 
 				adjacencyLists.put(cells[i][j], cellAdjList);
+
 
 			}
 		}
 
 	}
+
 
 	public void calcTargets(int i, int j, int numSteps) {
 
@@ -226,24 +308,7 @@ public class Board extends JPanel {
 	}
 
 	public Set<BoardCell> getTargets() {
-
 		return targets;
-	}
-
-	@Override
-	public void paintComponent(Graphics g) {
-		super.paintComponent(g);
-		for (int row = 0; row < this.getNumRows(); row++) {
-			for (int col = 0; col < this.getNumColumns(); col++) {
-				getCellAt(row, col).draw(g);
-				if(getCellAt(row, col) instanceof RoomCell)
-				((RoomCell)getCellAt(row, col)).drawName(g, this);
-			}
-		}
-
-		for (Player p : players) {
-			p.draw(g);
-		}
 	}
 
 	private void setNumColumns(int numColumnsTemp) {

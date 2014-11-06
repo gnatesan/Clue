@@ -36,9 +36,7 @@ public class CardPanel extends JPanel{
 				break;
 			}
 		}
-		
 		person.add(p);
-		
 		return person;
 	}
 	public JPanel generateRoomCard() {

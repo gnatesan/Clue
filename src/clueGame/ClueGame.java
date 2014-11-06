@@ -1,6 +1,7 @@
 package clueGame;
 
 import java.awt.BorderLayout;
+import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -37,6 +38,7 @@ public class ClueGame extends JFrame{
 	private Card disproveCard;
 	private final int MAX_NUM_ON_DIE = 6;
 	private int randomNumber;
+	private boolean humanMustFinish;
 
 	public ClueGame(String s1, String s2) {
 		//super();
@@ -45,6 +47,8 @@ public class ClueGame extends JFrame{
 		clueBoard = new Board(BoardConfig, BoardRoomConfig);
 		players = new ArrayList<Player>(6);
 		cards = new ArrayList<Card>();
+		clueBoard.calcAdjacencies();
+		this.addMouseListener(clueBoard);
 	}
 
 	private void setUpGui() {
@@ -53,7 +57,7 @@ public class ClueGame extends JFrame{
 		add(new CardPanel(getHuman().getCards()), BorderLayout.EAST);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("Clue Game");
-		setSize(700, 700);
+		setSize(800, 800);
 		createMenu();
 		setVisible(true);
 		JOptionPane.showMessageDialog(this, "You are " + getName() + ", press Next Player to begin playing", 
@@ -65,31 +69,39 @@ public class ClueGame extends JFrame{
 		//returns the human player
 		return ((HumanPlayer)players.get(0));
 	}
-	
+
 	public String getName(){
 		//gets and returns the name of the human player
 		return players.get(0).getName();
 	}
-	
+
 	public int getRandomNumber(){
 		return randomNumber;
 	}
 	
-	public void makeMove(ComputerPlayer p){
-		//choose the target
-		Board b = this.getBoard();
+	public int roll(){
 		Random rand = new Random();
 		randomNumber = rand.nextInt(MAX_NUM_ON_DIE-1) + 1;
-		System.out.println(randomNumber + " this is the roll");
-		b.calcTargets(p.getRow(), p.getCol(), randomNumber);
-		BoardCell newLoc = p.pickLocation(b.getTargets());
+		return randomNumber;
+	}
+
+	public void makeMove(ComputerPlayer p, int roll){
+		
+		//choose the target		
+		//calculate the targets and pick one
+		clueBoard.calcTargets(p.getRow(), p.getCol(), randomNumber);
+		BoardCell newLoc = p.pickLocation(clueBoard.getTargets());
+		
 		//update players row and column
 		p.setRow(newLoc.getRow());
 		p.setCol(newLoc.getColumn());
+
 		//repaint board
 		getBoard().repaint();
+		
+		//handle suggestion and accusation(next part)
 	}
-	
+
 	public Player getTurn() {
 		return turn;
 	}
@@ -101,7 +113,13 @@ public class ClueGame extends JFrame{
 		}
 		else{
 			turn = players.get(0);
+			turn = (HumanPlayer)turn;
+
+			humanMustFinish = true;
+			clueBoard.setHumanMustFinish(true);
+			//have to change setAccuse to true at some point
 		}
+		clueBoard.setTurn(turn);
 	}
 
 	public ClueGame() {
@@ -118,133 +136,6 @@ public class ClueGame extends JFrame{
 		return clueBoard;
 	}
 
-	public void loadConfigFiles() {
-		try {
-			this.loadRoomConfig();
-			this.loadBoardConfig();
-			this.loadPlayerConfig();
-			this.loadCardConfig("CardConfig.csv");
-			for(Player p: players){
-				if(p instanceof ComputerPlayer){
-					((ComputerPlayer)p).getDeck(cards);
-				}
-			}
-			this.dealCards();
-
-			clueBoard.setPlayers(players);
-			this.setUpGui();
-		} catch (FileNotFoundException | BadConfigFormatException e) {
-			System.out.println(e.getMessage());
-		}
-		clueBoard.calcAdjacencies();
-	}
-
-	public void loadRoomConfig() throws FileNotFoundException,
-	BadConfigFormatException {
-		clueBoard.loadRoomConfig();
-	}
-
-	public void loadBoardConfig() throws FileNotFoundException,
-	BadConfigFormatException {
-		clueBoard.loadBoardConfig();
-
-	}
-
-	public ArrayList<Player> getPlayers() {
-		return players;
-	}
-
-	public void setPlayers(ArrayList<Player> players) {
-		this.players = players;
-	}
-
-	public void loadPlayerConfig() throws FileNotFoundException,
-	BadConfigFormatException {
-		Player test;
-		boolean first = true;
-		String[] line;
-		FileReader reader = new FileReader("Player.txt");
-		Scanner in = new Scanner(reader);
-		while (in.hasNextLine()) {
-			line = in.nextLine().split(" ");
-			if (first) {
-				test = new HumanPlayer(line[0]);
-				turn = (HumanPlayer)test;
-				first = false;
-			} else {
-				test = new ComputerPlayer(line[0]);
-			}
-			test.setColor(line[1]);
-			test.setRow(Integer.parseInt(line[2]));
-			test.setCol(Integer.parseInt(line[3]));
-			players.add(test);
-		}
-		in.close();
-	}
-
-	public void loadCardConfig(String config) throws FileNotFoundException,
-	BadConfigFormatException {
-		FileReader reader = new FileReader(config);
-		Scanner in = new Scanner(reader);
-		String[] line;
-
-		while (in.hasNextLine()) {
-			line = in.nextLine().split(",");
-			Card nextCard;
-
-			switch (line[0].trim()) {
-			case "person":
-				nextCard = new Card(line[1].trim(), Card.CardType.PERSON);
-				break;
-			case "weapon":
-				nextCard = new Card(line[1].trim(), Card.CardType.WEAPON);
-				break;
-			case "room":
-				nextCard = new Card(line[1].trim(), Card.CardType.ROOM);
-				break;
-			default:
-				throw new BadConfigFormatException(
-						"Invalid card configuration format.");
-			}
-
-			this.cards.add(nextCard);
-		}
-		in.close();
-
-	}
-
-	public void dealCards() {
-		ArrayList<Card> tempList = new ArrayList<Card>(this.cards);
-		// Choose random cards from the list for the solution
-		Random rand = new Random();
-		Card one = tempList.get(rand.nextInt(6));
-		Card two = tempList.get(rand.nextInt(6) + 6);
-		Card three = tempList.get(rand.nextInt(9) + 12);
-
-		this.solution = new Solution(one.getName(), two.getName(),
-				three.getName());
-
-		tempList.remove(one);
-		tempList.remove(two);
-		tempList.remove(three);
-
-		int player;
-		// Go from 0 to size - 1 of the cards and apply modulus to get player #
-		int totalCards = tempList.size();
-		for (int i = 0; i < totalCards; i++) {
-			player = i % 6;
-			Card nextCard = tempList.get(rand.nextInt(tempList.size()));
-
-			this.players.get(player).addCard(nextCard);
-
-			tempList.remove(nextCard);
-		}
-	}
-
-	public ArrayList<Card> getCards() {
-		return this.cards;
-	}
-
 	public boolean checkAccusation(Solution sol) {
 		if (sol.getPerson().equals(solution.getPerson())) {
 			if (sol.getWeapon().equals(solution.getWeapon())) {
@@ -254,6 +145,14 @@ public class ClueGame extends JFrame{
 			}
 		}
 		return false;
+	}
+
+	public boolean isHumanMustFinish() {
+		return humanMustFinish;
+	}
+
+	public void setHumanMustFinish(boolean humanMustFinish) {
+		this.humanMustFinish = humanMustFinish;
 	}
 
 	public void handleSuggestion(String person, String room, String weapon, Player accuser, ArrayList<Player> group) {
@@ -354,6 +253,136 @@ public class ClueGame extends JFrame{
 		file.add(exit);
 		setJMenuBar(bar);
 
+	}
+	public void loadConfigFiles() {
+		try {
+			this.loadRoomConfig();
+			this.loadBoardConfig();
+			this.loadPlayerConfig();
+			this.loadCardConfig("CardConfig.csv");
+			for(Player p: players){
+				if(p instanceof ComputerPlayer){
+					((ComputerPlayer)p).getDeck(cards);
+				}
+			}
+			this.dealCards();
+
+			clueBoard.setPlayers(players);
+			this.setUpGui();
+		} catch (FileNotFoundException | BadConfigFormatException e) {
+			System.out.println(e.getMessage());
+		}
+		clueBoard.calcAdjacencies();
+	}
+
+	public void loadRoomConfig() throws FileNotFoundException,
+	BadConfigFormatException {
+		clueBoard.loadRoomConfig();
+	}
+
+	public void loadBoardConfig() throws FileNotFoundException,
+	BadConfigFormatException {
+		clueBoard.loadBoardConfig();
+
+	}
+
+	public ArrayList<Player> getPlayers() {
+		return players;
+	}
+
+	public void setPlayers(ArrayList<Player> players) {
+		this.players = players;
+	}
+
+	public void loadPlayerConfig() throws FileNotFoundException,
+	BadConfigFormatException {
+		Player test;
+		boolean first = true;
+		String[] line;
+		FileReader reader = new FileReader("Player.txt");
+		Scanner in = new Scanner(reader);
+		while (in.hasNextLine()) {
+			line = in.nextLine().split(" ");
+			if (first) {
+				test = new HumanPlayer(line[0]);
+				//turn = (HumanPlayer)test;
+				first = false;
+			} else {
+				test = new ComputerPlayer(line[0]);
+			}
+			test.setColor(line[1]);
+			test.setRow(Integer.parseInt(line[2]));
+			test.setCol(Integer.parseInt(line[3]));
+			players.add(test);
+		}
+		//set the starting player
+		turn = players.get(players.size()-1);
+		clueBoard.setTurn(turn);
+		in.close();
+	}
+	
+
+	public void loadCardConfig(String config) throws FileNotFoundException,
+	BadConfigFormatException {
+		FileReader reader = new FileReader(config);
+		Scanner in = new Scanner(reader);
+		String[] line;
+
+		while (in.hasNextLine()) {
+			line = in.nextLine().split(",");
+			Card nextCard;
+
+			switch (line[0].trim()) {
+			case "person":
+				nextCard = new Card(line[1].trim(), Card.CardType.PERSON);
+				break;
+			case "weapon":
+				nextCard = new Card(line[1].trim(), Card.CardType.WEAPON);
+				break;
+			case "room":
+				nextCard = new Card(line[1].trim(), Card.CardType.ROOM);
+				break;
+			default:
+				throw new BadConfigFormatException(
+						"Invalid card configuration format.");
+			}
+
+			this.cards.add(nextCard);
+		}
+		in.close();
+
+	}
+
+	public void dealCards() {
+		ArrayList<Card> tempList = new ArrayList<Card>(this.cards);
+		// Choose random cards from the list for the solution
+		Random rand = new Random();
+		Card one = tempList.get(rand.nextInt(6));
+		Card two = tempList.get(rand.nextInt(6) + 6);
+		Card three = tempList.get(rand.nextInt(9) + 12);
+
+		this.solution = new Solution(one.getName(), two.getName(),
+				three.getName());
+
+		tempList.remove(one);
+		tempList.remove(two);
+		tempList.remove(three);
+
+		int player;
+		// Go from 0 to size - 1 of the cards and apply modulus to get player #
+		int totalCards = tempList.size();
+		for (int i = 0; i < totalCards; i++) {
+			player = i % 6;
+			Card nextCard = tempList.get(rand.nextInt(tempList.size()));
+
+			this.players.get(player).addCard(nextCard);
+
+			tempList.remove(nextCard);
+		}
+	}
+
+	public ArrayList<Card> getCards() {
+		return this.cards;
 	}
 
 }
