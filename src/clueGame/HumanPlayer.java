@@ -6,6 +6,7 @@ import javax.swing.JOptionPane;
 
 public class HumanPlayer extends Player{
 	private final int MAX_NUM_ON_DIE = 6;
+	private boolean moved;
 
 	public HumanPlayer(String name) {
 		super(name);
@@ -17,7 +18,6 @@ public class HumanPlayer extends Player{
 		//when we call calcTargets for human player, highlight them
 		//calculate possible targets
 		b.calcTargets(this.getRow(), this.getCol(), roll);
-		
 		//highlight the targets
 		b.repaint();
 	}
@@ -29,7 +29,14 @@ public class HumanPlayer extends Player{
 		this.setCol(c.getColumn());
 		//repaint board
 		b.repaint();
-		//handle suggestion and accusation(next part)
+	}
+	
+	public void setMoved(boolean tf){
+		moved = tf;
+	}
+	
+	public boolean getMoved(){
+		return moved;
 	}
 
 }

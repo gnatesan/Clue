@@ -21,6 +21,7 @@ public class BoardConfigTests {
 	public void setUp() throws FileNotFoundException, BadConfigFormatException {
 
 		ClueGame game = new ClueGame("ClueLayoutOurs.csv", "ClueLegendours.txt");
+		game.setVisible(false);
 		game.loadRoomConfig();
 		game.loadBoardConfig();
 		board = game.getBoard();

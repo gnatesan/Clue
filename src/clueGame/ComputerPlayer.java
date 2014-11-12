@@ -1,8 +1,15 @@
 package clueGame;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 import java.util.Random;
+import java.util.Scanner;
 import java.util.Set;
 
 public class ComputerPlayer extends Player {
@@ -10,11 +17,13 @@ public class ComputerPlayer extends Player {
 	private String weapon;
 	private String person;
 	private String room;
-	ArrayList <Card> seen = new ArrayList <Card>();
-	ArrayList<String> personOptions;
-	ArrayList<String> weaponOptions;
-	ArrayList<String> roomOptions;
-	
+	private ArrayList <Card> seen = new ArrayList <Card>();
+	private ArrayList<String> personOptions;
+	private ArrayList<String> weaponOptions;
+	private ArrayList<String> roomOptions;
+	private boolean makeAccusation;
+	private Map<Character, String> rooms;
+
 	public ComputerPlayer(String name) {
 		super(name);
 		roomOptions = new ArrayList<String>();
@@ -23,8 +32,18 @@ public class ComputerPlayer extends Player {
 		//sets the lastRoomVisited to Z so we know that they haven't
 		//visited any rooms
 		lastRoomVisited = 'Z';
+		makeAccusation = false;		
 	}
-	
+
+
+	public boolean getMakeAccusation(){
+		return makeAccusation;
+	}
+
+	public void setMakeAccusation(boolean tf){
+		makeAccusation = tf;
+	}
+
 	public void getDeck(ArrayList<Card> deck){
 		for(Card c: deck){
 			switch(c.getType()){
@@ -40,7 +59,8 @@ public class ComputerPlayer extends Player {
 			}
 		}
 	}
-	
+
+
 	public BoardCell pickLocation(Set<BoardCell> targets) {		
 		LinkedList<BoardCell> boardList = new LinkedList<BoardCell>();
 		LinkedList<BoardCell> doorList = new LinkedList<BoardCell>();
@@ -55,15 +75,15 @@ public class ComputerPlayer extends Player {
 			setLastRoomVisited(((RoomCell)doorList.get(randNum)).getInitial());
 			return doorList.get(randNum);
 		}
-		
+
 		for (BoardCell cell : targets) {
-				boardList.add(cell);
+			boardList.add(cell);
 		}
 		return boardList.get(rand.nextInt(boardList.size()));
 	}
-	
+
 	public void makeMove(){
-		
+
 	}
 
 	public ArrayList<Card> getSeen() {
@@ -71,7 +91,7 @@ public class ComputerPlayer extends Player {
 	}
 
 	public Suggestion createSuggestion(String currentRoom) {
-		
+
 
 		//weapons and players only contain unseen cards, randomly choose a card from each to be part of your suggestion
 		Random rand = new Random();
@@ -83,7 +103,7 @@ public class ComputerPlayer extends Player {
 
 		return new Suggestion(person, weapon, currentRoom);
 	}
-	
+
 	public Solution createAccusation() {
 		//weapons and players only contain unseen cards, randomly choose a card from each to be part of your suggestion
 		Random rand = new Random();
@@ -97,12 +117,12 @@ public class ComputerPlayer extends Player {
 
 		return new Solution(person, weapon, room);
 	}
-	
+
 	// Setter only for debugging purposes
 	public void setLastRoomVisited(char room) {
 		this.lastRoomVisited = room;
 	}
-	
+
 	public void updateSeen(Card shown) {
 		//this updates the cards seen and also removes cards
 		//from the options lists
@@ -119,7 +139,7 @@ public class ComputerPlayer extends Player {
 			break;
 		}
 	}
-	
+
 	public ArrayList<Card> getCardsSeen(){
 		return seen;
 	}

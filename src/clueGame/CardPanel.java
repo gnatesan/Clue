@@ -23,35 +23,44 @@ public class CardPanel extends JPanel{
 		add(generateWeaponCard());
 	}
 	
-
-	
 	public JPanel generatePersonCard() {
 		JPanel person = new JPanel();
-		
 		person.setBorder(new TitledBorder(new EtchedBorder(), "People"));
-		JTextField p = new JTextField("");
+		
+		ArrayList<JTextField> peopleCards = new ArrayList<JTextField>();
 		for (Card c : cards) {
 			if (c.getType() == CardType.PERSON) {
-				p = new JTextField(c.getName());
-				break;
+				peopleCards.add(new JTextField(c.getName()));
 			}
 		}
-		person.add(p);
+		for(JTextField j: peopleCards){
+			person.add(j);
+			j.setEditable(false);
+		}
+		
+		person.setLayout(new GridLayout(peopleCards.size(), 1));
+
 		return person;
 	}
+	
 	public JPanel generateRoomCard() {
 		JPanel room = new JPanel();
 		
 		room.setBorder(new TitledBorder(new EtchedBorder(), "Rooms"));
-		JTextField r = new JTextField("");
+		
+
+		ArrayList<JTextField> roomCards = new ArrayList<JTextField>();
 		for (Card c : cards) {
 			if (c.getType() == CardType.ROOM) {
-				r = new JTextField(c.getName());
-				break;
+				roomCards.add(new JTextField(c.getName()));
 			}
 		}
-		
-		room.add(r);
+		for(JTextField j: roomCards){
+			room.add(j);
+			j.setEditable(false);
+		}
+		room.setLayout(new GridLayout(roomCards.size(), 1));
+
 		
 		return room;
 	}
@@ -59,15 +68,18 @@ public class CardPanel extends JPanel{
 		JPanel weapon = new JPanel();
 		
 		weapon.setBorder(new TitledBorder(new EtchedBorder(), "Weapon"));
-		JTextField w = new JTextField("");
+		
+		ArrayList<JTextField> weaponCards = new ArrayList<JTextField>();
 		for (Card c : cards) {
 			if (c.getType() == CardType.WEAPON) {
-				w = new JTextField(c.getName());
-				break;
+				weaponCards.add(new JTextField(c.getName()));
 			}
 		}
-		
-		weapon.add(w);
+		for(JTextField j: weaponCards){
+			weapon.add(j);
+			j.setEditable(false);
+		}
+		weapon.setLayout(new GridLayout(weaponCards.size(), 1));
 		
 		return weapon;
 	}

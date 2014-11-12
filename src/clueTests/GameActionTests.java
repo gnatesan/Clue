@@ -49,6 +49,7 @@ public class GameActionTests {
 		LoungeCard = new Card("Lounge", Card.CardType.ROOM);
 		GunCard = new Card("Gun", Card.CardType.WEAPON);
 		game.loadConfigFiles();
+		game.setVisible(false);
 		board = game.getBoard();
 	}
 

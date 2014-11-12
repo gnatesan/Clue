@@ -39,25 +39,32 @@ public class ClueGame extends JFrame{
 	private final int MAX_NUM_ON_DIE = 6;
 	private int randomNumber;
 	private boolean humanMustFinish;
+	private Suggestion suggest;
+	private boolean madeSuggestion;
+	private ControlGui control;
 
 	public ClueGame(String s1, String s2) {
 		//super();
 		BoardConfig = s1;
 		BoardRoomConfig = s2;
 		clueBoard = new Board(BoardConfig, BoardRoomConfig);
+		clueBoard.getGame(this);
 		players = new ArrayList<Player>(6);
 		cards = new ArrayList<Card>();
 		clueBoard.calcAdjacencies();
 		this.addMouseListener(clueBoard);
+		madeSuggestion = false;
 	}
 
 	private void setUpGui() {
 		add(this.clueBoard, BorderLayout.CENTER);
-		add(new ControlGui(this), BorderLayout.SOUTH);
+		control = new ControlGui(this);
+		clueBoard.setGui(control);
+		add(control, BorderLayout.SOUTH);
 		add(new CardPanel(getHuman().getCards()), BorderLayout.EAST);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("Clue Game");
-		setSize(800, 800);
+		setSize(720, 800);
 		createMenu();
 		setVisible(true);
 		JOptionPane.showMessageDialog(this, "You are " + getName() + ", press Next Player to begin playing", 
@@ -69,6 +76,18 @@ public class ClueGame extends JFrame{
 		//returns the human player
 		return ((HumanPlayer)players.get(0));
 	}
+	
+	public Suggestion getSuggestion(){
+		return suggest;
+	}
+	
+	public boolean getMadeSuggestion(){
+		return madeSuggestion;
+	}
+	
+	public void setMadeSuggestion(boolean tf){
+		madeSuggestion = tf;
+	}
 
 	public String getName(){
 		//gets and returns the name of the human player
@@ -78,7 +97,7 @@ public class ClueGame extends JFrame{
 	public int getRandomNumber(){
 		return randomNumber;
 	}
-	
+
 	public int roll(){
 		Random rand = new Random();
 		randomNumber = rand.nextInt(MAX_NUM_ON_DIE-1) + 1;
@@ -86,19 +105,40 @@ public class ClueGame extends JFrame{
 	}
 
 	public void makeMove(ComputerPlayer p, int roll){
-		
+		madeSuggestion = false;
+
+		//see if we need to make an accusation
+		if(p.getMakeAccusation()){
+			if(checkAccusation(p.createAccusation())){
+				Solution s = p.createAccusation();
+				JOptionPane.showMessageDialog(this,p.getName() + " wins!", p.getName() + " guessed correctly. The answer was " + s.getPerson() + " in the "+ s.getRoom() + " with the " + s.getWeapon() , JOptionPane.INFORMATION_MESSAGE);
+				//stop the game if they win
+				System.exit(0);
+			}
+			p.setMakeAccusation(false);
+		}
 		//choose the target		
 		//calculate the targets and pick one
 		clueBoard.calcTargets(p.getRow(), p.getCol(), randomNumber);
 		BoardCell newLoc = p.pickLocation(clueBoard.getTargets());
 		
+		//check to see if selected location is a room
+		//if it is, then call makeSuggestion
+		if(newLoc instanceof RoomCell){
+			Map<Character, String> rooms = getBoard().getRooms();
+			suggest = p.createSuggestion(rooms.get(((RoomCell) newLoc).getInitial()));
+			handleSuggestion(suggest.getPerson().getName(), suggest.getRoom().getName(), suggest.getWeapon().getName(), p, players);
+			//need to update GUI with guess and result
+			madeSuggestion = true;
+		}
+
 		//update players row and column
 		p.setRow(newLoc.getRow());
 		p.setCol(newLoc.getColumn());
 
 		//repaint board
 		getBoard().repaint();
-		
+
 		//handle suggestion and accusation(next part)
 	}
 
@@ -114,7 +154,7 @@ public class ClueGame extends JFrame{
 		else{
 			turn = players.get(0);
 			turn = (HumanPlayer)turn;
-
+			
 			humanMustFinish = true;
 			clueBoard.setHumanMustFinish(true);
 			//have to change setAccuse to true at some point
@@ -156,13 +196,25 @@ public class ClueGame extends JFrame{
 	}
 
 	public void handleSuggestion(String person, String room, String weapon, Player accuser, ArrayList<Player> group) {
+		suggest = new Suggestion(person, weapon, room);
+		
 		ArrayList<Card> choices = new ArrayList<Card>();
 		for (int i = 0; i < group.size(); i++) {
+			if(group.get(i).getName().equals(person)){
+				Player p = group.get(i);
+				p.setRow(accuser.getRow());
+				p.setCol(accuser.getCol());
+				getBoard().repaint();
+			}
 			if (!group.get(i).equals(accuser)) {
 				disproveCard = group.get(i).disproveSuggestion(person, room, weapon);
 				if (disproveCard != null)
 					break;
 			}
+		}
+		//if the suggestion was not disproved, player should make an accusation next turn
+		if(disproveCard==null && accuser instanceof ComputerPlayer){
+			((ComputerPlayer)accuser).setMakeAccusation(true);
 		}
 
 		//accusingPerson is the person making the suggestion
@@ -172,7 +224,6 @@ public class ClueGame extends JFrame{
 		//find accusingPerson in arrayList of players, 
 		for(int i = 0; i < group.size(); i++) {
 			if(group.get(i).equals(accuser)) {
-
 				playerPosition = i;
 				initialPosition = i;
 			}
@@ -182,7 +233,6 @@ public class ClueGame extends JFrame{
 			playerPosition = 0;
 		}
 		else playerPosition++;
-
 
 		//loop through and ask each player to disprove suggestion
 
@@ -209,7 +259,6 @@ public class ClueGame extends JFrame{
 			}
 		}
 		//if someone can disprove the suggestion, then disproveSuggestion will return a card instead of null and stop
-
 	}
 
 	public Card getDisproveCard() {
@@ -305,7 +354,6 @@ public class ClueGame extends JFrame{
 			line = in.nextLine().split(" ");
 			if (first) {
 				test = new HumanPlayer(line[0]);
-				//turn = (HumanPlayer)test;
 				first = false;
 			} else {
 				test = new ComputerPlayer(line[0]);
@@ -320,7 +368,7 @@ public class ClueGame extends JFrame{
 		clueBoard.setTurn(turn);
 		in.close();
 	}
-	
+
 
 	public void loadCardConfig(String config) throws FileNotFoundException,
 	BadConfigFormatException {

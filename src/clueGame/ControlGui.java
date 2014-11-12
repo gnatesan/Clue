@@ -1,5 +1,6 @@
 package clueGame;
 
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,11 +18,13 @@ import javax.swing.border.TitledBorder;
 public class ControlGui extends JPanel {
 	private JTextField rollText;
 	private JTextField turnField;
+	private JTextField guessField, guessPanel;
 	private ClueGame game;
 
 	public ControlGui(ClueGame game) {
+		guessPanel = new JTextField(15);
 		this.game = game;
-		setSize(650, 250);
+		setSize(650, 300);
 		setLayout(new GridLayout(2, 1));
 
 		JPanel topPanel = new JPanel();
@@ -43,7 +46,6 @@ public class ControlGui extends JPanel {
 	private JPanel createTopButtonPanel() {
 		JPanel panel = new JPanel();
 		JButton nextPlayerButton = new JButton("Next Player");
-		//need to make a listener for this button\
 		nextPlayerButton.addActionListener(new ActionListener() {
 			//this implements the interface, which allows us to do this because
 			//ActionListener is an interface
@@ -54,6 +56,20 @@ public class ControlGui extends JPanel {
 
 
 		JButton makeAccuseButton = new JButton("Make Accusation");
+		makeAccuseButton.addActionListener(new ActionListener() {
+			//this implements the interface, which allows us to do this because
+			//ActionListener is an interface
+			public void actionPerformed(ActionEvent e){
+				if(game.getTurn() instanceof HumanPlayer&&!((HumanPlayer)game.getHuman()).getMoved()){
+					makeAccusation();
+					//nextPlayer();
+				}
+				else if(((HumanPlayer)game.getHuman()).getMoved()){
+					 JOptionPane.showMessageDialog(game,"You have already taken your turn.","Cannot make an accusation", JOptionPane.INFORMATION_MESSAGE);
+				}
+				else JOptionPane.showMessageDialog(game,"You are not a human player!","Cannot make an accusation", JOptionPane.INFORMATION_MESSAGE);
+			}
+		});
 
 		panel.setLayout(new GridLayout(1,0));
 		panel.add(nextPlayerButton);
@@ -63,10 +79,15 @@ public class ControlGui extends JPanel {
 
 		return panel;
 	}
+	
+	private void makeAccusation(){
+		//create a makeAccusation dialog
+		AccuseDialog accuse = new AccuseDialog(game.getTurn(), game);
+	}
 
 	public void nextPlayer(){
 		if (game.getBoard().isHumanMustFinish()){
-			JOptionPane.showMessageDialog(null,"You must make a valid move!","Cannot Advance!", JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(game,"You must make a valid move!","Cannot Advance!", JOptionPane.INFORMATION_MESSAGE);
 		}else{
 			game.setTurn();
 			updateTurnPanel(game.getTurn().getName());
@@ -74,10 +95,23 @@ public class ControlGui extends JPanel {
 			updateDiePanel(roll);
 			game.getBoard().repaint();
 			if(!game.getTurn().isHuman()){
+				game.getHuman().setMoved(false);
 				game.makeMove(((ComputerPlayer)game.getTurn()), roll);
+				if(game.getDisproveCard()!=null)
+					updateGuessResult(game.getDisproveCard().getName());
+				else updateGuessResult("no new clue");
+				if(game.getMadeSuggestion()){
+					Suggestion suggest = game.getSuggestion();
+					updateGuessPanel(suggest);
+				}
 			}
 			else{
 				((HumanPlayer) game.getTurn()).showMove(game.getBoard(), roll);
+				if(game.getMadeSuggestion()){
+					Suggestion suggest = game.getSuggestion();
+					updateGuessPanel(suggest);
+					game.setMadeSuggestion(false);
+				}
 			}	
 		}
 	}
@@ -106,7 +140,7 @@ public class ControlGui extends JPanel {
 		JLabel roll = new JLabel("Roll");
 		rollText = new JTextField("   ");
 		//want to be able to change the number whenever we roll for each turn
-		rollText.setEditable(true);
+		rollText.setEditable(false);
 
 		dicePanel.add(roll);
 		dicePanel.add(rollText);
@@ -121,31 +155,41 @@ public class ControlGui extends JPanel {
 	}
 
 	private JPanel createGuessPanel() {
-		JPanel guessPanel = new JPanel();
-
+		JPanel guessP = new JPanel();
+		guessP.setLayout(new GridLayout(2, 1));
 		JLabel guessLabel = new JLabel("Guess");
-		JTextField guessText = new JTextField(15);
-		guessText.setEditable(false);
+		guessPanel.setEditable(false);
+		Font font = new Font("Verdana", Font.PLAIN, 10);
+		guessPanel.setFont(font);
 
-		guessPanel.add(guessLabel);
-		guessPanel.add(guessText);
-		guessPanel.setBorder(new TitledBorder(new EtchedBorder(), "Guess"));
+		guessP.add(guessLabel);
+		guessP.add(guessPanel);
+		guessP.setBorder(new TitledBorder(new EtchedBorder(), "Guess"));
 
-		return guessPanel;
+		return guessP;
 	}
+	
+	public void updateGuessPanel(Suggestion s){
+		guessPanel.setText(s.getPerson().getName() + " in the " + s.getRoom().getName() + " with the " + s.getWeapon().getName());
+	}
+
 
 	private JPanel createGuessResult() {
 		JPanel guessResultPanel = new JPanel();
 
 		JLabel responseLabel = new JLabel("Response");
-		JTextField responseText = new JTextField(8);
-		responseText.setEditable(false);
+		guessField = new JTextField(8);
+		guessField.setEditable(false);
 
 		guessResultPanel.add(responseLabel);
-		guessResultPanel.add(responseText);
+		guessResultPanel.add(guessField);
 		guessResultPanel.setBorder(new TitledBorder(new EtchedBorder(), "Result"));
 
 		return guessResultPanel;
+	}
+	
+	public void updateGuessResult(String s){
+		guessField.setText(s);
 	}
 
 

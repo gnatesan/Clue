@@ -31,13 +31,13 @@ public class Board extends JPanel implements MouseListener{
 	private String BoardConfig;
 	private String BoardRoomConfig;
 	private ArrayList<Player> players;
-	private static final int CELL_SIZE = 25;
-	//private boolean humanTurn;
 	private int x, y;
 	private BoardCell returnCell;
 	private boolean humanMustFinish;
 	private Player turn;
-	//private boolean clicked;
+	//for suggestion purposes
+	private ClueGame game;
+	private ControlGui gui;
 
 	public Board(String boardConfig, String boardRoomConfig) {
 		super();
@@ -51,6 +51,14 @@ public class Board extends JPanel implements MouseListener{
 		centers = new LinkedList<BoardCell>();
 	}
 	
+	public void setGui(ControlGui c){
+		this.gui = c;
+	}
+	
+	public void getGame(ClueGame game){
+		this.game = game;
+	}
+	
 	public void setTurn(Player p){
 		turn = p;
 	}
@@ -59,9 +67,9 @@ public class Board extends JPanel implements MouseListener{
 		//highlights the targets and makes them blue
 		for(BoardCell cell: targets){
 			g.setColor(Color.CYAN);
-			g.fillRect(cell.getColumn() * CELL_SIZE, cell.getRow() * CELL_SIZE, CELL_SIZE, CELL_SIZE);
+			g.fillRect(cell.getColumn() * BoardCell.CELL_SIZE, cell.getRow() * BoardCell.CELL_SIZE, BoardCell.CELL_SIZE, BoardCell.CELL_SIZE);
 			g.setColor(Color.BLACK);
-			g.drawRect(cell.getColumn() * CELL_SIZE,  cell.getRow() * CELL_SIZE,  CELL_SIZE, CELL_SIZE);	
+			g.drawRect(cell.getColumn() * BoardCell.CELL_SIZE,  cell.getRow() *BoardCell.CELL_SIZE,  BoardCell.CELL_SIZE, BoardCell.CELL_SIZE);	
 		}
 	}
 
@@ -80,15 +88,22 @@ public class Board extends JPanel implements MouseListener{
 		y = e.getY();
 		
 		for(BoardCell cell: targets){
-			if(y<=(cell.getRow()*CELL_SIZE + 3*CELL_SIZE-1) && y >=(cell.getRow()*CELL_SIZE + 50)&&
-					x<=(cell.getColumn()*CELL_SIZE + CELL_SIZE-1) && x >=(cell.getColumn()*CELL_SIZE)){
+			if(y<=(cell.getRow()*BoardCell.CELL_SIZE + 3*BoardCell.CELL_SIZE-1) && y >=(cell.getRow()*BoardCell.CELL_SIZE + 50)&&
+					x<=(cell.getColumn()*BoardCell.CELL_SIZE + BoardCell.CELL_SIZE-1) && x >=(cell.getColumn()*BoardCell.CELL_SIZE)){
 				returnCell = cell;
 				humanMustFinish = false;
-				//have to call makeMove somehow
+				((HumanPlayer)turn).setMoved(true);
+				//have to call makeMove
 				((HumanPlayer)turn).makeMove(this, returnCell);
+				//if it's a room cell, they need to make a guess
+				if(returnCell instanceof RoomCell){
+					GuessDialog guess = new GuessDialog(turn, game);
+					guess.setGui(gui);
+					gui.setVisible(true);
+				}
 			}
 		}
-		if(humanMustFinish) JOptionPane.showMessageDialog(null,"Please select a valid move!","Invalid Move!", JOptionPane.INFORMATION_MESSAGE);
+		if(humanMustFinish) JOptionPane.showMessageDialog(game,"Please select a valid move!","Invalid Move!", JOptionPane.INFORMATION_MESSAGE);
 
 	}
 
@@ -108,6 +123,7 @@ public class Board extends JPanel implements MouseListener{
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
+		BoardCell.CELL_SIZE = Math.min((game.getWidth()-70)/numColumns, (game.getHeight()-180)/numRows);
 		for (int row = 0; row < this.getNumRows(); row++) {
 			for (int col = 0; col < this.getNumColumns(); col++) {
 				getCellAt(row, col).draw(g);
@@ -120,7 +136,6 @@ public class Board extends JPanel implements MouseListener{
 			p.draw(g);
 		}
 	}
-
 
 	public void loadBoardConfig() throws FileNotFoundException,
 	BadConfigFormatException {

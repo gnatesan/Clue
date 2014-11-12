@@ -12,7 +12,6 @@ public class Player {
 	private int row;
 	private int col;
 	private ArrayList<Card> cards;
-	private static final int PLAYER_RADIUS = 25;
 
 	public boolean isHuman(){
 		return (this instanceof HumanPlayer);
@@ -71,7 +70,7 @@ public class Player {
 
 	public void draw(Graphics g) {
 		g.setColor(getColor());
-		g.fillOval(getCol() * PLAYER_RADIUS, getRow() * PLAYER_RADIUS, PLAYER_RADIUS, PLAYER_RADIUS);
+		g.fillOval(getCol() * BoardCell.CELL_SIZE, getRow() * BoardCell.CELL_SIZE, BoardCell.CELL_SIZE, BoardCell.CELL_SIZE);
 	}
 
 	public Card disproveSuggestion(String person, String weapon, String room) {
@@ -97,5 +96,6 @@ public class Player {
 			return true;
 		return false;
 	}
+
 
 }

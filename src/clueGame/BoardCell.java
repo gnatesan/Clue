@@ -5,7 +5,7 @@ import java.awt.Graphics;
 public abstract class BoardCell {
 	private int row;
 	private int column;
-	protected static final int CELL_SIZE = 25;
+	public static int CELL_SIZE = 15;
 
 	protected boolean doorway = false;
 

@@ -19,6 +19,7 @@ public class GameSetupTests {
 	@BeforeClass
 	public static void setUp() throws FileNotFoundException, BadConfigFormatException{
 		game = new ClueGame("ClueLayout.csv", "ClueLegend.txt");
+		game.setVisible(false);
 		game.loadConfigFiles();
 		board = game.getBoard();
 	}
